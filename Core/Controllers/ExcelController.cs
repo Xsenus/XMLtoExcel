@@ -81,8 +81,11 @@ namespace Core.Controllers
                                 }
                                 else
                                 {
-                                    worksheet.Cells[i, _columnEditNumber].Value = "0";
-                                    Log?.Invoke($"НЕ найдено значение для артикля: {excelArticle}");
+                                    if (i > 1)
+                                    {
+                                        worksheet.Cells[i, _columnEditNumber].Value = "0";
+                                        Log?.Invoke($"НЕ найдено значение для артикля: {excelArticle}");
+                                    }                                    
                                 }
 
                                 worksheet.Cells[i, _columnDeleteNumber].Value = string.Empty;
@@ -169,8 +172,11 @@ namespace Core.Controllers
                         }
                         else
                         {
-                            _worksheet.Cells[i, _columnEditNumber].Value = "0";
-                            Log?.Invoke($"НЕ найдено значение для артикля: {excelArticle}");
+                            if (i > 1)
+                            {
+                                _worksheet.Cells[i, _columnEditNumber].Value = "0";
+                                Log?.Invoke($"НЕ найдено значение для артикля: {excelArticle}");
+                            }                            
                         }
 
                         _worksheet.Cells[i, _columnDeleteNumber].Value = string.Empty;
