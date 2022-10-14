@@ -56,7 +56,7 @@ namespace Core.Controllers
                         var countSubstitutions = 0;
                         var rowCount = worksheet.Dimension.End.Row;
 
-                        for (int i = 1; i < rowCount; i++)
+                        for (int i = 1; i <= rowCount; i++)
                         {
                             string excelArticle = worksheet.Cells[i, _columnDeleteNumber].Value?.ToString();
                             Log?.Invoke($"Получение артикля из ячейки [{i}; {_columnDeleteNumber}] : {excelArticle ?? "NULL"}");
@@ -81,6 +81,7 @@ namespace Core.Controllers
                                 }
                                 else
                                 {
+                                    worksheet.Cells[i, _columnEditNumber].Value = "0";
                                     Log?.Invoke($"НЕ найдено значение для артикля: {excelArticle}");
                                 }
 
@@ -143,7 +144,7 @@ namespace Core.Controllers
                 var rowCount = _range.Rows.Count;
                 Log?.Invoke($"Строк для обработки файла Excel: {rowCount}");
 
-                for (int i = 1; i < rowCount; i++)
+                for (int i = 1; i <= rowCount; i++)
                 {
                     string excelArticle = _worksheet.Cells[i, _columnDeleteNumber].Value?.ToString();
                     Log?.Invoke($"Получение артикля из ячейки [{i}; {_columnDeleteNumber}] : {excelArticle ?? "NULL"}");
@@ -168,6 +169,7 @@ namespace Core.Controllers
                         }
                         else
                         {
+                            _worksheet.Cells[i, _columnEditNumber].Value = "0";
                             Log?.Invoke($"НЕ найдено значение для артикля: {excelArticle}");
                         }
 
