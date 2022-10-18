@@ -2,6 +2,9 @@
 using Core.Models.Original;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace XMLtoExcel.Forms
@@ -13,36 +16,6 @@ namespace XMLtoExcel.Forms
         public MainForm()
         {
             InitializeComponent();             
-        }
-                
-        public void AddExcelPatch(string path)
-        {
-            if (string.IsNullOrEmpty(path))
-            {
-                return;
-            }
-
-            if (!_excelPath.Contains(path))
-            {
-                _excelPath.Add(path);
-                listView.Items.Add(path);
-            }
-        }
-        
-        private void btnAddExcel_Click(object sender, EventArgs e)
-        {
-            using (var openFileDialog = new OpenFileDialog() { Multiselect = true})
-            {
-                openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm|All files (*.*)|*.*";
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    foreach (var filePath in openFileDialog.FileNames)
-                    {
-                        AddExcelPatch(filePath);
-                    }
-                }
-            }
         }
         
         private void btnSelect_Click(object sender, EventArgs e)
@@ -100,7 +73,7 @@ namespace XMLtoExcel.Forms
                 return;
             }
 
-            lblCount.Text = $"Замен: 0";
+            ClearLableOut();
 
             foreach (var excelPath in _excelPath)
             {
@@ -119,12 +92,33 @@ namespace XMLtoExcel.Forms
                     }
                     excelWriter.Writer -= ExcelWriter_Writer;
                     excelWriter.Log -= ExcelWriter_Log;
-                    lblCount.Text = $"Замен: {excelWriter.CountSubstitutions}";
+                    
+                    var fileName = GetFileName(excelPath);
+                    lblOut.Text += $"{Environment.NewLine} [{fileName}] замен: {excelWriter.CountSubstitutions}";
+                    lblOut.Refresh();
                 }
             }
 
             progressBar.Value = 0;
             MessageBox.Show("Операция успешно завершена", "OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private static string GetFileName(string excelPath)
+        {
+            try
+            {
+                return Path.GetFileName(excelPath);
+            }
+            catch (Exception ex)
+            {
+                LogerController.AddMessage($"{ex.Message}");
+                return excelPath;
+            }
+        }
+
+        private void ClearLableOut()
+        {
+            lblOut.Text = default(string);
         }
 
         private void ExcelWriter_Log(string message)
@@ -142,8 +136,6 @@ namespace XMLtoExcel.Forms
             progressBar.Value = position;
             progressBar.Maximum = count;
             progressBar.Update();
-
-            lblCount.Text = $"Замен: {countSubstitutions}";
         }
 
         private void btnMenuLogger_Click(object sender, EventArgs e)
@@ -173,6 +165,93 @@ namespace XMLtoExcel.Forms
             else
             {
                 checkIsEpplus.Checked = true;
+            }
+        }
+
+        private void listView_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var contextMenu= new ContextMenu();
+                
+                var itemAdd = new MenuItem("Добавить");
+                itemAdd.Click += ItemAdd_Click;
+                contextMenu.MenuItems.Add(itemAdd);
+
+                var itemDel = new MenuItem("Удалить");
+                itemDel.Enabled = false;
+                if (listView.SelectedItems.Count > 0)
+                {
+                    itemDel.Enabled = true;
+                }
+                itemDel.Click += (_sender, _e) => ItemDel_Click(_sender, _e);
+                contextMenu.MenuItems.Add(itemDel);
+
+                contextMenu.Show(listView, new Point(e.X, e.Y));
+            }
+        }
+
+        public void AddExcelPatch(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                return;
+            }
+
+            if (!_excelPath.Contains(path))
+            {
+                _excelPath.Add(path);
+                listView.Items.Add(path);
+            }
+        }
+
+        private void RemoveExcelPatch(string obj)
+        {
+            if (!string.IsNullOrWhiteSpace(obj))
+            {
+                if (_excelPath.Contains(obj))
+                {
+                    var itemList = listView.Items.Cast<ListViewItem>()
+                        .FirstOrDefault(f => !string.IsNullOrWhiteSpace(f.Text) && f.Text.Equals(obj));
+
+                    if (itemList != null)
+                    {
+                        _excelPath.Remove(obj);
+                        listView.Items.Remove(itemList);
+                    }
+                }
+            }
+        }
+
+        private void ItemAdd_Click(object sender, EventArgs e)
+        {
+            ClearLableOut();
+
+            using (var openFileDialog = new OpenFileDialog() { Multiselect = true })
+            {
+                openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm|All files (*.*)|*.*";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    foreach (var filePath in openFileDialog.FileNames)
+                    {
+                        AddExcelPatch(filePath);
+                    }
+                }
+            }
+        }
+
+        private void ItemDel_Click(object sender, EventArgs e)
+        {
+            ClearLableOut();
+
+            foreach (ListViewItem item in listView.SelectedItems)
+            {
+                var obj = item.Text;
+                if (!string.IsNullOrWhiteSpace(obj))
+                {
+                    RemoveExcelPatch(obj);
+                }
             }
         }
     }
