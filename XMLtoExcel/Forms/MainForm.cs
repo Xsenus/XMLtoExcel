@@ -73,12 +73,14 @@ namespace XMLtoExcel.Forms
                 return;
             }
 
+            var isDeleteColumnNumber = checkIsDeleteColumnNumber.Checked;
+
             ClearLableOut();
 
             foreach (var excelPath in _excelPath)
             {
                 LogerController.AddMessage($"Обработка EXCEL: {excelPath}");
-                using (var excelWriter = new ExcelWriter(excelPath))
+                using (var excelWriter = new ExcelWriter(excelPath, isDeleteColumnNumber: isDeleteColumnNumber))
                 {
                     excelWriter.Writer += ExcelWriter_Writer;
                     excelWriter.Log += ExcelWriter_Log;
@@ -94,8 +96,11 @@ namespace XMLtoExcel.Forms
                     excelWriter.Log -= ExcelWriter_Log;
                     
                     var fileName = GetFileName(excelPath);
-                    lblOut.Text += $"{Environment.NewLine} [{fileName}] замен: {excelWriter.CountSubstitutions}";
-                    lblOut.Refresh();
+                    memoOut.Text += $"{Environment.NewLine}Файл: {fileName} [{excelWriter.Count}]{Environment.NewLine}" +
+                        $"Замены: {excelWriter.CountSubstitutions}{Environment.NewLine}" +
+                        $"Замены на 0: {excelWriter.CountZeroSubstitutions}{Environment.NewLine}" +
+                        $"--------------------{Environment.NewLine}";
+                    memoOut.Refresh();
                 }
             }
 
@@ -118,7 +123,7 @@ namespace XMLtoExcel.Forms
 
         private void ClearLableOut()
         {
-            lblOut.Text = default(string);
+            memoOut.Text = default(string);
         }
 
         private void ExcelWriter_Log(string message)
@@ -135,6 +140,12 @@ namespace XMLtoExcel.Forms
 
             progressBar.Value = position;
             progressBar.Maximum = count;
+           
+            //progressBar.CreateGraphics().DrawString($"{position}\t из\t{count}", 
+            //    new Font("Arial", (float)8.50, FontStyle.Regular),
+            //    Brushes.Black, 
+            //    new PointF(progressBar.Width / 2 - 25, progressBar.Height / 2 - 7));
+            
             progressBar.Update();
         }
 

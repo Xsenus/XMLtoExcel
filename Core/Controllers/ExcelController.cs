@@ -1,4 +1,5 @@
 ﻿using Core.Models.Original;
+using Microsoft.Office.Interop.Excel;
 using OfficeOpenXml;
 using System;
 using System.Diagnostics;
@@ -16,13 +17,16 @@ namespace Core.Controllers
         private string _sheetName;
         private int _columnEditNumber;
         private int _columnDeleteNumber;
+        private bool _isDeleteColumnNumber;
 
         private Excel.Application _excelApplication;
         private Excel.Workbook _workbook;
         private Excel._Worksheet _worksheet;
         private Excel.Range _range;
 
+        public int Count { get; private set; }
         public int CountSubstitutions { get; private set; }
+        public int CountZeroSubstitutions { get; private set; }
 
         public delegate void WriterEventHandler(int position, int count, int countSubstitutions);
         public event WriterEventHandler Writer;
@@ -31,12 +35,17 @@ namespace Core.Controllers
         public delegate void LogEventHandler(string message);
         public event LogEventHandler Log;
 
-        public ExcelWriter(string path, string sheetName = "Остатки", int columnEditNumber = 5, int columnDeleteNumber = 6)
+        public ExcelWriter(string path, 
+            string sheetName = "Остатки", 
+            int columnEditNumber = 5, 
+            int columnDeleteNumber = 6, 
+            bool isDeleteColumnNumber = false)
         {
             _path = path;
             _sheetName = sheetName;
             _columnEditNumber = columnEditNumber;
             _columnDeleteNumber = columnDeleteNumber;
+            _isDeleteColumnNumber = isDeleteColumnNumber;
         }
         
         public void StartWriterEPPlus(Data data)
@@ -53,8 +62,11 @@ namespace Core.Controllers
                     if (worksheet.Name.Equals(_sheetName))
                     {
                         Log?.Invoke($"Найдена необходимая страница: [{worksheet.Index}] {worksheet.Name}");
-                        var countSubstitutions = 0;
+
                         var rowCount = worksheet.Dimension.End.Row;
+                        Log?.Invoke($"Строк для обработки файла Excel: {rowCount}");
+
+                        Count = rowCount - 2;
 
                         for (int i = 1; i <= rowCount; i++)
                         {
@@ -76,8 +88,7 @@ namespace Core.Controllers
                                     worksheet.Cells[i, _columnEditNumber].Value = value;
                                     Log?.Invoke($"Подстановка артикула [{value}] в ячейку [{i}, {_columnEditNumber}]");
 
-                                    CountSubstitutions = countSubstitutions;
-                                    countSubstitutions++;
+                                    CountSubstitutions++;
                                 }
                                 else
                                 {
@@ -85,12 +96,17 @@ namespace Core.Controllers
                                     {
                                         worksheet.Cells[i, _columnEditNumber].Value = "0";
                                         Log?.Invoke($"НЕ найдено значение для артикля: {excelArticle}");
+                                        CountZeroSubstitutions++;
                                     }                                    
                                 }
 
-                                worksheet.Cells[i, _columnDeleteNumber].Value = string.Empty;
+                                if (_isDeleteColumnNumber)
+                                {
+                                    worksheet.Cells[i, _columnDeleteNumber].Value = string.Empty;
+                                }
                             }
-                            Writer?.Invoke(i, rowCount + 2, CountSubstitutions);
+
+                            SentWriter(rowCount, i);                        
                         }
                     }
                 }
@@ -143,9 +159,10 @@ namespace Core.Controllers
                 Log?.Invoke($"Получение рабочей зоны");
                 _range = _worksheet.UsedRange;
 
-                var countSubstitutions = 0;
                 var rowCount = _range.Rows.Count;
                 Log?.Invoke($"Строк для обработки файла Excel: {rowCount}");
+
+                Count = rowCount - 2;
 
                 for (int i = 1; i <= rowCount; i++)
                 {
@@ -167,8 +184,7 @@ namespace Core.Controllers
                             _worksheet.Cells[i, _columnEditNumber].Value = value;
                             Log?.Invoke($"Подстановка артикула [{value}] в ячейку [{i}, {_columnEditNumber}]");
 
-                            CountSubstitutions = countSubstitutions;
-                            countSubstitutions++;
+                            CountSubstitutions++;
                         }
                         else
                         {
@@ -176,12 +192,17 @@ namespace Core.Controllers
                             {
                                 _worksheet.Cells[i, _columnEditNumber].Value = "0";
                                 Log?.Invoke($"НЕ найдено значение для артикля: {excelArticle}");
-                            }                            
+                                CountZeroSubstitutions++;
+                            }
                         }
 
-                        _worksheet.Cells[i, _columnDeleteNumber].Value = string.Empty;
+                        if (_isDeleteColumnNumber)
+                        {
+                            _worksheet.Cells[i, _columnDeleteNumber].Value = string.Empty;
+                        }
                     }
-                    Writer?.Invoke(i, rowCount + 2, CountSubstitutions);
+
+                    SentWriter(rowCount, i);
                 }
 
                 _workbook.Save();
@@ -194,7 +215,12 @@ namespace Core.Controllers
                 Dispose();
             }
         }
-        
+
+        private void SentWriter(int rowCount, int i)
+        {
+            Writer?.Invoke(i, rowCount, CountSubstitutions);
+        }
+
         public void Dispose()
         {
             if (_isEpPlus)
