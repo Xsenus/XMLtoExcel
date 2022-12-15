@@ -54,6 +54,13 @@ namespace XMLtoExcel.Forms
                 return;
             }
 
+
+            var stock = default(decimal?);
+            if (decimal.TryParse(txtStock.Text?.Replace(".", ","), out decimal result))
+            {
+                stock = result;
+            }
+
             var query = default(Data);
             try
             {
@@ -86,11 +93,11 @@ namespace XMLtoExcel.Forms
                     excelWriter.Log += ExcelWriter_Log;
                     if (checkIsEpplus.Checked)
                     {
-                        excelWriter.StartWriterEPPlus(query);
+                        excelWriter.StartWriterEPPlus(query, stock);
                     }
                     else
                     {
-                        excelWriter.StartWriter(query);
+                        excelWriter.StartWriter(query, stock);
                     }
                     excelWriter.Writer -= ExcelWriter_Writer;
                     excelWriter.Log -= ExcelWriter_Log;

@@ -37,6 +37,7 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.listView = new System.Windows.Forms.ListView();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.memoOut = new System.Windows.Forms.RichTextBox();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.btnMenuFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,7 +45,8 @@
             this.checkIsInterop = new System.Windows.Forms.CheckBox();
             this.checkIsEpplus = new System.Windows.Forms.CheckBox();
             this.checkIsDeleteColumnNumber = new System.Windows.Forms.CheckBox();
-            this.memoOut = new System.Windows.Forms.RichTextBox();
+            this.txtStock = new System.Windows.Forms.TextBox();
+            this.lblStock = new System.Windows.Forms.Label();
             this.tableLayoutPanel.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -158,6 +160,18 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // memoOut
+            // 
+            this.memoOut.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.memoOut.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.memoOut.Location = new System.Drawing.Point(474, 44);
+            this.memoOut.Margin = new System.Windows.Forms.Padding(5);
+            this.memoOut.Name = "memoOut";
+            this.memoOut.ReadOnly = true;
+            this.memoOut.Size = new System.Drawing.Size(300, 149);
+            this.memoOut.TabIndex = 10;
+            this.memoOut.Text = "";
+            // 
             // progressBar
             // 
             this.progressBar.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -242,23 +256,29 @@
             this.checkIsDeleteColumnNumber.Text = "Удаление колонки с артикулом";
             this.checkIsDeleteColumnNumber.UseVisualStyleBackColor = true;
             // 
-            // memoOut
+            // txtStock
             // 
-            this.memoOut.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.memoOut.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.memoOut.Location = new System.Drawing.Point(474, 44);
-            this.memoOut.Margin = new System.Windows.Forms.Padding(5);
-            this.memoOut.Name = "memoOut";
-            this.memoOut.ReadOnly = true;
-            this.memoOut.Size = new System.Drawing.Size(300, 149);
-            this.memoOut.TabIndex = 10;
-            this.memoOut.Text = "";
+            this.txtStock.Location = new System.Drawing.Point(677, 27);
+            this.txtStock.Name = "txtStock";
+            this.txtStock.Size = new System.Drawing.Size(100, 20);
+            this.txtStock.TabIndex = 16;
+            // 
+            // lblStock
+            // 
+            this.lblStock.AutoSize = true;
+            this.lblStock.Location = new System.Drawing.Point(633, 30);
+            this.lblStock.Name = "lblStock";
+            this.lblStock.Size = new System.Drawing.Size(38, 13);
+            this.lblStock.TabIndex = 17;
+            this.lblStock.Text = "Stock:";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 361);
+            this.Controls.Add(this.lblStock);
+            this.Controls.Add(this.txtStock);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.checkIsDeleteColumnNumber);
             this.Controls.Add(this.progressBar);
@@ -298,6 +318,8 @@
         private System.Windows.Forms.CheckBox checkIsEpplus;
         private System.Windows.Forms.CheckBox checkIsDeleteColumnNumber;
         private System.Windows.Forms.RichTextBox memoOut;
+        private System.Windows.Forms.TextBox txtStock;
+        private System.Windows.Forms.Label lblStock;
     }
 }
 

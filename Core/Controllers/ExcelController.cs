@@ -48,7 +48,7 @@ namespace Core.Controllers
             _isDeleteColumnNumber = isDeleteColumnNumber;
         }
         
-        public void StartWriterEPPlus(Data data)
+        public void StartWriterEPPlus(Data data, decimal? stock = default)
         {
             _isEpPlus = true;
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -83,12 +83,23 @@ namespace Core.Controllers
                                 if (product != null)
                                 {
                                     var value = product?.Instock?.Stock?.Text ?? string.Empty;
+
+                                    if (stock is decimal intStock 
+                                        && decimal.TryParse(value?.Replace(".", ","), out decimal result) 
+                                        && intStock >= result)
+                                    {
+                                        value = "0";
+                                        CountZeroSubstitutions++;
+                                    }
+                                    else
+                                    {
+                                        CountSubstitutions++;
+                                    }
+
                                     Log?.Invoke($"Найдено значение для артикля [{excelArticle}]: {value ?? "NULL"}");
 
                                     worksheet.Cells[i, _columnEditNumber].Value = value;
                                     Log?.Invoke($"Подстановка артикула [{value}] в ячейку [{i}, {_columnEditNumber}]");
-
-                                    CountSubstitutions++;
                                 }
                                 else
                                 {
@@ -115,7 +126,7 @@ namespace Core.Controllers
             }
         }
 
-        public void StartWriter(Data data)
+        public void StartWriter(Data data, decimal? stock = default)
         {
             _isEpPlus = false;
             if (System.IO.File.Exists(_path) is false)
@@ -179,12 +190,23 @@ namespace Core.Controllers
                         if (product != null)
                         {
                             var value = product?.Instock?.Stock?.Text ?? string.Empty;
+
+                            if (stock is decimal intStock
+                                        && decimal.TryParse(value?.Replace(".", ","), out decimal result)
+                                        && intStock >= result)
+                            {
+                                value = "0";
+                                CountZeroSubstitutions++;
+                            }
+                            else
+                            {
+                                CountSubstitutions++;
+                            }
+
                             Log?.Invoke($"Найдено значение для артикля [{excelArticle}]: {value ?? "NULL"}");
 
                             _worksheet.Cells[i, _columnEditNumber].Value = value;
                             Log?.Invoke($"Подстановка артикула [{value}] в ячейку [{i}, {_columnEditNumber}]");
-
-                            CountSubstitutions++;
                         }
                         else
                         {
