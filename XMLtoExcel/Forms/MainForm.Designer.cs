@@ -266,11 +266,11 @@
             // lblStock
             // 
             this.lblStock.AutoSize = true;
-            this.lblStock.Location = new System.Drawing.Point(633, 30);
+            this.lblStock.Location = new System.Drawing.Point(449, 30);
             this.lblStock.Name = "lblStock";
-            this.lblStock.Size = new System.Drawing.Size(38, 13);
+            this.lblStock.Size = new System.Drawing.Size(222, 13);
             this.lblStock.TabIndex = 17;
-            this.lblStock.Text = "Stock:";
+            this.lblStock.Text = "Значение остатков (равное и меньше) в 0:";
             // 
             // MainForm
             // 
