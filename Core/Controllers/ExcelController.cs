@@ -27,6 +27,7 @@ namespace Core.Controllers
         public int Count { get; private set; }
         public int CountSubstitutions { get; private set; }
         public int CountZeroSubstitutions { get; private set; }
+        public int CountZeroStockSubstitutions { get; private set; }
 
         public delegate void WriterEventHandler(int position, int count, int countSubstitutions);
         public event WriterEventHandler Writer;
@@ -89,17 +90,15 @@ namespace Core.Controllers
                                         && intStock >= result)
                                     {
                                         value = "0";
-                                        CountZeroSubstitutions++;
-                                    }
-                                    else
-                                    {
-                                        CountSubstitutions++;
+                                        CountZeroStockSubstitutions++;
                                     }
 
                                     Log?.Invoke($"Найдено значение для артикля [{excelArticle}]: {value ?? "NULL"}");
 
                                     worksheet.Cells[i, _columnEditNumber].Value = value;
                                     Log?.Invoke($"Подстановка артикула [{value}] в ячейку [{i}, {_columnEditNumber}]");
+
+                                    CountSubstitutions++;
                                 }
                                 else
                                 {
@@ -196,17 +195,15 @@ namespace Core.Controllers
                                         && intStock >= result)
                             {
                                 value = "0";
-                                CountZeroSubstitutions++;
-                            }
-                            else
-                            {
-                                CountSubstitutions++;
+                                CountZeroStockSubstitutions++;
                             }
 
                             Log?.Invoke($"Найдено значение для артикля [{excelArticle}]: {value ?? "NULL"}");
 
                             _worksheet.Cells[i, _columnEditNumber].Value = value;
                             Log?.Invoke($"Подстановка артикула [{value}] в ячейку [{i}, {_columnEditNumber}]");
+                            
+                            CountSubstitutions++;
                         }
                         else
                         {

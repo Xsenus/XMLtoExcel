@@ -106,6 +106,7 @@ namespace XMLtoExcel.Forms
                     memoOut.Text += $"{Environment.NewLine}Файл: {fileName} [{excelWriter.Count}]{Environment.NewLine}" +
                         $"Замены: {excelWriter.CountSubstitutions}{Environment.NewLine}" +
                         $"Замены на 0: {excelWriter.CountZeroSubstitutions}{Environment.NewLine}" +
+                        $"Значение остатков (равное и меньше): {excelWriter.CountZeroStockSubstitutions}{Environment.NewLine}" +
                         $"--------------------{Environment.NewLine}";
                     memoOut.Refresh();
                 }
