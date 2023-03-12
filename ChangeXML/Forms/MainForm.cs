@@ -14,9 +14,9 @@ namespace ChangeXML.Forms
             InitializeComponent();
 
 #if DEBUG
-            btnProduct.EditValue = @"C:\Users\ilel\Downloads\products.xml";
-            btnParameter.EditValue = @"C:\Users\ilel\Downloads\parameters.xml";
-            btnShablon.EditValue = @"C:\Users\ilel\Downloads\shablon.xml";
+            btnProduct.EditValue = @"C:\Users\ilel\Downloads\products_u.xml";
+            btnParameter.EditValue = @"C:\Users\ilel\Downloads\parameters_u.xml";
+            btnShablon.EditValue = @"C:\Users\ilel\Downloads\shab_u.xml";
 #endif
         }
 

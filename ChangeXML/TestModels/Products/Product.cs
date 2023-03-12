@@ -101,38 +101,13 @@ namespace ChangeXML.TestModels.Products
     [XmlType(AnonymousType = true)]
     public partial class dataProductGroup
     {
-
-        private byte orderField;
-
-        private ushort valueField;
-
         /// <remarks/>
         [XmlAttribute()]
-        public byte order
-        {
-            get
-            {
-                return this.orderField;
-            }
-            set
-            {
-                this.orderField = value;
-            }
-        }
+        public string order { get; set; }
 
         /// <remarks/>
         [XmlText()]
-        public ushort Value
-        {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                this.valueField = value;
-            }
-        }
+        public string Value { get; set; }
     }
 
     /// <remarks/>
