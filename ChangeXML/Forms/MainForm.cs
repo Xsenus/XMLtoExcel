@@ -13,6 +13,7 @@ namespace ChangeXML.Forms
         {
             InitializeComponent();
 
+            Text += $" v{Application.ProductVersion}";
 #if DEBUG
             btnProduct.EditValue = @"C:\Users\ilel\Downloads\products_u.xml";
             btnParameter.EditValue = @"C:\Users\ilel\Downloads\parameters_u.xml";
@@ -20,17 +21,23 @@ namespace ChangeXML.Forms
 #endif
         }
 
+        private string lastOpenFolder = Environment.CurrentDirectory;
         private void GetFilePath(object sender, ButtonPressedEventArgs e)
         {
             if (sender is ButtonEdit buttonEdit)
             {
                 if (e.Button.Kind == ButtonPredefines.Ellipsis)
                 {
-                    using (var ofd = new XtraOpenFileDialog() { Filter = "XML Files (*.xml)|*.xml|All files (*.*)|*.*" })
+                    using (var ofd = new XtraOpenFileDialog() 
+                    {
+                        InitialDirectory = lastOpenFolder,
+                        Filter = "XML Files (*.xml)|*.xml|All files (*.*)|*.*" 
+                    })
                     {
                         if (ofd.ShowDialog() == DialogResult.OK)
                         {
                             buttonEdit.EditValue = ofd.FileName;
+                            lastOpenFolder = Path.GetDirectoryName(ofd.FileName);
                         }
                     }
                 }
