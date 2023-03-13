@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChangeXML.TestModels.Templates
 {
@@ -12,10 +13,11 @@ namespace ChangeXML.TestModels.Templates
 
         public List<Parameter> Parameters { get; set; }
 
-        public string GetXML()
+        public string GetXMLWithDelete()
         {
             var result = $"{Environment.NewLine}";
-            foreach (var parameter in Parameters)
+
+            foreach (var parameter in Parameters.Where(w => w.Values?.Count() > 0))
             {
                 result += $"\t\t<{parameter.NameXmlElement} order=\"{parameter.Order}\" id=\"{parameter.Id}\">{Environment.NewLine}";
                 result += $"\t\t\t<name>{parameter.Name}</name>{Environment.NewLine}";

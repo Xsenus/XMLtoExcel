@@ -115,7 +115,7 @@ namespace ChangeXML.Forms
                             }
                         }
 
-                        product.techdata = templates.GetXML();
+                        product.techdata = templates.GetXMLWithDelete();
                         countProduct++;
                     }
                 }                
