@@ -79,6 +79,9 @@ namespace ChangeXML.Forms
                 var parameters = Controllers.OriginalController.GetObjFromXML<ChangeXML.TestModels.Parameters.data>(pathParameter);
                 var templates = Controllers.OriginalController.GetTechnicalInformation(pathShablon);
 
+                var countProduct = 0;
+                var countFindParametrs = 0;
+                var countAddValue = 0;
                 if (products.product != null)
                 {
                     foreach (var product in products.product)
@@ -90,6 +93,7 @@ namespace ChangeXML.Forms
 
                             if (parameter != null)
                             {
+                                countFindParametrs++;
                                 var productArticle = product.article;
                                 var value = parameter.products.FirstOrDefault(f => f.article == productArticle);
 
@@ -98,12 +102,14 @@ namespace ChangeXML.Forms
                                     foreach (var tempValue in value.values)
                                     {
                                         obj.Values.Add($"<value order=\"{tempValue.order}\" number=\"{tempValue.number}\">{tempValue.Value}</value>");
+                                        countAddValue ++;
                                     }
                                 }
                             }
                         }
 
                         product.techdata = templates.GetXML();
+                        countProduct++;
                     }
                 }                
 
@@ -124,7 +130,10 @@ namespace ChangeXML.Forms
                     $"Программа успешно обработала файлы.{Environment.NewLine}" +
                         $"Результат находится в корневой папке c программой.{Environment.NewLine}" +
                         $"Путь к файлу скопирован в буфер.{Environment.NewLine}{Environment.NewLine}" +
-                        $"{path}",
+                        $"{path}{Environment.NewLine}{Environment.NewLine}" +
+                        $"Обработано товаров: {countProduct}{Environment.NewLine}" +
+                        $"Найдено параметров по ID: {countFindParametrs}{Environment.NewLine}" +
+                        $"Добавлено значений к товарам: {countAddValue}",
                     "Обработка XML документов",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
