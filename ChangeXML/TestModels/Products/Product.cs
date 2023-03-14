@@ -1358,38 +1358,13 @@ namespace ChangeXML.TestModels.Products
     [XmlType(AnonymousType = true)]
     public partial class dataProductArrivalStatus
     {
-
-        private string typeField;
-
-        private sbyte valueField;
-
         /// <remarks/>
         [XmlAttribute()]
-        public string type
-        {
-            get
-            {
-                return this.typeField;
-            }
-            set
-            {
-                this.typeField = value;
-            }
-        }
+        public string type { get; set; }
 
         /// <remarks/>
         [XmlText()]
-        public sbyte Value
-        {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                this.valueField = value;
-            }
-        }
+        public sbyte Value { get; set; }
     }
 
     /// <remarks/>
@@ -1399,37 +1374,13 @@ namespace ChangeXML.TestModels.Products
     public partial class dataProductArrivalQty
     {
 
-        private string typeField;
-
-        private ushort valueField;
-
         /// <remarks/>
         [XmlAttribute()]
-        public string type
-        {
-            get
-            {
-                return this.typeField;
-            }
-            set
-            {
-                this.typeField = value;
-            }
-        }
+        public string type { get; set; }
 
         /// <remarks/>
         [XmlText()]
-        public ushort Value
-        {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                this.valueField = value;
-            }
-        }
+        public decimal Value { get; set; }
     }
 
     /// <remarks/>
