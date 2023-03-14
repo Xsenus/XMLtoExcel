@@ -15,9 +15,9 @@ namespace ChangeXML.Forms
 
             Text += $" v{Application.ProductVersion}";
 #if DEBUG
-            btnProduct.EditValue = @"C:\Users\ilel\Downloads\products_l.xml";
-            btnParameter.EditValue = @"C:\Users\ilel\Downloads\parameters_l.xml";
-            btnShablon.EditValue = @"C:\Users\ilel\Downloads\shab_l.xml";
+            btnProduct.EditValue = @"C:\Users\ilel\Downloads\products_b.xml";
+            btnParameter.EditValue = @"C:\Users\ilel\Downloads\parameters_b.xml";
+            btnShablon.EditValue = @"C:\Users\ilel\Downloads\shab_b.xml";
 #endif
         }
 
@@ -74,7 +74,7 @@ namespace ChangeXML.Forms
             throw new Exception("Пожалуйста укажите путь к файлу.");
         }
 
-        private void btnStart_Click(object sender, EventArgs e)
+        private async void btnStart_Click(object sender, EventArgs e)
         {
             try
             {
@@ -82,7 +82,9 @@ namespace ChangeXML.Forms
                 var pathParameter = GetFilePath(btnParameter);
                 var pathShablon = GetFilePath(btnShablon);
 
-                var products = Controllers.OriginalController.GetObjFromXML<ChangeXML.TestModels.Products.data>(pathProduct);
+                var tempFileProduct = GetTempFileFromPathProduct(pathProduct);
+
+                var products = Controllers.OriginalController.GetObjFromXML<ChangeXML.TestModels.Products.data>(tempFileProduct);
                 var parameters = Controllers.OriginalController.GetObjFromXML<ChangeXML.TestModels.Parameters.data>(pathParameter);
                 var templates = Controllers.OriginalController.GetTechnicalInformation(pathShablon);
 
@@ -109,7 +111,7 @@ namespace ChangeXML.Forms
                                     foreach (var tempValue in value.values)
                                     {
                                         obj.Values.Add($"<value order=\"{tempValue.order}\" number=\"{tempValue.number}\">{tempValue.Value}</value>");
-                                        countAddValue ++;
+                                        countAddValue++;
                                     }
                                 }
                             }
@@ -118,20 +120,13 @@ namespace ChangeXML.Forms
                         product.techdata = templates.GetXMLWithDelete();
                         countProduct++;
                     }
-                }                
+                }
 
-                var fileName = "new.xml";
-                Controllers.OriginalController.Save(products, fileName);
-
-                var text = File.ReadAllText(fileName);
-                text = text
-                    .Replace("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" ", "")
-                    .Replace("&lt;", "<")
-                    .Replace("&gt;", ">");
-                File.WriteAllText(fileName, text);
-
+                var fileName = SaveAndEditNewFile(products);
                 var path = Path.GetFullPath(fileName);
                 Clipboard.SetText(path);
+                
+                await DeleteTempFile(tempFileProduct);
 
                 XtraMessageBox.Show(
                     $"Программа успешно обработала файлы.{Environment.NewLine}" +
@@ -150,6 +145,48 @@ namespace ChangeXML.Forms
             {
                 XtraMessageBox.Show(ex.Message, "Обработка XML документов", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private async System.Threading.Tasks.Task DeleteTempFile(string tempFileProduct)
+        {
+            try
+            {
+                await System.Threading.Tasks.Task.Run(() =>
+                {
+                    File.Delete(tempFileProduct);
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        private static string SaveAndEditNewFile(TestModels.Products.data products)
+        {
+            var fileName = "new.xml";
+            Controllers.OriginalController.Save(products, fileName);
+
+            var text = File.ReadAllText(fileName);
+            text = text
+                .Replace("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" ", "")
+                .Replace("&lt;", "<")
+                .Replace("&gt;", ">")
+                .Replace("{REPLACER_LT}", "&lt;")
+                .Replace("{REPLACER_GT}", "&gt;");
+            File.WriteAllText(fileName, text);
+            return fileName;
+        }
+
+        private static string GetTempFileFromPathProduct(string pathProduct)
+        {
+            var tempFileProduct = Path.GetTempFileName();
+            var productText = File.ReadAllText(pathProduct);
+            productText = productText
+                .Replace("&lt;", "{REPLACER_LT}")
+                .Replace("&gt;", "{REPLACER_GT}");
+            File.WriteAllText(tempFileProduct, productText);
+            return tempFileProduct;
         }
     }
 }
