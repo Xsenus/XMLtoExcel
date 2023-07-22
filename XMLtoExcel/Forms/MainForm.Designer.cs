@@ -31,13 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.txtPath = new System.Windows.Forms.TextBox();
             this.btnSelect = new System.Windows.Forms.Button();
-            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.labelName = new System.Windows.Forms.Label();
+            this.labelNameExcelStock = new System.Windows.Forms.Label();
             this.lblPath = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
-            this.listView = new System.Windows.Forms.ListView();
+            this.listViewExcelStock = new System.Windows.Forms.ListView();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.memoOut = new System.Windows.Forms.RichTextBox();
+            this.memoOutExcelStock = new System.Windows.Forms.RichTextBox();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.btnMenuFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,139 +46,129 @@
             this.checkIsDeleteColumnNumber = new System.Windows.Forms.CheckBox();
             this.txtStock = new System.Windows.Forms.TextBox();
             this.lblStock = new System.Windows.Forms.Label();
-            this.tableLayoutPanel.SuspendLayout();
+            this.panelControl = new System.Windows.Forms.Panel();
+            this.txtPercentExcelO = new System.Windows.Forms.TextBox();
+            this.txtAddNewPriceExcelO = new System.Windows.Forms.TextBox();
+            this.txtAddCurrentPriceExcelO = new System.Windows.Forms.TextBox();
+            this.txtCurrentPriceExcelO = new System.Windows.Forms.TextBox();
+            this.txtArticuleExcelO = new System.Windows.Forms.TextBox();
+            this.label1labelNameExcelO = new System.Windows.Forms.Label();
+            this.memoOutExcelO = new System.Windows.Forms.RichTextBox();
+            this.listViewExcelO = new System.Windows.Forms.ListView();
+            this.txtPercentExcelY = new System.Windows.Forms.TextBox();
+            this.txtAddNewPriceExcelY = new System.Windows.Forms.TextBox();
+            this.txtAddCurrentPriceExcelY = new System.Windows.Forms.TextBox();
+            this.txtCurrentPriceExcelY = new System.Windows.Forms.TextBox();
+            this.txtArticuleExcelY = new System.Windows.Forms.TextBox();
+            this.labelNameExcelY = new System.Windows.Forms.Label();
+            this.memoOutExcelY = new System.Windows.Forms.RichTextBox();
+            this.listViewExcelY = new System.Windows.Forms.ListView();
             this.menuStrip.SuspendLayout();
+            this.panelControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtPath
             // 
-            this.txtPath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtPath.Location = new System.Drawing.Point(123, 7);
-            this.txtPath.Margin = new System.Windows.Forms.Padding(2);
-            this.txtPath.MinimumSize = new System.Drawing.Size(300, 4);
+            this.txtPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPath.Location = new System.Drawing.Point(125, 120);
+            this.txtPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtPath.MinimumSize = new System.Drawing.Size(399, 4);
             this.txtPath.Multiline = true;
             this.txtPath.Name = "txtPath";
-            this.txtPath.Size = new System.Drawing.Size(344, 30);
+            this.txtPath.Size = new System.Drawing.Size(644, 45);
             this.txtPath.TabIndex = 0;
             // 
             // btnSelect
             // 
-            this.btnSelect.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSelect.Location = new System.Drawing.Point(471, 7);
-            this.btnSelect.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSelect.Location = new System.Drawing.Point(775, 120);
+            this.btnSelect.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSelect.Name = "btnSelect";
-            this.btnSelect.Size = new System.Drawing.Size(306, 30);
+            this.btnSelect.Size = new System.Drawing.Size(45, 45);
             this.btnSelect.TabIndex = 2;
             this.btnSelect.Text = "+";
             this.btnSelect.UseVisualStyleBackColor = true;
             this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
             // 
-            // tableLayoutPanel
+            // labelNameExcelStock
             // 
-            this.tableLayoutPanel.ColumnCount = 3;
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel.Controls.Add(this.labelName, 0, 1);
-            this.tableLayoutPanel.Controls.Add(this.lblPath, 0, 0);
-            this.tableLayoutPanel.Controls.Add(this.txtPath, 1, 0);
-            this.tableLayoutPanel.Controls.Add(this.btnStart, 1, 2);
-            this.tableLayoutPanel.Controls.Add(this.listView, 1, 1);
-            this.tableLayoutPanel.Controls.Add(this.btnSelect, 2, 0);
-            this.tableLayoutPanel.Controls.Add(this.btnCancel, 2, 2);
-            this.tableLayoutPanel.Controls.Add(this.memoOut, 2, 1);
-            this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel.Location = new System.Drawing.Point(0, 93);
-            this.tableLayoutPanel.Margin = new System.Windows.Forms.Padding(5);
-            this.tableLayoutPanel.Name = "tableLayoutPanel";
-            this.tableLayoutPanel.Padding = new System.Windows.Forms.Padding(5);
-            this.tableLayoutPanel.RowCount = 3;
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(784, 238);
-            this.tableLayoutPanel.TabIndex = 4;
-            // 
-            // labelName
-            // 
-            this.labelName.AutoSize = true;
-            this.labelName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelName.Location = new System.Drawing.Point(7, 39);
-            this.labelName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(112, 159);
-            this.labelName.TabIndex = 6;
-            this.labelName.Text = "Excel:";
-            this.labelName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelNameExcelStock.AutoSize = true;
+            this.labelNameExcelStock.Location = new System.Drawing.Point(12, 175);
+            this.labelNameExcelStock.Name = "labelNameExcelStock";
+            this.labelNameExcelStock.Size = new System.Drawing.Size(86, 16);
+            this.labelNameExcelStock.TabIndex = 6;
+            this.labelNameExcelStock.Text = "Excel (stock):";
+            this.labelNameExcelStock.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblPath
             // 
             this.lblPath.AutoSize = true;
-            this.lblPath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblPath.Location = new System.Drawing.Point(7, 5);
-            this.lblPath.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblPath.Location = new System.Drawing.Point(60, 123);
             this.lblPath.Name = "lblPath";
-            this.lblPath.Size = new System.Drawing.Size(112, 34);
+            this.lblPath.Size = new System.Drawing.Size(36, 16);
             this.lblPath.TabIndex = 5;
             this.lblPath.Text = "XML:";
             this.lblPath.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnStart
             // 
-            this.btnStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStart.Location = new System.Drawing.Point(123, 200);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(2);
+            this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStart.Location = new System.Drawing.Point(614, 543);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(344, 31);
+            this.btnStart.Size = new System.Drawing.Size(100, 40);
             this.btnStart.TabIndex = 7;
             this.btnStart.Text = "Старт";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
-            // listView
+            // listViewExcelStock
             // 
-            this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView.HideSelection = false;
-            this.listView.Location = new System.Drawing.Point(124, 42);
-            this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(342, 153);
-            this.listView.TabIndex = 9;
-            this.listView.UseCompatibleStateImageBehavior = false;
-            this.listView.View = System.Windows.Forms.View.List;
-            this.listView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listView_MouseUp);
+            this.listViewExcelStock.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewExcelStock.HideSelection = false;
+            this.listViewExcelStock.Location = new System.Drawing.Point(125, 173);
+            this.listViewExcelStock.Margin = new System.Windows.Forms.Padding(4);
+            this.listViewExcelStock.Name = "listViewExcelStock";
+            this.listViewExcelStock.Size = new System.Drawing.Size(399, 116);
+            this.listViewExcelStock.TabIndex = 9;
+            this.listViewExcelStock.UseCompatibleStateImageBehavior = false;
+            this.listViewExcelStock.View = System.Windows.Forms.View.List;
+            this.listViewExcelStock.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listViewExcelStock_MouseUp);
             // 
             // btnCancel
             // 
-            this.btnCancel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCancel.Location = new System.Drawing.Point(471, 200);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.Location = new System.Drawing.Point(720, 543);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(306, 31);
+            this.btnCancel.Size = new System.Drawing.Size(100, 40);
             this.btnCancel.TabIndex = 8;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // memoOut
+            // memoOutExcelStock
             // 
-            this.memoOut.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.memoOut.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.memoOut.Location = new System.Drawing.Point(474, 44);
-            this.memoOut.Margin = new System.Windows.Forms.Padding(5);
-            this.memoOut.Name = "memoOut";
-            this.memoOut.ReadOnly = true;
-            this.memoOut.Size = new System.Drawing.Size(300, 149);
-            this.memoOut.TabIndex = 10;
-            this.memoOut.Text = "";
+            this.memoOutExcelStock.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.memoOutExcelStock.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.memoOutExcelStock.Location = new System.Drawing.Point(535, 173);
+            this.memoOutExcelStock.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.memoOutExcelStock.Name = "memoOutExcelStock";
+            this.memoOutExcelStock.ReadOnly = true;
+            this.memoOutExcelStock.Size = new System.Drawing.Size(285, 114);
+            this.memoOutExcelStock.TabIndex = 10;
+            this.memoOutExcelStock.Text = "";
             // 
             // progressBar
             // 
             this.progressBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBar.Location = new System.Drawing.Point(0, 331);
-            this.progressBar.Margin = new System.Windows.Forms.Padding(5);
-            this.progressBar.MaximumSize = new System.Drawing.Size(0, 30);
+            this.progressBar.Location = new System.Drawing.Point(0, 591);
+            this.progressBar.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.progressBar.MaximumSize = new System.Drawing.Size(0, 37);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(784, 30);
+            this.progressBar.Size = new System.Drawing.Size(832, 37);
             this.progressBar.TabIndex = 11;
             this.progressBar.Tag = "";
             // 
@@ -190,8 +179,8 @@
             this.btnMenuFile});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip.Size = new System.Drawing.Size(784, 24);
+            this.menuStrip.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip.Size = new System.Drawing.Size(832, 28);
             this.menuStrip.TabIndex = 12;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -200,13 +189,13 @@
             this.btnMenuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnMenuLogger});
             this.btnMenuFile.Name = "btnMenuFile";
-            this.btnMenuFile.Size = new System.Drawing.Size(48, 20);
+            this.btnMenuFile.Size = new System.Drawing.Size(59, 24);
             this.btnMenuFile.Text = "Файл";
             // 
             // btnMenuLogger
             // 
             this.btnMenuLogger.Name = "btnMenuLogger";
-            this.btnMenuLogger.Size = new System.Drawing.Size(123, 22);
+            this.btnMenuLogger.Size = new System.Drawing.Size(153, 26);
             this.btnMenuLogger.Text = "События";
             this.btnMenuLogger.Click += new System.EventHandler(this.btnMenuLogger_Click);
             // 
@@ -214,11 +203,11 @@
             // 
             this.checkIsInterop.AutoSize = true;
             this.checkIsInterop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkIsInterop.Location = new System.Drawing.Point(0, 47);
-            this.checkIsInterop.Margin = new System.Windows.Forms.Padding(5);
+            this.checkIsInterop.Location = new System.Drawing.Point(0, 56);
+            this.checkIsInterop.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.checkIsInterop.Name = "checkIsInterop";
-            this.checkIsInterop.Padding = new System.Windows.Forms.Padding(5, 3, 5, 3);
-            this.checkIsInterop.Size = new System.Drawing.Size(784, 23);
+            this.checkIsInterop.Padding = new System.Windows.Forms.Padding(7, 4, 7, 4);
+            this.checkIsInterop.Size = new System.Drawing.Size(832, 28);
             this.checkIsInterop.TabIndex = 13;
             this.checkIsInterop.Text = "Использовать Microsoft.Office.Interop.Excel";
             this.checkIsInterop.UseVisualStyleBackColor = true;
@@ -230,11 +219,11 @@
             this.checkIsEpplus.Checked = true;
             this.checkIsEpplus.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkIsEpplus.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkIsEpplus.Location = new System.Drawing.Point(0, 24);
-            this.checkIsEpplus.Margin = new System.Windows.Forms.Padding(5);
+            this.checkIsEpplus.Location = new System.Drawing.Point(0, 28);
+            this.checkIsEpplus.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.checkIsEpplus.Name = "checkIsEpplus";
-            this.checkIsEpplus.Padding = new System.Windows.Forms.Padding(5, 3, 5, 3);
-            this.checkIsEpplus.Size = new System.Drawing.Size(784, 23);
+            this.checkIsEpplus.Padding = new System.Windows.Forms.Padding(7, 4, 7, 4);
+            this.checkIsEpplus.Size = new System.Drawing.Size(832, 28);
             this.checkIsEpplus.TabIndex = 14;
             this.checkIsEpplus.Text = "Использовать EPPlus";
             this.checkIsEpplus.UseVisualStyleBackColor = true;
@@ -246,55 +235,242 @@
             this.checkIsDeleteColumnNumber.Checked = true;
             this.checkIsDeleteColumnNumber.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkIsDeleteColumnNumber.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkIsDeleteColumnNumber.Location = new System.Drawing.Point(0, 70);
-            this.checkIsDeleteColumnNumber.Margin = new System.Windows.Forms.Padding(5);
+            this.checkIsDeleteColumnNumber.Location = new System.Drawing.Point(0, 84);
+            this.checkIsDeleteColumnNumber.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.checkIsDeleteColumnNumber.Name = "checkIsDeleteColumnNumber";
-            this.checkIsDeleteColumnNumber.Padding = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            this.checkIsDeleteColumnNumber.Padding = new System.Windows.Forms.Padding(7, 4, 7, 4);
             this.checkIsDeleteColumnNumber.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.checkIsDeleteColumnNumber.Size = new System.Drawing.Size(784, 23);
+            this.checkIsDeleteColumnNumber.Size = new System.Drawing.Size(832, 28);
             this.checkIsDeleteColumnNumber.TabIndex = 15;
             this.checkIsDeleteColumnNumber.Text = "Удаление колонки с артикулом";
             this.checkIsDeleteColumnNumber.UseVisualStyleBackColor = true;
             // 
             // txtStock
             // 
-            this.txtStock.Location = new System.Drawing.Point(677, 27);
+            this.txtStock.Location = new System.Drawing.Point(700, 33);
+            this.txtStock.Margin = new System.Windows.Forms.Padding(4);
             this.txtStock.Name = "txtStock";
-            this.txtStock.Size = new System.Drawing.Size(100, 20);
+            this.txtStock.Size = new System.Drawing.Size(120, 22);
             this.txtStock.TabIndex = 16;
             // 
             // lblStock
             // 
             this.lblStock.AutoSize = true;
-            this.lblStock.Location = new System.Drawing.Point(449, 30);
+            this.lblStock.Location = new System.Drawing.Point(400, 37);
+            this.lblStock.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStock.Name = "lblStock";
-            this.lblStock.Size = new System.Drawing.Size(222, 13);
+            this.lblStock.Size = new System.Drawing.Size(281, 16);
             this.lblStock.TabIndex = 17;
             this.lblStock.Text = "Значение остатков (равное и меньше) в 0:";
             // 
+            // panelControl
+            // 
+            this.panelControl.Controls.Add(this.txtPercentExcelO);
+            this.panelControl.Controls.Add(this.txtAddNewPriceExcelO);
+            this.panelControl.Controls.Add(this.txtAddCurrentPriceExcelO);
+            this.panelControl.Controls.Add(this.txtCurrentPriceExcelO);
+            this.panelControl.Controls.Add(this.txtArticuleExcelO);
+            this.panelControl.Controls.Add(this.label1labelNameExcelO);
+            this.panelControl.Controls.Add(this.memoOutExcelO);
+            this.panelControl.Controls.Add(this.listViewExcelO);
+            this.panelControl.Controls.Add(this.txtPercentExcelY);
+            this.panelControl.Controls.Add(this.txtAddNewPriceExcelY);
+            this.panelControl.Controls.Add(this.txtAddCurrentPriceExcelY);
+            this.panelControl.Controls.Add(this.txtCurrentPriceExcelY);
+            this.panelControl.Controls.Add(this.txtArticuleExcelY);
+            this.panelControl.Controls.Add(this.labelNameExcelY);
+            this.panelControl.Controls.Add(this.memoOutExcelY);
+            this.panelControl.Controls.Add(this.listViewExcelY);
+            this.panelControl.Controls.Add(this.lblPath);
+            this.panelControl.Controls.Add(this.labelNameExcelStock);
+            this.panelControl.Controls.Add(this.txtPath);
+            this.panelControl.Controls.Add(this.btnStart);
+            this.panelControl.Controls.Add(this.btnSelect);
+            this.panelControl.Controls.Add(this.btnCancel);
+            this.panelControl.Controls.Add(this.memoOutExcelStock);
+            this.panelControl.Controls.Add(this.listViewExcelStock);
+            this.panelControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelControl.Location = new System.Drawing.Point(0, 0);
+            this.panelControl.Name = "panelControl";
+            this.panelControl.Size = new System.Drawing.Size(832, 628);
+            this.panelControl.TabIndex = 18;
+            // 
+            // txtPercentExcelO
+            // 
+            this.txtPercentExcelO.Location = new System.Drawing.Point(449, 512);
+            this.txtPercentExcelO.Name = "txtPercentExcelO";
+            this.txtPercentExcelO.Size = new System.Drawing.Size(75, 22);
+            this.txtPercentExcelO.TabIndex = 31;
+            this.txtPercentExcelO.Text = "% (+/-)";
+            // 
+            // txtAddNewPriceExcelO
+            // 
+            this.txtAddNewPriceExcelO.Location = new System.Drawing.Point(368, 512);
+            this.txtAddNewPriceExcelO.Name = "txtAddNewPriceExcelO";
+            this.txtAddNewPriceExcelO.Size = new System.Drawing.Size(75, 22);
+            this.txtAddNewPriceExcelO.TabIndex = 30;
+            this.txtAddNewPriceExcelO.Text = "Ст.нов.цена";
+            // 
+            // txtAddCurrentPriceExcelO
+            // 
+            this.txtAddCurrentPriceExcelO.Location = new System.Drawing.Point(287, 512);
+            this.txtAddCurrentPriceExcelO.Name = "txtAddCurrentPriceExcelO";
+            this.txtAddCurrentPriceExcelO.Size = new System.Drawing.Size(75, 22);
+            this.txtAddCurrentPriceExcelO.TabIndex = 29;
+            this.txtAddCurrentPriceExcelO.Text = "Ст.тек.цена";
+            // 
+            // txtCurrentPriceExcelO
+            // 
+            this.txtCurrentPriceExcelO.Location = new System.Drawing.Point(206, 512);
+            this.txtCurrentPriceExcelO.Name = "txtCurrentPriceExcelO";
+            this.txtCurrentPriceExcelO.Size = new System.Drawing.Size(75, 22);
+            this.txtCurrentPriceExcelO.TabIndex = 28;
+            this.txtCurrentPriceExcelO.Text = "Тек.цена";
+            // 
+            // txtArticuleExcelO
+            // 
+            this.txtArticuleExcelO.Location = new System.Drawing.Point(125, 512);
+            this.txtArticuleExcelO.Name = "txtArticuleExcelO";
+            this.txtArticuleExcelO.Size = new System.Drawing.Size(75, 22);
+            this.txtArticuleExcelO.TabIndex = 27;
+            this.txtArticuleExcelO.Text = "Артикул";
+            // 
+            // label1labelNameExcelO
+            // 
+            this.label1labelNameExcelO.AutoSize = true;
+            this.label1labelNameExcelO.Location = new System.Drawing.Point(12, 422);
+            this.label1labelNameExcelO.Name = "label1labelNameExcelO";
+            this.label1labelNameExcelO.Size = new System.Drawing.Size(97, 16);
+            this.label1labelNameExcelO.TabIndex = 24;
+            this.label1labelNameExcelO.Text = "Excel (Price Y):";
+            this.label1labelNameExcelO.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // memoOutExcelO
+            // 
+            this.memoOutExcelO.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.memoOutExcelO.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.memoOutExcelO.Location = new System.Drawing.Point(535, 420);
+            this.memoOutExcelO.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.memoOutExcelO.Name = "memoOutExcelO";
+            this.memoOutExcelO.ReadOnly = true;
+            this.memoOutExcelO.Size = new System.Drawing.Size(285, 114);
+            this.memoOutExcelO.TabIndex = 26;
+            this.memoOutExcelO.Text = "";
+            // 
+            // listViewExcelO
+            // 
+            this.listViewExcelO.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewExcelO.HideSelection = false;
+            this.listViewExcelO.Location = new System.Drawing.Point(125, 420);
+            this.listViewExcelO.Margin = new System.Windows.Forms.Padding(4);
+            this.listViewExcelO.Name = "listViewExcelO";
+            this.listViewExcelO.Size = new System.Drawing.Size(399, 85);
+            this.listViewExcelO.TabIndex = 25;
+            this.listViewExcelO.UseCompatibleStateImageBehavior = false;
+            this.listViewExcelO.View = System.Windows.Forms.View.List;
+            this.listViewExcelO.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listViewExcelO_MouseUp);
+            // 
+            // txtPercentExcelY
+            // 
+            this.txtPercentExcelY.Location = new System.Drawing.Point(449, 391);
+            this.txtPercentExcelY.Name = "txtPercentExcelY";
+            this.txtPercentExcelY.Size = new System.Drawing.Size(75, 22);
+            this.txtPercentExcelY.TabIndex = 23;
+            this.txtPercentExcelY.Text = "% (+/-)";
+            // 
+            // txtAddNewPriceExcelY
+            // 
+            this.txtAddNewPriceExcelY.Location = new System.Drawing.Point(368, 391);
+            this.txtAddNewPriceExcelY.Name = "txtAddNewPriceExcelY";
+            this.txtAddNewPriceExcelY.Size = new System.Drawing.Size(75, 22);
+            this.txtAddNewPriceExcelY.TabIndex = 22;
+            this.txtAddNewPriceExcelY.Text = "Ст.нов.цена";
+            // 
+            // txtAddCurrentPriceExcelY
+            // 
+            this.txtAddCurrentPriceExcelY.Location = new System.Drawing.Point(287, 391);
+            this.txtAddCurrentPriceExcelY.Name = "txtAddCurrentPriceExcelY";
+            this.txtAddCurrentPriceExcelY.Size = new System.Drawing.Size(75, 22);
+            this.txtAddCurrentPriceExcelY.TabIndex = 21;
+            this.txtAddCurrentPriceExcelY.Text = "Ст.тек.цена";
+            // 
+            // txtCurrentPriceExcelY
+            // 
+            this.txtCurrentPriceExcelY.Location = new System.Drawing.Point(206, 391);
+            this.txtCurrentPriceExcelY.Name = "txtCurrentPriceExcelY";
+            this.txtCurrentPriceExcelY.Size = new System.Drawing.Size(75, 22);
+            this.txtCurrentPriceExcelY.TabIndex = 20;
+            this.txtCurrentPriceExcelY.Text = "Тек.цена";
+            // 
+            // txtArticuleExcelY
+            // 
+            this.txtArticuleExcelY.Location = new System.Drawing.Point(125, 391);
+            this.txtArticuleExcelY.Name = "txtArticuleExcelY";
+            this.txtArticuleExcelY.Size = new System.Drawing.Size(75, 22);
+            this.txtArticuleExcelY.TabIndex = 19;
+            this.txtArticuleExcelY.Text = "Артикул";
+            // 
+            // labelNameExcelY
+            // 
+            this.labelNameExcelY.AutoSize = true;
+            this.labelNameExcelY.Location = new System.Drawing.Point(12, 301);
+            this.labelNameExcelY.Name = "labelNameExcelY";
+            this.labelNameExcelY.Size = new System.Drawing.Size(97, 16);
+            this.labelNameExcelY.TabIndex = 11;
+            this.labelNameExcelY.Text = "Excel (Price Y):";
+            this.labelNameExcelY.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // memoOutExcelY
+            // 
+            this.memoOutExcelY.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.memoOutExcelY.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.memoOutExcelY.Location = new System.Drawing.Point(535, 299);
+            this.memoOutExcelY.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.memoOutExcelY.Name = "memoOutExcelY";
+            this.memoOutExcelY.ReadOnly = true;
+            this.memoOutExcelY.Size = new System.Drawing.Size(285, 114);
+            this.memoOutExcelY.TabIndex = 13;
+            this.memoOutExcelY.Text = "";
+            // 
+            // listViewExcelY
+            // 
+            this.listViewExcelY.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewExcelY.HideSelection = false;
+            this.listViewExcelY.Location = new System.Drawing.Point(125, 299);
+            this.listViewExcelY.Margin = new System.Windows.Forms.Padding(4);
+            this.listViewExcelY.Name = "listViewExcelY";
+            this.listViewExcelY.Size = new System.Drawing.Size(399, 85);
+            this.listViewExcelY.TabIndex = 12;
+            this.listViewExcelY.UseCompatibleStateImageBehavior = false;
+            this.listViewExcelY.View = System.Windows.Forms.View.List;
+            this.listViewExcelY.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listViewExcelY_MouseUp);
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 361);
+            this.ClientSize = new System.Drawing.Size(832, 628);
             this.Controls.Add(this.lblStock);
             this.Controls.Add(this.txtStock);
-            this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.checkIsDeleteColumnNumber);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.checkIsInterop);
             this.Controls.Add(this.checkIsEpplus);
             this.Controls.Add(this.menuStrip);
+            this.Controls.Add(this.panelControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.MinimumSize = new System.Drawing.Size(800, 400);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MinimumSize = new System.Drawing.Size(850, 675);
             this.Name = "MainForm";
             this.Text = "XML TO EXCEL";
-            this.tableLayoutPanel.ResumeLayout(false);
-            this.tableLayoutPanel.PerformLayout();
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            this.panelControl.ResumeLayout(false);
+            this.panelControl.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -304,12 +480,11 @@
 
         private System.Windows.Forms.TextBox txtPath;
         private System.Windows.Forms.Button btnSelect;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
-        private System.Windows.Forms.Label labelName;
+        private System.Windows.Forms.Label labelNameExcelStock;
         private System.Windows.Forms.Label lblPath;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.ListView listView;
+        private System.Windows.Forms.ListView listViewExcelStock;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem btnMenuFile;
@@ -317,9 +492,26 @@
         private System.Windows.Forms.CheckBox checkIsInterop;
         private System.Windows.Forms.CheckBox checkIsEpplus;
         private System.Windows.Forms.CheckBox checkIsDeleteColumnNumber;
-        private System.Windows.Forms.RichTextBox memoOut;
+        private System.Windows.Forms.RichTextBox memoOutExcelStock;
         private System.Windows.Forms.TextBox txtStock;
         private System.Windows.Forms.Label lblStock;
+        private System.Windows.Forms.Panel panelControl;
+        private System.Windows.Forms.Label labelNameExcelY;
+        private System.Windows.Forms.RichTextBox memoOutExcelY;
+        private System.Windows.Forms.ListView listViewExcelY;
+        private System.Windows.Forms.TextBox txtPercentExcelY;
+        private System.Windows.Forms.TextBox txtAddNewPriceExcelY;
+        private System.Windows.Forms.TextBox txtAddCurrentPriceExcelY;
+        private System.Windows.Forms.TextBox txtCurrentPriceExcelY;
+        private System.Windows.Forms.TextBox txtArticuleExcelY;
+        private System.Windows.Forms.TextBox txtPercentExcelO;
+        private System.Windows.Forms.TextBox txtAddNewPriceExcelO;
+        private System.Windows.Forms.TextBox txtAddCurrentPriceExcelO;
+        private System.Windows.Forms.TextBox txtCurrentPriceExcelO;
+        private System.Windows.Forms.TextBox txtArticuleExcelO;
+        private System.Windows.Forms.Label label1labelNameExcelO;
+        private System.Windows.Forms.RichTextBox memoOutExcelO;
+        private System.Windows.Forms.ListView listViewExcelO;
     }
 }
 

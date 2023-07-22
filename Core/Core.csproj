@@ -50,6 +50,9 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1001\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,8 +60,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ExcelController.cs" />
-    <Compile Include="Controllers\LogerController.cs" />
+    <Compile Include="Controllers\LoggerController.cs" />
     <Compile Include="Controllers\OriginalController.cs" />
+    <Compile Include="Controllers\SettingController.cs" />
+    <Compile Include="Models\ExcelSetting.cs" />
     <Compile Include="Models\Original\Arrival.cs" />
     <Compile Include="Models\Original\DateArrival.cs" />
     <Compile Include="Models\Original\TextObj.cs" />
@@ -84,6 +89,7 @@
     <Compile Include="Models\Original\Weight.cs" />
     <Compile Include="Models\Original\WeightNetto.cs" />
     <Compile Include="Models\Original\Width.cs" />
+    <Compile Include="Models\Setting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

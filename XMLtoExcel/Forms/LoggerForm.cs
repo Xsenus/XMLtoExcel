@@ -13,7 +13,7 @@ namespace XMLtoExcel.Forms
 
         private void LoggerForm_Load(object sender, EventArgs e)
         {
-            memoLogger.Text = LogerController.GetMessage();
+            memoLogger.Text = LoggerController.GetMessage();
         }
     }
 }
