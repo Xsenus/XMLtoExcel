@@ -1,5 +1,4 @@
 ﻿using Core.Models.Original;
-using Microsoft.Office.Interop.Excel;
 using OfficeOpenXml;
 using System;
 using System.Diagnostics;
@@ -9,7 +8,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Core.Controllers
 {
-    public class ExcelWriter : IDisposable
+    public class ExcelWriterStock : IDisposable
     {
         private bool _isEpPlus;
 
@@ -36,7 +35,7 @@ namespace Core.Controllers
         public delegate void LogEventHandler(string message);
         public event LogEventHandler Log;
 
-        public ExcelWriter(string path, 
+        public ExcelWriterStock(string path, 
             string sheetName = "Остатки", 
             int columnEditNumber = 5, 
             int columnDeleteNumber = 6, 

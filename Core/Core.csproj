@@ -59,7 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\ExcelController.cs" />
+    <Compile Include="Controllers\ExcelWriterPrice.cs" />
+    <Compile Include="Controllers\ExcelWriterStock.cs" />
     <Compile Include="Controllers\LoggerController.cs" />
     <Compile Include="Controllers\OriginalController.cs" />
     <Compile Include="Controllers\SettingController.cs" />

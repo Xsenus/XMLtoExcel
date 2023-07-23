@@ -18,7 +18,15 @@ namespace XMLtoExcel.Forms
 
         public MainForm()
         {
-            InitializeComponent();             
+            InitializeComponent();
+
+//#if DEBUG
+//            txtPath.Text = "C:\\Users\\ilel\\Desktop\\TEST\\30992026\\1010.xml";
+
+//            _excelPathStock.Add(@"C:\Users\ilel\Desktop\TEST\30992026\ТЕСТ-stock.xlsx");
+//            _excelPathY.Add(@"C:\Users\ilel\Desktop\TEST\30992026\Пример1.xlsx");
+//            _excelPathO.Add(@"C:\Users\ilel\Desktop\TEST\30992026\Пример1.xlsx");
+//#endif
         }
         
         private void btnSelect_Click(object sender, EventArgs e)
@@ -119,12 +127,124 @@ namespace XMLtoExcel.Forms
                 return;
             }
 
+            var stock = GetStock();
+            var isDeleteColumnNumber = checkIsDeleteColumnNumber.Checked;
+            var query = GetXMLData(path);
+
+            if (query is null)
+            {
+                MessageBox.Show("Не удалось получить информации из XML файла.", "Информациооное сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            SaveSetting();
+            ClearLableOut();
+
+            TreatmentStock(stock, isDeleteColumnNumber, query);
+            TreatmentExcel(query, _excelPathY, SettingController.Get().ExcelSettingY, memoOutExcelY);
+            TreatmentExcel(query, _excelPathO, SettingController.Get().ExcelSettingO, memoOutExcelO);
+
+            MessageBox.Show("Все операции завершены.", "Информациооное сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private bool TreatmentExcel(Data query, List<string> list, ExcelSetting excelSetting, RichTextBox richTextBox)
+        {
+            var result = true;
+            foreach (var excelPath in list)
+            {
+                try
+                {
+                    LoggerController.AddMessage($"Обработка EXCEL: {excelPath}");
+
+                    var excelWriter = new ExcelWriterPrice(excelPath, excelSetting);
+                    excelWriter.Writer += ExcelWriter_Writer;
+                    excelWriter.Log += ExcelWriter_Log;
+
+                    excelWriter.StartWriterEPPlus(query);
+
+                    excelWriter.Writer -= ExcelWriter_Writer;
+                    excelWriter.Log -= ExcelWriter_Log;
+
+                    var fileName = GetFileName(excelPath);
+                    richTextBox.Text += $"Файл: {fileName} [{excelWriter.Total}]{Environment.NewLine}" +
+                        $"Общее количесвто: {excelWriter.Total}{Environment.NewLine}" +
+                        $"Замены: {excelWriter.CountSubstitutions}{Environment.NewLine}" +
+                        $"Нет цены: {excelWriter.CountNoPrice}{Environment.NewLine}" +
+                        $"Текущая цена меньше новой: {excelWriter.CountCurrentPriceLessThanNew}{Environment.NewLine}" +
+                        $"Текущая цена больше новой: {excelWriter.CountCurrentPriceHigherThanNew}{Environment.NewLine}" +
+                        $"Применен %: {excelWriter.CountPercentageApplied}{Environment.NewLine}" +
+                        $"--------------------{Environment.NewLine}";
+                    richTextBox.Refresh();
+                }
+                catch (Exception ex)
+                {
+                    ExcelWriter_Log(ex.Message);
+                    MessageBox.Show(ex.Message, "Сообщение об операци", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    result = false;
+                }
+            }
+
+            progressBar.Value = 0;
+            return result;
+        }
+
+
+        private bool TreatmentStock(decimal? stock, bool isDeleteColumnNumber, Data query)
+        {
+            var result = true;
+            foreach (var excelPath in _excelPathStock)
+            {
+                try
+                {
+                    LoggerController.AddMessage($"Обработка EXCEL: {excelPath}");
+                    using (var excelWriter = new ExcelWriterStock(excelPath, isDeleteColumnNumber: isDeleteColumnNumber))
+                    {
+                        excelWriter.Writer += ExcelWriter_Writer;
+                        excelWriter.Log += ExcelWriter_Log;
+                        if (checkIsEpplus.Checked)
+                        {
+                            excelWriter.StartWriterEPPlus(query, stock);
+                        }
+                        else
+                        {
+                            excelWriter.StartWriter(query, stock);
+                        }
+                        excelWriter.Writer -= ExcelWriter_Writer;
+                        excelWriter.Log -= ExcelWriter_Log;
+
+                        var fileName = GetFileName(excelPath);
+                        memoOutExcelStock.Text += $"Файл: {fileName} [{excelWriter.Count}]{Environment.NewLine}" +
+                            $"Замены: {excelWriter.CountSubstitutions}{Environment.NewLine}" +
+                            $"Замены на 0: {excelWriter.CountZeroSubstitutions}{Environment.NewLine}" +
+                            $"Значение остатков (равное и меньше): {excelWriter.CountZeroStockSubstitutions}{Environment.NewLine}" +
+                            $"--------------------{Environment.NewLine}";
+                        memoOutExcelStock.Refresh();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ExcelWriter_Log(ex.Message);
+                    result = false;
+                }
+            }
+
+            progressBar.Value = 0;
+            return result;
+        }
+
+        private decimal? GetStock()
+        {
             var stock = default(decimal?);
             if (decimal.TryParse(txtStock.Text?.Replace(".", ","), out decimal result))
             {
                 stock = result;
             }
 
+            return stock;
+        }
+
+        private Data GetXMLData(string path)
+        {            
             var query = default(Data);
             try
             {
@@ -135,52 +255,16 @@ namespace XMLtoExcel.Forms
             {
                 LoggerController.AddMessage($"{ex.Message}");
                 MessageBox.Show(ex.Message?.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return default;
             }
 
             if (query is null)
             {
                 MessageBox.Show("Укажите пути для файлов Excel", "Путь к файлам", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return default;
             }
 
-            var isDeleteColumnNumber = checkIsDeleteColumnNumber.Checked;
-
-            ClearLableOut();
-
-            foreach (var excelPath in _excelPathStock)
-            {
-                LoggerController.AddMessage($"Обработка EXCEL: {excelPath}");
-                using (var excelWriter = new ExcelWriter(excelPath, isDeleteColumnNumber: isDeleteColumnNumber))
-                {
-                    excelWriter.Writer += ExcelWriter_Writer;
-                    excelWriter.Log += ExcelWriter_Log;
-                    if (checkIsEpplus.Checked)
-                    {
-                        excelWriter.StartWriterEPPlus(query, stock);
-                    }
-                    else
-                    {
-                        excelWriter.StartWriter(query, stock);
-                    }
-                    excelWriter.Writer -= ExcelWriter_Writer;
-                    excelWriter.Log -= ExcelWriter_Log;
-                    
-                    var fileName = GetFileName(excelPath);
-                    memoOutExcelStock.Text += $"{Environment.NewLine}Файл: {fileName} [{excelWriter.Count}]{Environment.NewLine}" +
-                        $"Замены: {excelWriter.CountSubstitutions}{Environment.NewLine}" +
-                        $"Замены на 0: {excelWriter.CountZeroSubstitutions}{Environment.NewLine}" +
-                        $"Значение остатков (равное и меньше): {excelWriter.CountZeroStockSubstitutions}{Environment.NewLine}" +
-                        $"--------------------{Environment.NewLine}";
-                    memoOutExcelStock.Refresh();
-                }
-            }
-
-            progressBar.Value = 0;
-
-            SaveSetting();
-
-            MessageBox.Show("Операция успешно завершена", "OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return query;
         }
 
         private static string GetFileName(string excelPath)
@@ -199,6 +283,8 @@ namespace XMLtoExcel.Forms
         private void ClearLableOut()
         {
             memoOutExcelStock.Text = default(string);
+            memoOutExcelY.Text = default(string);
+            memoOutExcelO.Text = default(string);
         }
 
         private void ExcelWriter_Log(string message)
