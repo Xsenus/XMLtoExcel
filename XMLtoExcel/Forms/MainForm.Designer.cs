@@ -340,9 +340,9 @@
             this.label1labelNameExcelO.AutoSize = true;
             this.label1labelNameExcelO.Location = new System.Drawing.Point(12, 422);
             this.label1labelNameExcelO.Name = "label1labelNameExcelO";
-            this.label1labelNameExcelO.Size = new System.Drawing.Size(97, 16);
+            this.label1labelNameExcelO.Size = new System.Drawing.Size(98, 16);
             this.label1labelNameExcelO.TabIndex = 24;
-            this.label1labelNameExcelO.Text = "Excel (Price Y):";
+            this.label1labelNameExcelO.Text = "Excel (Price O):";
             this.label1labelNameExcelO.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // memoOutExcelO
