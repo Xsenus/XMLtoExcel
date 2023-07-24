@@ -66,6 +66,9 @@
             this.checkStock = new System.Windows.Forms.CheckBox();
             this.checkY = new System.Windows.Forms.CheckBox();
             this.checkO = new System.Windows.Forms.CheckBox();
+            this.txtListNameY = new System.Windows.Forms.TextBox();
+            this.txtListNameO = new System.Windows.Forms.TextBox();
+            this.txtListNameStock = new System.Windows.Forms.TextBox();
             this.menuStrip.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -183,7 +186,7 @@
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip.Size = new System.Drawing.Size(832, 28);
+            this.menuStrip.Size = new System.Drawing.Size(832, 30);
             this.menuStrip.TabIndex = 12;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -192,7 +195,7 @@
             this.btnMenuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnMenuLogger});
             this.btnMenuFile.Name = "btnMenuFile";
-            this.btnMenuFile.Size = new System.Drawing.Size(59, 24);
+            this.btnMenuFile.Size = new System.Drawing.Size(59, 26);
             this.btnMenuFile.Text = "Файл";
             // 
             // btnMenuLogger
@@ -206,7 +209,7 @@
             // 
             this.checkIsInterop.AutoSize = true;
             this.checkIsInterop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkIsInterop.Location = new System.Drawing.Point(0, 56);
+            this.checkIsInterop.Location = new System.Drawing.Point(0, 58);
             this.checkIsInterop.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.checkIsInterop.Name = "checkIsInterop";
             this.checkIsInterop.Padding = new System.Windows.Forms.Padding(7, 4, 7, 4);
@@ -222,7 +225,7 @@
             this.checkIsEpplus.Checked = true;
             this.checkIsEpplus.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkIsEpplus.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkIsEpplus.Location = new System.Drawing.Point(0, 28);
+            this.checkIsEpplus.Location = new System.Drawing.Point(0, 30);
             this.checkIsEpplus.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.checkIsEpplus.Name = "checkIsEpplus";
             this.checkIsEpplus.Padding = new System.Windows.Forms.Padding(7, 4, 7, 4);
@@ -238,7 +241,7 @@
             this.checkIsDeleteColumnNumber.Checked = true;
             this.checkIsDeleteColumnNumber.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkIsDeleteColumnNumber.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkIsDeleteColumnNumber.Location = new System.Drawing.Point(0, 84);
+            this.checkIsDeleteColumnNumber.Location = new System.Drawing.Point(0, 86);
             this.checkIsDeleteColumnNumber.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.checkIsDeleteColumnNumber.Name = "checkIsDeleteColumnNumber";
             this.checkIsDeleteColumnNumber.Padding = new System.Windows.Forms.Padding(7, 4, 7, 4);
@@ -268,6 +271,9 @@
             // 
             // panelControl
             // 
+            this.panelControl.Controls.Add(this.txtListNameStock);
+            this.panelControl.Controls.Add(this.txtListNameO);
+            this.panelControl.Controls.Add(this.txtListNameY);
             this.panelControl.Controls.Add(this.checkO);
             this.panelControl.Controls.Add(this.checkY);
             this.panelControl.Controls.Add(this.checkStock);
@@ -466,7 +472,7 @@
             // checkStock
             // 
             this.checkStock.AutoSize = true;
-            this.checkStock.Location = new System.Drawing.Point(78, 194);
+            this.checkStock.Location = new System.Drawing.Point(100, 222);
             this.checkStock.Name = "checkStock";
             this.checkStock.Size = new System.Drawing.Size(18, 17);
             this.checkStock.TabIndex = 32;
@@ -475,7 +481,7 @@
             // checkY
             // 
             this.checkY.AutoSize = true;
-            this.checkY.Location = new System.Drawing.Point(78, 320);
+            this.checkY.Location = new System.Drawing.Point(100, 348);
             this.checkY.Name = "checkY";
             this.checkY.Size = new System.Drawing.Size(18, 17);
             this.checkY.TabIndex = 33;
@@ -484,11 +490,35 @@
             // checkO
             // 
             this.checkO.AutoSize = true;
-            this.checkO.Location = new System.Drawing.Point(78, 441);
+            this.checkO.Location = new System.Drawing.Point(100, 469);
             this.checkO.Name = "checkO";
             this.checkO.Size = new System.Drawing.Size(18, 17);
             this.checkO.TabIndex = 34;
             this.checkO.UseVisualStyleBackColor = true;
+            // 
+            // txtListNameY
+            // 
+            this.txtListNameY.Location = new System.Drawing.Point(12, 320);
+            this.txtListNameY.Name = "txtListNameY";
+            this.txtListNameY.Size = new System.Drawing.Size(106, 22);
+            this.txtListNameY.TabIndex = 35;
+            this.txtListNameY.Enter += new System.EventHandler(this.txtListName_Enter);
+            // 
+            // txtListNameO
+            // 
+            this.txtListNameO.Location = new System.Drawing.Point(12, 441);
+            this.txtListNameO.Name = "txtListNameO";
+            this.txtListNameO.Size = new System.Drawing.Size(106, 22);
+            this.txtListNameO.TabIndex = 36;
+            this.txtListNameO.Enter += new System.EventHandler(this.txtListName_Enter);
+            // 
+            // txtListNameStock
+            // 
+            this.txtListNameStock.Location = new System.Drawing.Point(12, 194);
+            this.txtListNameStock.Name = "txtListNameStock";
+            this.txtListNameStock.Size = new System.Drawing.Size(106, 22);
+            this.txtListNameStock.TabIndex = 37;
+            this.txtListNameStock.Enter += new System.EventHandler(this.txtListName_Enter);
             // 
             // MainForm
             // 
@@ -558,6 +588,9 @@
         private System.Windows.Forms.CheckBox checkO;
         private System.Windows.Forms.CheckBox checkY;
         private System.Windows.Forms.CheckBox checkStock;
+        private System.Windows.Forms.TextBox txtListNameStock;
+        private System.Windows.Forms.TextBox txtListNameO;
+        private System.Windows.Forms.TextBox txtListNameY;
     }
 }
 

@@ -46,7 +46,7 @@ namespace Core.Controllers
                 foreach (var worksheet in package.Workbook.Worksheets)
                 {
                     Log?.Invoke($"Найдена страница: [{worksheet.Index}] {worksheet.Name}");
-                    if (worksheet.Name.Equals(_sheetName))
+                    if (worksheet.Name.Trim().Equals(_sheetName.Trim()))
                     {
                         Log?.Invoke($"Найдена необходимая страница: [{worksheet.Index}] {worksheet.Name}");
 

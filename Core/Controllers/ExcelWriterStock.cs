@@ -36,16 +36,25 @@ namespace Core.Controllers
         public event LogEventHandler Log;
 
         public ExcelWriterStock(string path, 
-            string sheetName = "Остатки", 
+            string sheetName = default, 
             int columnEditNumber = 5, 
             int columnDeleteNumber = 6, 
             bool isDeleteColumnNumber = false)
         {
             _path = path;
-            _sheetName = sheetName;
             _columnEditNumber = columnEditNumber;
             _columnDeleteNumber = columnDeleteNumber;
             _isDeleteColumnNumber = isDeleteColumnNumber;
+
+            if (string.IsNullOrWhiteSpace(sheetName))
+            {
+                _sheetName = "Остатки";
+            }
+            else
+            {
+                _sheetName = sheetName;
+            }
+
         }
         
         public void StartWriterEPPlus(Data data, decimal? stock = default)
@@ -59,7 +68,7 @@ namespace Core.Controllers
                 foreach (var worksheet in package.Workbook.Worksheets)
                 {
                     Log?.Invoke($"Найдена страница: [{worksheet.Index}] {worksheet.Name}");
-                    if (worksheet.Name.Equals(_sheetName))
+                    if (worksheet.Name.Trim().Equals(_sheetName.Trim()))
                     {
                         Log?.Invoke($"Найдена необходимая страница: [{worksheet.Index}] {worksheet.Name}");
 

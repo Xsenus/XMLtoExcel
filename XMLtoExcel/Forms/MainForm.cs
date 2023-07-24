@@ -151,23 +151,23 @@ namespace XMLtoExcel.Forms
 
             if (checkStock.Checked)
             {
-                TreatmentStock(stock, isDeleteColumnNumber, query);
+                TreatmentStock(stock, isDeleteColumnNumber, query, txtListNameStock.Text);
             }
 
             if (checkY.Checked)
             {
-                TreatmentExcel(query, _excelPathY, SettingController.Get().ExcelSettingY, memoOutExcelY);
+                TreatmentExcel(query, _excelPathY, SettingController.Get().ExcelSettingY, memoOutExcelY, txtListNameY.Text);
             }
 
             if (checkO.Checked)
             {
-                TreatmentExcel(query, _excelPathO, SettingController.Get().ExcelSettingO, memoOutExcelO);
+                TreatmentExcel(query, _excelPathO, SettingController.Get().ExcelSettingO, memoOutExcelO, txtListNameO.Text);
             }
 
             MessageBox.Show("Все операции завершены.", "Информациооное сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private bool TreatmentExcel(Data query, List<string> list, ExcelSetting excelSetting, RichTextBox richTextBox)
+        private bool TreatmentExcel(Data query, List<string> list, ExcelSetting excelSetting, RichTextBox richTextBox, string sheetName)
         {
             var result = true;
             foreach (var excelPath in list)
@@ -176,7 +176,17 @@ namespace XMLtoExcel.Forms
                 {
                     LoggerController.AddMessage($"Обработка EXCEL: {excelPath}");
 
-                    var excelWriter = new ExcelWriterPrice(excelPath, excelSetting);
+                    var excelWriter = default(ExcelWriterPrice);
+                    
+                    if (string.IsNullOrWhiteSpace(sheetName))
+                    {
+                        excelWriter = new ExcelWriterPrice(excelPath, excelSetting);
+                    }
+                    else
+                    {
+                        excelWriter = new ExcelWriterPrice(excelPath, excelSetting, sheetName);
+                    }
+
                     excelWriter.Writer += ExcelWriter_Writer;
                     excelWriter.Log += ExcelWriter_Log;
 
@@ -209,7 +219,7 @@ namespace XMLtoExcel.Forms
         }
 
 
-        private bool TreatmentStock(decimal? stock, bool isDeleteColumnNumber, Data query)
+        private bool TreatmentStock(decimal? stock, bool isDeleteColumnNumber, Data query, string sheetName)
         {
             var result = true;
             foreach (var excelPath in _excelPathStock)
@@ -217,7 +227,7 @@ namespace XMLtoExcel.Forms
                 try
                 {
                     LoggerController.AddMessage($"Обработка EXCEL: {excelPath}");
-                    using (var excelWriter = new ExcelWriterStock(excelPath, isDeleteColumnNumber: isDeleteColumnNumber))
+                    using (var excelWriter = new ExcelWriterStock(excelPath, isDeleteColumnNumber: isDeleteColumnNumber, sheetName: sheetName))
                     {
                         excelWriter.Writer += ExcelWriter_Writer;
                         excelWriter.Log += ExcelWriter_Log;
@@ -556,6 +566,15 @@ namespace XMLtoExcel.Forms
             if (sender is TextBox textBox)
             {
                 ShowToolTip(textBox, "Увеличить на % (+поднять, -снизить)");
+            }
+        }
+
+        private void txtListName_Enter(object sender, EventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                ShowToolTip(textBox, $"Поле для установки наименования листа обработки.{Environment.NewLine}" +
+                    $"Если пусто, то используются параметры по умолчанию.");
             }
         }
     }
