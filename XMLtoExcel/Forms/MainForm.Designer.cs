@@ -63,6 +63,9 @@
             this.labelNameExcelY = new System.Windows.Forms.Label();
             this.memoOutExcelY = new System.Windows.Forms.RichTextBox();
             this.listViewExcelY = new System.Windows.Forms.ListView();
+            this.checkStock = new System.Windows.Forms.CheckBox();
+            this.checkY = new System.Windows.Forms.CheckBox();
+            this.checkO = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -265,6 +268,9 @@
             // 
             // panelControl
             // 
+            this.panelControl.Controls.Add(this.checkO);
+            this.panelControl.Controls.Add(this.checkY);
+            this.panelControl.Controls.Add(this.checkStock);
             this.panelControl.Controls.Add(this.txtPercentExcelO);
             this.panelControl.Controls.Add(this.txtAddNewPriceExcelO);
             this.panelControl.Controls.Add(this.txtAddCurrentPriceExcelO);
@@ -457,6 +463,33 @@
             this.listViewExcelY.View = System.Windows.Forms.View.List;
             this.listViewExcelY.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listViewExcelY_MouseUp);
             // 
+            // checkStock
+            // 
+            this.checkStock.AutoSize = true;
+            this.checkStock.Location = new System.Drawing.Point(78, 194);
+            this.checkStock.Name = "checkStock";
+            this.checkStock.Size = new System.Drawing.Size(18, 17);
+            this.checkStock.TabIndex = 32;
+            this.checkStock.UseVisualStyleBackColor = true;
+            // 
+            // checkY
+            // 
+            this.checkY.AutoSize = true;
+            this.checkY.Location = new System.Drawing.Point(78, 320);
+            this.checkY.Name = "checkY";
+            this.checkY.Size = new System.Drawing.Size(18, 17);
+            this.checkY.TabIndex = 33;
+            this.checkY.UseVisualStyleBackColor = true;
+            // 
+            // checkO
+            // 
+            this.checkO.AutoSize = true;
+            this.checkO.Location = new System.Drawing.Point(78, 441);
+            this.checkO.Name = "checkO";
+            this.checkO.Size = new System.Drawing.Size(18, 17);
+            this.checkO.TabIndex = 34;
+            this.checkO.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -522,6 +555,9 @@
         private System.Windows.Forms.Label label1labelNameExcelO;
         private System.Windows.Forms.RichTextBox memoOutExcelO;
         private System.Windows.Forms.ListView listViewExcelO;
+        private System.Windows.Forms.CheckBox checkO;
+        private System.Windows.Forms.CheckBox checkY;
+        private System.Windows.Forms.CheckBox checkStock;
     }
 }
 

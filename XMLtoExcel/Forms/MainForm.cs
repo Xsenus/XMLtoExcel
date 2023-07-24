@@ -99,32 +99,41 @@ namespace XMLtoExcel.Forms
                 return;
             }
 
-            if (_excelPathStock.Count == 0)
+            if (checkStock.Checked)
             {
-                MessageBox.Show("Укажите пути для файлов Excel (stock)", "Путь к файлам", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
+                if (_excelPathStock.Count == 0)
+                {
+                    MessageBox.Show("Укажите пути для файлов Excel (stock)", "Путь к файлам", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
             }
 
-            if (_excelPathY.Count == 0)
+            if (checkY.Checked)
             {
-                MessageBox.Show("Укажите пути для файлов (Price Y)", "Путь к файлам", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
+                if (_excelPathY.Count == 0)
+                {
+                    MessageBox.Show("Укажите пути для файлов (Price Y)", "Путь к файлам", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                if (CheckExcelParamect(txtArticuleExcelY, txtCurrentPriceExcelY, txtAddCurrentPriceExcelY, txtAddNewPriceExcelY, txtPercentExcelY) is false)
+                {
+                    return;
+                }
             }
 
-            if (_excelPathO.Count == 0)
+            if (checkO.Checked)
             {
-                MessageBox.Show("Укажите пути для файлов (Price O)", "Путь к файлам", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+                if (_excelPathO.Count == 0)
+                {
+                    MessageBox.Show("Укажите пути для файлов (Price O)", "Путь к файлам", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
-            if (CheckExcelParamect(txtArticuleExcelY, txtCurrentPriceExcelY, txtAddCurrentPriceExcelY, txtAddNewPriceExcelY, txtPercentExcelY) is false)
-            {
-                return;
-            }
-
-            if (CheckExcelParamect(txtArticuleExcelO, txtCurrentPriceExcelO, txtAddCurrentPriceExcelO, txtAddNewPriceExcelO, txtPercentExcelO) is false)
-            {
-                return;
+                if (CheckExcelParamect(txtArticuleExcelO, txtCurrentPriceExcelO, txtAddCurrentPriceExcelO, txtAddNewPriceExcelO, txtPercentExcelO) is false)
+                {
+                    return;
+                }
             }
 
             var stock = GetStock();
@@ -140,9 +149,20 @@ namespace XMLtoExcel.Forms
             SaveSetting();
             ClearLableOut();
 
-            TreatmentStock(stock, isDeleteColumnNumber, query);
-            TreatmentExcel(query, _excelPathY, SettingController.Get().ExcelSettingY, memoOutExcelY);
-            TreatmentExcel(query, _excelPathO, SettingController.Get().ExcelSettingO, memoOutExcelO);
+            if (checkStock.Checked)
+            {
+                TreatmentStock(stock, isDeleteColumnNumber, query);
+            }
+
+            if (checkY.Checked)
+            {
+                TreatmentExcel(query, _excelPathY, SettingController.Get().ExcelSettingY, memoOutExcelY);
+            }
+
+            if (checkO.Checked)
+            {
+                TreatmentExcel(query, _excelPathO, SettingController.Get().ExcelSettingO, memoOutExcelO);
+            }
 
             MessageBox.Show("Все операции завершены.", "Информациооное сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
