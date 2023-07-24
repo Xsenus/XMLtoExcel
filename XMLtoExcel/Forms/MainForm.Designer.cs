@@ -302,6 +302,7 @@
             this.txtPercentExcelO.Size = new System.Drawing.Size(75, 22);
             this.txtPercentExcelO.TabIndex = 31;
             this.txtPercentExcelO.Text = "% (+/-)";
+            this.txtPercentExcelO.Enter += new System.EventHandler(this.txtPercentExcel_Enter);
             // 
             // txtAddNewPriceExcelO
             // 
@@ -310,6 +311,7 @@
             this.txtAddNewPriceExcelO.Size = new System.Drawing.Size(75, 22);
             this.txtAddNewPriceExcelO.TabIndex = 30;
             this.txtAddNewPriceExcelO.Text = "Ст.нов.цена";
+            this.txtAddNewPriceExcelO.Enter += new System.EventHandler(this.txtAddNewPriceExcel_Enter);
             // 
             // txtAddCurrentPriceExcelO
             // 
@@ -318,6 +320,7 @@
             this.txtAddCurrentPriceExcelO.Size = new System.Drawing.Size(75, 22);
             this.txtAddCurrentPriceExcelO.TabIndex = 29;
             this.txtAddCurrentPriceExcelO.Text = "Ст.тек.цена";
+            this.txtAddCurrentPriceExcelO.Enter += new System.EventHandler(this.txtAddCurrentPriceExcel_Enter);
             // 
             // txtCurrentPriceExcelO
             // 
@@ -326,6 +329,7 @@
             this.txtCurrentPriceExcelO.Size = new System.Drawing.Size(75, 22);
             this.txtCurrentPriceExcelO.TabIndex = 28;
             this.txtCurrentPriceExcelO.Text = "Тек.цена";
+            this.txtCurrentPriceExcelO.Enter += new System.EventHandler(this.txtCurrentPriceExcel_Enter);
             // 
             // txtArticuleExcelO
             // 
@@ -334,6 +338,7 @@
             this.txtArticuleExcelO.Size = new System.Drawing.Size(75, 22);
             this.txtArticuleExcelO.TabIndex = 27;
             this.txtArticuleExcelO.Text = "Артикул";
+            this.txtArticuleExcelO.Enter += new System.EventHandler(this.txtArticuleExcel_Enter);
             // 
             // label1labelNameExcelO
             // 
@@ -378,6 +383,7 @@
             this.txtPercentExcelY.Size = new System.Drawing.Size(75, 22);
             this.txtPercentExcelY.TabIndex = 23;
             this.txtPercentExcelY.Text = "% (+/-)";
+            this.txtPercentExcelY.Enter += new System.EventHandler(this.txtPercentExcel_Enter);
             // 
             // txtAddNewPriceExcelY
             // 
@@ -386,6 +392,7 @@
             this.txtAddNewPriceExcelY.Size = new System.Drawing.Size(75, 22);
             this.txtAddNewPriceExcelY.TabIndex = 22;
             this.txtAddNewPriceExcelY.Text = "Ст.нов.цена";
+            this.txtAddNewPriceExcelY.Enter += new System.EventHandler(this.txtAddNewPriceExcel_Enter);
             // 
             // txtAddCurrentPriceExcelY
             // 
@@ -394,6 +401,7 @@
             this.txtAddCurrentPriceExcelY.Size = new System.Drawing.Size(75, 22);
             this.txtAddCurrentPriceExcelY.TabIndex = 21;
             this.txtAddCurrentPriceExcelY.Text = "Ст.тек.цена";
+            this.txtAddCurrentPriceExcelY.Enter += new System.EventHandler(this.txtAddCurrentPriceExcel_Enter);
             // 
             // txtCurrentPriceExcelY
             // 
@@ -402,6 +410,7 @@
             this.txtCurrentPriceExcelY.Size = new System.Drawing.Size(75, 22);
             this.txtCurrentPriceExcelY.TabIndex = 20;
             this.txtCurrentPriceExcelY.Text = "Тек.цена";
+            this.txtCurrentPriceExcelY.Enter += new System.EventHandler(this.txtCurrentPriceExcel_Enter);
             // 
             // txtArticuleExcelY
             // 
@@ -410,6 +419,7 @@
             this.txtArticuleExcelY.Size = new System.Drawing.Size(75, 22);
             this.txtArticuleExcelY.TabIndex = 19;
             this.txtArticuleExcelY.Text = "Артикул";
+            this.txtArticuleExcelY.Enter += new System.EventHandler(this.txtArticuleExcel_Enter);
             // 
             // labelNameExcelY
             // 

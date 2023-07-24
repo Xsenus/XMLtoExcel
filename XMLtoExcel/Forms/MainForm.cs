@@ -490,5 +490,53 @@ namespace XMLtoExcel.Forms
             SetSettingParamentr(setting.ExcelSettingO, txtArticuleExcelO, txtCurrentPriceExcelO, txtAddCurrentPriceExcelO, txtAddNewPriceExcelO, txtPercentExcelO);
             setting.Save();
         }
+
+        private static void ShowToolTip(TextBox textBox, string message)
+        {
+            var visibleTime = 1500;  //in milliseconds
+
+            var toolTip = new ToolTip();
+            toolTip.Show(message, textBox, 0, 25, visibleTime);
+        }
+
+        private void txtArticuleExcel_Enter(object sender, EventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                ShowToolTip(textBox, "Артикул");
+            }
+        }
+
+        private void txtCurrentPriceExcel_Enter(object sender, EventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                ShowToolTip(textBox, "Текущая цена");
+            }
+        }
+
+        private void txtAddCurrentPriceExcel_Enter(object sender, EventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                ShowToolTip(textBox, "Устанавливаем текущую цену");
+            }
+        }
+
+        private void txtAddNewPriceExcel_Enter(object sender, EventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                ShowToolTip(textBox, "Устанавливаем новую цену");
+            }
+        }
+
+        private void txtPercentExcel_Enter(object sender, EventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                ShowToolTip(textBox, "Увеличить на % (+поднять, -снизить)");
+            }
+        }
     }
 }
