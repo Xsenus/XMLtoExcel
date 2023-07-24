@@ -90,7 +90,7 @@ namespace Core.Controllers
                                         }
 
                                         var indexExcelColumnSetCurrentPrice = GetColumnIndex(_excelSetting.ColumnSetCurrentPrice, columnDictionary);
-                                        worksheet.Cells[i, indexExcelColumnSetCurrentPrice].Value = currentPrice; 
+                                        worksheet.Cells[i, indexExcelColumnSetCurrentPrice].Value = currentPrice?.Replace(".", ","); 
                                         Log?.Invoke($"Перенос старой цены в Excel файле. Артикул: [{product.Article}]. Цена: {currentPrice}.");
 
                                         if (!string.IsNullOrWhiteSpace(_excelSetting.Percent))
@@ -150,7 +150,7 @@ namespace Core.Controllers
                                         }
 
                                         var indexExcelColumnSetNewPrice = GetColumnIndex(_excelSetting.ColumnSetNewPrice, columnDictionary);
-                                        worksheet.Cells[i, indexExcelColumnSetNewPrice].Value = retailPrice;
+                                        worksheet.Cells[i, indexExcelColumnSetNewPrice].Value = retailPrice?.Replace(".", ",");
                                         Log?.Invoke($"Перенос новой цены в Excel файле. Артикул: [{product.Article}]. Цена: {retailPrice}.");
 
                                         CountSubstitutions++;
