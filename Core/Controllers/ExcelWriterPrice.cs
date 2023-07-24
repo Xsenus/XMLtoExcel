@@ -95,7 +95,7 @@ namespace Core.Controllers
 
                                         if (!string.IsNullOrWhiteSpace(_excelSetting.Percent))
                                         {
-                                            if (_excelSetting.Percent != "+0" && _excelSetting.Percent != "-0")
+                                            if (_excelSetting.Percent != "+0" && _excelSetting.Percent != "-0" && _excelSetting.Percent != "0")
                                             {
                                                 if (_excelSetting.Percent.Contains("+"))
                                                 {
@@ -106,18 +106,6 @@ namespace Core.Controllers
                                                             var value = (resultPrice + (resultPrice * result / 100));                                                            
                                                             retailPrice = value.ToString();
                                                             CountPercentageApplied++;
-
-                                                            if (decimal.TryParse(currentPrice.Replace(".", ","), out decimal currentPriceResult))
-                                                            {
-                                                                if (currentPriceResult > value)
-                                                                {
-                                                                    CountCurrentPriceHigherThanNew++;
-                                                                }
-                                                                else
-                                                                {
-                                                                    CountCurrentPriceLessThanNew++;
-                                                                }
-                                                            }
                                                         }
                                                     }
                                                 }
@@ -131,23 +119,14 @@ namespace Core.Controllers
                                                             var value = (resultPrice - (resultPrice * result / 100)); 
                                                             retailPrice = value.ToString();
                                                             CountPercentageApplied++;
-
-                                                            if (decimal.TryParse(currentPrice.Replace(".", ","), out decimal currentPriceResult))
-                                                            {
-                                                                if (currentPriceResult > value)
-                                                                {
-                                                                    CountCurrentPriceHigherThanNew++;
-                                                                }
-                                                                else
-                                                                {
-                                                                    CountCurrentPriceLessThanNew++;
-                                                                }
-                                                            }
                                                         }
                                                     }
                                                 }
                                             }
                                         }
+
+
+                                        CheckingGreaterValue(currentPrice, retailPrice);
 
                                         var indexExcelColumnSetNewPrice = GetColumnIndex(_excelSetting.ColumnSetNewPrice, columnDictionary);
                                         worksheet.Cells[i, indexExcelColumnSetNewPrice].Value = retailPrice?.Replace(".", ",");
@@ -170,6 +149,25 @@ namespace Core.Controllers
                 package.Save();
             }
         }
+
+        private void CheckingGreaterValue(string currentPrice, string newPrice)
+        {
+            var currentPriceValue = default(decimal);
+            var newPriceValue = default(decimal);
+
+            if (decimal.TryParse(currentPrice, out currentPriceValue)) { }
+            if (decimal.TryParse(newPrice, out newPriceValue)) { }
+
+            if (currentPriceValue > newPriceValue)
+            {
+                CountCurrentPriceHigherThanNew++;
+            }
+            else
+            {
+                CountCurrentPriceLessThanNew++;
+            }
+        }
+
 
         private string CheckingSettings(ExcelSetting excelSetting, Dictionary<int, string> columnDictionary)
         {
@@ -218,7 +216,7 @@ namespace Core.Controllers
             }
             else
             {
-                return columnDictionary.First(f => f.Value == obj).Key;
+                return columnDictionary.First(f => f.Value == obj.ToUpper()).Key;
             }
         }
 
