@@ -116,6 +116,11 @@ namespace XMLtoExcel.Forms
                     return;
                 }
 
+                if (CheckPercentValue(txtPercentExcelY) is false)
+                {
+                    return;
+                };
+
                 if (CheckExcelParamect(txtArticuleExcelY, txtCurrentPriceExcelY, txtAddCurrentPriceExcelY, txtAddNewPriceExcelY, txtPercentExcelY) is false)
                 {
                     return;
@@ -129,6 +134,11 @@ namespace XMLtoExcel.Forms
                     MessageBox.Show("Укажите пути для файлов (Price O)", "Путь к файлам", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
+
+                if (CheckPercentValue(txtPercentExcelO) is false)
+                {
+                    return;
+                };
 
                 if (CheckExcelParamect(txtArticuleExcelO, txtCurrentPriceExcelO, txtAddCurrentPriceExcelO, txtAddNewPriceExcelO, txtPercentExcelO) is false)
                 {
@@ -165,6 +175,32 @@ namespace XMLtoExcel.Forms
             }
 
             MessageBox.Show("Все операции завершены.", "Информациооное сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private bool CheckPercentValue(object obj)
+        {
+            if (obj is TextBox text)
+            {
+                if (string.IsNullOrWhiteSpace(text.Text)
+                                || text.Text == "0"
+                                || ((text.Text.Contains("+") || text.Text.Contains("-"))
+                                    && int.TryParse(text.Text, out int result)))
+                {
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show($"Не правильно оформлено поле с процентом.{Environment.NewLine}" +
+                                        $"Укажите [0], либо значение с [+] или [-].{Environment.NewLine}" +
+                                        $"Например: 0, +5, -10 и т.д.",
+                                    "Путь к файлам",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                    text.Focus();
+                }
+            }
+
+            return false;
         }
 
         private bool TreatmentExcel(Data query, List<string> list, ExcelSetting excelSetting, RichTextBox richTextBox, string sheetName)
