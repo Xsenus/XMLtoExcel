@@ -156,7 +156,6 @@ namespace XMLtoExcel.Forms
                 return;
             }
 
-            SaveSetting();
             ClearLableOut();
 
             if (checkStock.Checked)
@@ -164,17 +163,33 @@ namespace XMLtoExcel.Forms
                 TreatmentStock(stock, isDeleteColumnNumber, query, txtListNameStock.Text);
             }
 
-            if (checkY.Checked)
+            if (checkY.Checked && CheckExcelPath(_excelPathY))
             {
                 TreatmentExcel(query, _excelPathY, SettingController.Get().ExcelSettingY, memoOutExcelY, txtListNameY.Text);
             }
 
-            if (checkO.Checked)
+            if (checkO.Checked && CheckExcelPath(_excelPathO))
             {
                 TreatmentExcel(query, _excelPathO, SettingController.Get().ExcelSettingO, memoOutExcelO, txtListNameO.Text);
             }
 
+            SaveSetting();
+
             MessageBox.Show("Все операции завершены.", "Информациооное сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private bool CheckExcelPath(List<string> paths)
+        {
+            foreach (var path in paths)
+            {
+                if (System.IO.File.Exists(path) is false)
+                {
+                    MessageBox.Show($"Файла по следующему пути не существует ({path}).", "Информациооное сообщение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+            }            
+
+            return true;
         }
 
         private bool CheckPercentValue(object obj)
@@ -521,39 +536,90 @@ namespace XMLtoExcel.Forms
             {
                 if (setting.ExcelSettingY != null)
                 {
-                    SetFirstParamentr(setting.ExcelSettingY, txtArticuleExcelY, txtCurrentPriceExcelY, txtAddCurrentPriceExcelY, txtAddNewPriceExcelY, txtPercentExcelY);
+                    SetFirstParamentr(setting.ExcelSettingY,
+                                      txtArticuleExcelY,
+                                      txtCurrentPriceExcelY,
+                                      txtAddCurrentPriceExcelY,
+                                      txtAddNewPriceExcelY,
+                                      txtPercentExcelY,
+                                      
+                                      txtListNameY,
+                                      ref _excelPathY,
+                                      listViewExcelY);
                 }
 
                 if (setting.ExcelSettingO != null)
                 {
-                    SetFirstParamentr(setting.ExcelSettingO, txtArticuleExcelO, txtCurrentPriceExcelO, txtAddCurrentPriceExcelO, txtAddNewPriceExcelO, txtPercentExcelO);
+                    SetFirstParamentr(setting.ExcelSettingO,
+                                      txtArticuleExcelO,
+                                      txtCurrentPriceExcelO,
+                                      txtAddCurrentPriceExcelO,
+                                      txtAddNewPriceExcelO,
+                                      txtPercentExcelO,
+
+                                      txtListNameO,
+                                      ref _excelPathO,
+                                      listViewExcelO);
                 }
             }
         }
 
-        private void SetFirstParamentr(ExcelSetting setting, TextBox txtArticule, TextBox txtCurrentPrice, TextBox txtAddCurrentPrice, TextBox txtAddNewPrice, TextBox txtPercent)
+        private void SetFirstParamentr(ExcelSetting setting,
+                                       TextBox txtArticule,
+                                       TextBox txtCurrentPrice,
+                                       TextBox txtAddCurrentPrice,
+                                       TextBox txtAddNewPrice,
+                                       TextBox txtPercent,
+                                       TextBox txtListName,
+                                       ref List<string> paths,
+                                       ListView listView)
         {
             txtArticule.Text = setting.ColumnArticle;
             txtCurrentPrice.Text = setting.ColumnCurrentPrice;
             txtAddCurrentPrice.Text = setting.ColumnSetCurrentPrice;
             txtAddNewPrice.Text = setting.ColumnSetNewPrice;
             txtPercent.Text = setting.Percent;
+            txtListName.Text = setting.ExcelListName;
+
+            paths = setting.Paths;
+            foreach (var path in paths)
+            {
+                listView.Items.Add(path);
+            }
         }
 
-        private void SetSettingParamentr(ExcelSetting setting, TextBox txtArticule, TextBox txtCurrentPrice, TextBox txtAddCurrentPrice, TextBox txtAddNewPrice, TextBox txtPercent)
+        private void SetSettingParamentr(ExcelSetting setting,
+                                         TextBox txtArticule,
+                                         TextBox txtCurrentPrice,
+                                         TextBox txtAddCurrentPrice,
+                                         TextBox txtAddNewPrice,
+                                         TextBox txtPercent,
+                                         TextBox txtListName,
+                                         List<string> paths)
         {
             setting.ColumnArticle = txtArticule.Text;
             setting.ColumnCurrentPrice = txtCurrentPrice.Text;
             setting.ColumnSetCurrentPrice = txtAddCurrentPrice.Text;
             setting.ColumnSetNewPrice = txtAddNewPrice.Text;
             setting.Percent = txtPercent.Text;
+            setting.ExcelListName = txtListName.Text;
+            setting.Paths = paths;
         }
 
         private void SaveSetting()
         {
             var setting = SettingController.GetOrCreateSetting();
-            SetSettingParamentr(setting.ExcelSettingY, txtArticuleExcelY, txtCurrentPriceExcelY, txtAddCurrentPriceExcelY, txtAddNewPriceExcelY, txtPercentExcelY);
-            SetSettingParamentr(setting.ExcelSettingO, txtArticuleExcelO, txtCurrentPriceExcelO, txtAddCurrentPriceExcelO, txtAddNewPriceExcelO, txtPercentExcelO);
+
+            if (checkY.Checked)
+            {
+                SetSettingParamentr(setting.ExcelSettingY, txtArticuleExcelY, txtCurrentPriceExcelY, txtAddCurrentPriceExcelY, txtAddNewPriceExcelY, txtPercentExcelY, txtListNameY, _excelPathY);
+            }
+
+            if (checkO.Checked)
+            {
+                SetSettingParamentr(setting.ExcelSettingO, txtArticuleExcelO, txtCurrentPriceExcelO, txtAddCurrentPriceExcelO, txtAddNewPriceExcelO, txtPercentExcelO, txtListNameO, _excelPathO);
+            }
+
             setting.Save();
         }
 
