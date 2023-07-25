@@ -19,6 +19,8 @@ namespace Core.Controllers
         public int CountCurrentPriceHigherThanNew { get; private set; }
         public int CountCurrentPriceLessThanNew { get; private set; }
         public int CountPercentageApplied { get; private set; }
+        public int NumberOfIdenticalValues { get; private set; }
+        public int NumberOfDifferentlValues { get; private set; }
 
 
         public delegate void WriterEventHandler(int position, int count, int countSubstitutions);
@@ -155,19 +157,26 @@ namespace Core.Controllers
             var currentPriceValue = default(decimal);
             var newPriceValue = default(decimal);
 
-            if (decimal.TryParse(currentPrice, out currentPriceValue)) { }
-            if (decimal.TryParse(newPrice, out newPriceValue)) { }
+            if (decimal.TryParse(currentPrice?.Replace(".", ","), out currentPriceValue)) { }
+            if (decimal.TryParse(newPrice?.Replace(".", ","), out newPriceValue)) { }
 
             if (currentPriceValue > newPriceValue)
             {
                 CountCurrentPriceHigherThanNew++;
             }
-            else
+            else if (currentPriceValue < newPriceValue)
             {
                 CountCurrentPriceLessThanNew++;
             }
+            else if (currentPriceValue == newPriceValue)
+            {
+                NumberOfIdenticalValues++;
+            }
+            else if (currentPriceValue != newPriceValue)
+            {
+                NumberOfDifferentlValues++;
+            }
         }
-
 
         private string CheckingSettings(ExcelSetting excelSetting, Dictionary<int, string> columnDictionary)
         {
