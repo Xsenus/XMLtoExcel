@@ -14,13 +14,6 @@ namespace XMLtoExcel
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            //TODO: убрать после сдачи проекта.
-            if (DateTime.Now > new DateTime(2023, 07, 28))
-            {
-                Environment.Exit(0);
-            }
-
             Application.Run(new MainForm());
         }
     }

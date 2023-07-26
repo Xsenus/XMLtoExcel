@@ -12,6 +12,7 @@ namespace Core.Controllers
         private string _path;
         private ExcelSetting _excelSetting;
         private string _sheetName;
+        private bool _pricePerSet;
 
         public int Total { get; private set; }
         public int CountSubstitutions { get; private set; }
@@ -22,6 +23,9 @@ namespace Core.Controllers
         public int NumberOfIdenticalValues { get; private set; }
         public int NumberOfDifferentlValues { get; private set; }
 
+        public int NoQty { get; private set; }
+        public int NoPrice { get; private set; }
+
 
         public delegate void WriterEventHandler(int position, int count, int countSubstitutions);
         public event WriterEventHandler Writer;
@@ -31,10 +35,12 @@ namespace Core.Controllers
 
         public ExcelWriterPrice(string path,
             ExcelSetting excelSetting,
+            bool pricePerSet = false,
             string sheetName = "Товары и цены")
         {
             _path = path;
             _excelSetting = excelSetting;
+            _pricePerSet = pricePerSet;
             _sheetName = sheetName;
         }
         
@@ -70,72 +76,15 @@ namespace Core.Controllers
 
                                 if (!string.IsNullOrWhiteSpace(excelArticle))
                                 {
-                                    var product = data.Product
-                                        .Where(w => w.Prices != null 
-                                            && w.Prices.Price != null 
-                                            && w.Prices.Price.FirstOrDefault(f => f.Type == "retail") != null)
-                                        .FirstOrDefault(f => f.Article != null && f.Article.Equals(excelArticle));
-                                    Log?.Invoke($"Поиск артикля в XML файле");
-
-                                    if (product != null)
+                                    if (_pricePerSet)
                                     {
-                                        var retailPrice = product.Prices.Price.First(f => f.Type == "retail").Text;
-                                        Log?.Invoke($"Получение текущей цены продукта их XML файла. Артикул: [{product.Article}]. Цена: {retailPrice}.");
-
-                                        var indexExcelColumnCurrentPrice = GetColumnIndex(_excelSetting.ColumnCurrentPrice, columnDictionary);
-                                        var currentPrice = worksheet.Cells[i, indexExcelColumnCurrentPrice].Value?.ToString();
-                                        Log?.Invoke($"Получение текущей цены продукта их Excel файла. Артикул: [{product.Article}]. Цена: {currentPrice}.");
-
-                                        if (string.IsNullOrWhiteSpace(currentPrice))
-                                        {
-                                            CountNoPrice++;
-                                        }
-
-                                        var indexExcelColumnSetCurrentPrice = GetColumnIndex(_excelSetting.ColumnSetCurrentPrice, columnDictionary);
-                                        worksheet.Cells[i, indexExcelColumnSetCurrentPrice].Value = currentPrice?.Replace(".", ","); 
-                                        Log?.Invoke($"Перенос старой цены в Excel файле. Артикул: [{product.Article}]. Цена: {currentPrice}.");
-
-                                        if (!string.IsNullOrWhiteSpace(_excelSetting.Percent))
-                                        {
-                                            if (_excelSetting.Percent != "+0" && _excelSetting.Percent != "-0" && _excelSetting.Percent != "0")
-                                            {
-                                                if (_excelSetting.Percent.Contains("+"))
-                                                {
-                                                    if (int.TryParse(_excelSetting.Percent.Replace("+", "").Trim(), out int result))
-                                                    {
-                                                        if (decimal.TryParse(retailPrice.Replace(".", ","), out decimal resultPrice))
-                                                        {
-                                                            var value = (resultPrice + (resultPrice * result / 100));                                                            
-                                                            retailPrice = value.ToString();
-                                                            CountPercentageApplied++;
-                                                        }
-                                                    }
-                                                }
-
-                                                if (_excelSetting.Percent.Contains("-"))
-                                                {
-                                                    if (int.TryParse(_excelSetting.Percent.Replace("-", "").Trim(), out int result))
-                                                    {
-                                                        if (decimal.TryParse(retailPrice.Replace(".", ","), out decimal resultPrice))
-                                                        {
-                                                            var value = (resultPrice - (resultPrice * result / 100)); 
-                                                            retailPrice = value.ToString();
-                                                            CountPercentageApplied++;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-
-
-                                        CheckingGreaterValue(currentPrice, retailPrice);
-
-                                        var indexExcelColumnSetNewPrice = GetColumnIndex(_excelSetting.ColumnSetNewPrice, columnDictionary);
-                                        worksheet.Cells[i, indexExcelColumnSetNewPrice].Value = retailPrice?.Replace(".", ",");
-                                        Log?.Invoke($"Перенос новой цены в Excel файле. Артикул: [{product.Article}]. Цена: {retailPrice}.");
-
-                                        CountSubstitutions++;
+                                        PricePerSetMethod(data, worksheet, columnDictionary, i, excelArticle);
                                     }
+                                    else
+                                    {
+                                        BaseMethod(data, worksheet, columnDictionary, i, excelArticle);
+                                    }
+
                                 }
 
                                 SentWriter(rowCount, i);
@@ -149,6 +98,189 @@ namespace Core.Controllers
                 }
 
                 package.Save();
+            }
+        }
+
+        private void PricePerSetMethod(Data data, ExcelWorksheet worksheet, Dictionary<int, string> columnDictionary, int i, string excelArticle)
+        {
+            var product = data.Product
+                .Where(w => w.Container != null 
+                    && w.Container.Qty != null)
+                .Where(w => w.Prices != null
+                    && w.Prices.Price != null
+                    && w.Prices.Price.FirstOrDefault(f => f.Type == "retail") != null)
+                .FirstOrDefault(f => f.Article != null && f.Article.Equals(excelArticle));
+            Log?.Invoke($"Поиск артикля в XML файле");
+
+            if (product != null)
+            {
+                var qty = product.Container.Qty.Text;
+                Log?.Invoke($"Получение текущей цены продукта их XML файла. Артикул: [{product.Article}]. Qty: {qty}.");
+
+                var retailPrice = product.Prices.Price.First(f => f.Type == "retail").Text;
+                Log?.Invoke($"Получение текущей цены продукта их XML файла. Артикул: [{product.Article}]. Цена: {retailPrice}.");
+
+
+                var isReturn = false;
+
+                if (string.IsNullOrWhiteSpace(qty))
+                {
+                    NoQty++;
+                    isReturn = true;
+                }
+
+                if (string.IsNullOrWhiteSpace(retailPrice))
+                {
+                    NoPrice++;
+                    isReturn = true;
+                }
+
+                if (decimal.TryParse(qty.Replace(".", ","), out decimal qtyResult))
+                {
+                    if (decimal.TryParse(retailPrice.Replace(".", ","), out decimal retailPriceResult))
+                    {
+                        retailPrice = (qtyResult * retailPriceResult).ToString();
+                    }
+                    else
+                    {
+                        isReturn = true;
+                    }
+                }
+                else
+                {
+                    isReturn = true;
+                }
+
+
+                if (isReturn)
+                {
+                    return;
+                }
+
+
+                var indexExcelColumnCurrentPrice = GetColumnIndex(_excelSetting.ColumnCurrentPrice, columnDictionary);
+                var currentPrice = worksheet.Cells[i, indexExcelColumnCurrentPrice].Value?.ToString();
+                Log?.Invoke($"Получение текущей цены продукта их Excel файла. Артикул: [{product.Article}]. Цена: {currentPrice}.");
+
+                if (string.IsNullOrWhiteSpace(currentPrice))
+                {
+                    CountNoPrice++;
+                }
+
+                var indexExcelColumnSetCurrentPrice = GetColumnIndex(_excelSetting.ColumnSetCurrentPrice, columnDictionary);
+                worksheet.Cells[i, indexExcelColumnSetCurrentPrice].Value = currentPrice?.Replace(".", ",");
+                Log?.Invoke($"Перенос старой цены в Excel файле. Артикул: [{product.Article}]. Цена: {currentPrice}.");
+
+                if (!string.IsNullOrWhiteSpace(_excelSetting.Percent))
+                {
+                    if (_excelSetting.Percent != "+0" && _excelSetting.Percent != "-0" && _excelSetting.Percent != "0")
+                    {
+                        if (_excelSetting.Percent.Contains("+"))
+                        {
+                            if (int.TryParse(_excelSetting.Percent.Replace("+", "").Trim(), out int result))
+                            {
+                                if (decimal.TryParse(retailPrice.Replace(".", ","), out decimal resultPrice))
+                                {
+                                    var value = (resultPrice + (resultPrice * result / 100));
+                                    retailPrice = value.ToString();
+                                    CountPercentageApplied++;
+                                }
+                            }
+                        }
+
+                        if (_excelSetting.Percent.Contains("-"))
+                        {
+                            if (int.TryParse(_excelSetting.Percent.Replace("-", "").Trim(), out int result))
+                            {
+                                if (decimal.TryParse(retailPrice.Replace(".", ","), out decimal resultPrice))
+                                {
+                                    var value = (resultPrice - (resultPrice * result / 100));
+                                    retailPrice = value.ToString();
+                                    CountPercentageApplied++;
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+                CheckingGreaterValue(currentPrice, retailPrice);
+
+                var indexExcelColumnSetNewPrice = GetColumnIndex(_excelSetting.ColumnSetNewPrice, columnDictionary);
+                worksheet.Cells[i, indexExcelColumnSetNewPrice].Value = retailPrice?.Replace(".", ",");
+                Log?.Invoke($"Перенос новой цены в Excel файле. Артикул: [{product.Article}]. Цена: {retailPrice}.");
+
+                CountSubstitutions++;
+            }
+        }
+
+        private void BaseMethod(Data data, ExcelWorksheet worksheet, Dictionary<int, string> columnDictionary, int i, string excelArticle)
+        {
+            var product = data.Product
+                .Where(w => w.Prices != null
+                    && w.Prices.Price != null
+                    && w.Prices.Price.FirstOrDefault(f => f.Type == "retail") != null)
+                .FirstOrDefault(f => f.Article != null && f.Article.Equals(excelArticle));
+            Log?.Invoke($"Поиск артикля в XML файле");
+
+            if (product != null)
+            {
+                var retailPrice = product.Prices.Price.First(f => f.Type == "retail").Text;
+                Log?.Invoke($"Получение текущей цены продукта их XML файла. Артикул: [{product.Article}]. Цена: {retailPrice}.");
+
+                var indexExcelColumnCurrentPrice = GetColumnIndex(_excelSetting.ColumnCurrentPrice, columnDictionary);
+                var currentPrice = worksheet.Cells[i, indexExcelColumnCurrentPrice].Value?.ToString();
+                Log?.Invoke($"Получение текущей цены продукта их Excel файла. Артикул: [{product.Article}]. Цена: {currentPrice}.");
+
+                if (string.IsNullOrWhiteSpace(currentPrice))
+                {
+                    CountNoPrice++;
+                }
+
+                var indexExcelColumnSetCurrentPrice = GetColumnIndex(_excelSetting.ColumnSetCurrentPrice, columnDictionary);
+                worksheet.Cells[i, indexExcelColumnSetCurrentPrice].Value = currentPrice?.Replace(".", ",");
+                Log?.Invoke($"Перенос старой цены в Excel файле. Артикул: [{product.Article}]. Цена: {currentPrice}.");
+
+                if (!string.IsNullOrWhiteSpace(_excelSetting.Percent))
+                {
+                    if (_excelSetting.Percent != "+0" && _excelSetting.Percent != "-0" && _excelSetting.Percent != "0")
+                    {
+                        if (_excelSetting.Percent.Contains("+"))
+                        {
+                            if (int.TryParse(_excelSetting.Percent.Replace("+", "").Trim(), out int result))
+                            {
+                                if (decimal.TryParse(retailPrice.Replace(".", ","), out decimal resultPrice))
+                                {
+                                    var value = (resultPrice + (resultPrice * result / 100));
+                                    retailPrice = value.ToString();
+                                    CountPercentageApplied++;
+                                }
+                            }
+                        }
+
+                        if (_excelSetting.Percent.Contains("-"))
+                        {
+                            if (int.TryParse(_excelSetting.Percent.Replace("-", "").Trim(), out int result))
+                            {
+                                if (decimal.TryParse(retailPrice.Replace(".", ","), out decimal resultPrice))
+                                {
+                                    var value = (resultPrice - (resultPrice * result / 100));
+                                    retailPrice = value.ToString();
+                                    CountPercentageApplied++;
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+                CheckingGreaterValue(currentPrice, retailPrice);
+
+                var indexExcelColumnSetNewPrice = GetColumnIndex(_excelSetting.ColumnSetNewPrice, columnDictionary);
+                worksheet.Cells[i, indexExcelColumnSetNewPrice].Value = retailPrice?.Replace(".", ",");
+                Log?.Invoke($"Перенос новой цены в Excel файле. Артикул: [{product.Article}]. Цена: {retailPrice}.");
+
+                CountSubstitutions++;
             }
         }
 

@@ -165,12 +165,22 @@ namespace XMLtoExcel.Forms
 
             if (checkY.Checked && CheckExcelPath(_excelPathY))
             {
-                TreatmentExcel(query, _excelPathY, SettingController.Get().ExcelSettingY, memoOutExcelY, txtListNameY.Text);
+                TreatmentExcel(query,
+                               _excelPathY,
+                               SettingController.Get().ExcelSettingY,
+                               memoOutExcelY,
+                               txtListNameY.Text,
+                               checkPricePerSet.Checked);
             }
 
             if (checkO.Checked && CheckExcelPath(_excelPathO))
             {
-                TreatmentExcel(query, _excelPathO, SettingController.Get().ExcelSettingO, memoOutExcelO, txtListNameO.Text);
+                TreatmentExcel(query,
+                               _excelPathO,
+                               SettingController.Get().ExcelSettingO,
+                               memoOutExcelO,
+                               txtListNameO.Text,
+                               checkPricePerSet.Checked);
             }
 
             SaveSetting();
@@ -218,7 +228,12 @@ namespace XMLtoExcel.Forms
             return false;
         }
 
-        private bool TreatmentExcel(Data query, List<string> list, ExcelSetting excelSetting, RichTextBox richTextBox, string sheetName)
+        private bool TreatmentExcel(Data query,
+                                    List<string> list,
+                                    ExcelSetting excelSetting,
+                                    RichTextBox richTextBox,
+                                    string sheetName,
+                                    bool pricePerSet = false)
         {
             var result = true;
             foreach (var excelPath in list)
@@ -231,11 +246,11 @@ namespace XMLtoExcel.Forms
                     
                     if (string.IsNullOrWhiteSpace(sheetName))
                     {
-                        excelWriter = new ExcelWriterPrice(excelPath, excelSetting);
+                        excelWriter = new ExcelWriterPrice(excelPath, excelSetting, pricePerSet: pricePerSet);
                     }
                     else
                     {
-                        excelWriter = new ExcelWriterPrice(excelPath, excelSetting, sheetName);
+                        excelWriter = new ExcelWriterPrice(excelPath, excelSetting, pricePerSet: pricePerSet, sheetName: sheetName);
                     }
 
                     excelWriter.Writer += ExcelWriter_Writer;
@@ -251,10 +266,23 @@ namespace XMLtoExcel.Forms
                         $"Общее количесвто: {excelWriter.Total}{Environment.NewLine}" +
                         $"Замены: {excelWriter.CountSubstitutions}{Environment.NewLine}" +
                         $"Нет цены: {excelWriter.CountNoPrice}{Environment.NewLine}" +
+                        $"[PricePerSet]" +
                         $"Текущая цена меньше новой: {excelWriter.CountCurrentPriceLessThanNew}{Environment.NewLine}" +
                         $"Текущая цена больше новой: {excelWriter.CountCurrentPriceHigherThanNew}{Environment.NewLine}" +
                         $"Применен %: {excelWriter.CountPercentageApplied}{Environment.NewLine}" +
                         $"--------------------{Environment.NewLine}";
+
+                    if (pricePerSet)
+                    {
+                        richTextBox.Text = richTextBox.Text.Replace("[PricePerSet]", 
+                            $"Нет qty: {excelWriter.NoQty}{Environment.NewLine}" +
+                                $"Нет price: {excelWriter.NoPrice}{Environment.NewLine}");
+                    }
+                    else
+                    {
+                        richTextBox.Text = richTextBox.Text.Replace("[PricePerSet]", "");
+                    }
+
                     richTextBox.Refresh();
                 }
                 catch (Exception ex)
