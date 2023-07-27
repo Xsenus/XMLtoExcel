@@ -109,20 +109,20 @@ namespace Core.Controllers
         private void PricePerSetMethod(Data data, ExcelWorksheet worksheet, Dictionary<int, string> columnDictionary, int i, string excelArticle)
         {
             var product = data.Product
-                .Where(w => w.Package != null 
-                    && w.Package.Qty != null)
-                .Where(w => w.Prices != null
-                    && w.Prices.Price != null
-                    && w.Prices.Price.FirstOrDefault(f => f.Type == "retail") != null)
+                //.Where(w => w.Package != null 
+                //    && w.Package.Qty != null)
+                //.Where(w => w.Prices != null
+                //    && w.Prices.Price != null
+                //    && w.Prices.Price.FirstOrDefault(f => f.Type == "retail") != null)
                 .FirstOrDefault(f => f.Article != null && f.Article.Equals(excelArticle));
             Log?.Invoke($"Поиск артикля в XML файле");
 
             if (product != null)
             {
-                var qty = product.Package.Qty.Text;
+                var qty = product.Package?.Qty?.Text;
                 Log?.Invoke($"Получение текущей цены продукта их XML файла. Артикул: [{product.Article}]. Qty: {qty}.");
 
-                var retailPrice = product.Prices.Price.First(f => f.Type == "retail").Text;
+                var retailPrice = product.Prices?.Price?.First(f => f.Type == "retail")?.Text;
                 Log?.Invoke($"Получение текущей цены продукта их XML файла. Артикул: [{product.Article}]. Цена: {retailPrice}.");
 
                 var isReturn = false;
