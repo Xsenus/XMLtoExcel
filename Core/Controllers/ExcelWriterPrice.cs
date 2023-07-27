@@ -122,7 +122,7 @@ namespace Core.Controllers
                 var qty = product.Package?.Qty?.Text;
                 Log?.Invoke($"Получение текущей цены продукта их XML файла. Артикул: [{product.Article}]. Qty: {qty}.");
 
-                var retailPrice = product.Prices?.Price?.First(f => f.Type == "retail")?.Text;
+                var retailPrice = product.Prices?.Price?.FirstOrDefault(f => f.Type == "retail")?.Text;
                 Log?.Invoke($"Получение текущей цены продукта их XML файла. Артикул: [{product.Article}]. Цена: {retailPrice}.");
 
                 var isReturn = false;
@@ -139,9 +139,9 @@ namespace Core.Controllers
                     isReturn = true;
                 }
 
-                if (decimal.TryParse(qty.Replace(".", ","), out decimal qtyResult))
+                if (decimal.TryParse(qty?.Replace(".", ","), out decimal qtyResult))
                 {
-                    if (decimal.TryParse(retailPrice.Replace(".", ","), out decimal retailPriceResult))
+                    if (decimal.TryParse(retailPrice?.Replace(".", ","), out decimal retailPriceResult))
                     {
                         retailPrice = (qtyResult * retailPriceResult).ToString();
                     }
