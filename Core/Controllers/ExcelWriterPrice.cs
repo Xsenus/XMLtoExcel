@@ -66,25 +66,30 @@ namespace Core.Controllers
                             var rowCount = worksheet.Dimension.End.Row;
                             Log?.Invoke($"Строк для обработки файла Excel: {rowCount}");
 
-                            Total = rowCount - 4;
-
-                            for (int i = 5; i <= rowCount; i++)
+                            for (int i = 0; i <= rowCount; i++)
                             {
-                                var indexExcelArticleColumn = GetColumnIndex(_excelSetting.ColumnArticle, columnDictionary);
-                                string excelArticle = worksheet.Cells[i, indexExcelArticleColumn].Value?.ToString();
-                                Log?.Invoke($"Получение артикля из ячейки [{i}; {indexExcelArticleColumn}] : {excelArticle ?? "NULL"}");
-
-                                if (!string.IsNullOrWhiteSpace(excelArticle))
+                                try
                                 {
-                                    if (_pricePerSet)
-                                    {
-                                        PricePerSetMethod(data, worksheet, columnDictionary, i, excelArticle);
-                                    }
-                                    else
-                                    {
-                                        BaseMethod(data, worksheet, columnDictionary, i, excelArticle);
-                                    }
+                                    var indexExcelArticleColumn = GetColumnIndex(_excelSetting.ColumnArticle, columnDictionary);
+                                    string excelArticle = worksheet.Cells[i, indexExcelArticleColumn].Value?.ToString();
+                                    Log?.Invoke($"Получение артикля из ячейки [{i}; {indexExcelArticleColumn}] : {excelArticle ?? "NULL"}");
 
+                                    if (!string.IsNullOrWhiteSpace(excelArticle))
+                                    {
+                                        if (_pricePerSet)
+                                        {
+                                            PricePerSetMethod(data, worksheet, columnDictionary, i, excelArticle);
+                                        }
+                                        else
+                                        {
+                                            BaseMethod(data, worksheet, columnDictionary, i, excelArticle);
+                                        }
+                                        Total++;
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    Log?.Invoke(ex.ToString());
                                 }
 
                                 SentWriter(rowCount, i);
@@ -119,7 +124,6 @@ namespace Core.Controllers
 
                 var retailPrice = product.Prices.Price.First(f => f.Type == "retail").Text;
                 Log?.Invoke($"Получение текущей цены продукта их XML файла. Артикул: [{product.Article}]. Цена: {retailPrice}.");
-
 
                 var isReturn = false;
 
@@ -182,7 +186,7 @@ namespace Core.Controllers
                                 if (decimal.TryParse(retailPrice.Replace(".", ","), out decimal resultPrice))
                                 {
                                     var value = (resultPrice + (resultPrice * result / 100));
-                                    retailPrice = value.ToString();
+                                    retailPrice = value.ToString("n2");
                                     CountPercentageApplied++;
                                 }
                             }
@@ -195,7 +199,7 @@ namespace Core.Controllers
                                 if (decimal.TryParse(retailPrice.Replace(".", ","), out decimal resultPrice))
                                 {
                                     var value = (resultPrice - (resultPrice * result / 100));
-                                    retailPrice = value.ToString();
+                                    retailPrice = value.ToString("n2");
                                     CountPercentageApplied++;
                                 }
                             }
@@ -252,7 +256,7 @@ namespace Core.Controllers
                                 if (decimal.TryParse(retailPrice.Replace(".", ","), out decimal resultPrice))
                                 {
                                     var value = (resultPrice + (resultPrice * result / 100));
-                                    retailPrice = value.ToString();
+                                    retailPrice = value.ToString("n2");
                                     CountPercentageApplied++;
                                 }
                             }
@@ -265,7 +269,7 @@ namespace Core.Controllers
                                 if (decimal.TryParse(retailPrice.Replace(".", ","), out decimal resultPrice))
                                 {
                                     var value = (resultPrice - (resultPrice * result / 100));
-                                    retailPrice = value.ToString();
+                                    retailPrice = value.ToString("n2");
                                     CountPercentageApplied++;
                                 }
                             }
