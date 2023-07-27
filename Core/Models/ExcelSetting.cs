@@ -4,6 +4,8 @@ namespace Core.Models
 {
     public class ExcelSetting
     {
+        public bool Use { get; set; }
+
         public string ColumnArticle { get; set; }
         public string ColumnCurrentPrice { get; set; }
         public string ColumnSetCurrentPrice { get; set; }

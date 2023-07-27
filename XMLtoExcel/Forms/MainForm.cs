@@ -561,6 +561,8 @@ namespace XMLtoExcel.Forms
             var setting = SettingController.Get();
             if (setting != null)
             {
+                checkPricePerSet.Checked = setting.UsePricePerSet;
+
                 if (setting.ExcelSettingY != null)
                 {
                     SetFirstParamentr(setting.ExcelSettingY,
@@ -573,6 +575,8 @@ namespace XMLtoExcel.Forms
                                       txtListNameY,
                                       ref _excelPathY,
                                       listViewExcelY);
+
+                    checkY.Checked = setting.ExcelSettingY?.Use ?? false;
                 }
 
                 if (setting.ExcelSettingO != null)
@@ -586,7 +590,9 @@ namespace XMLtoExcel.Forms
 
                                       txtListNameO,
                                       ref _excelPathO,
-                                      listViewExcelO);
+                                      listViewExcelO); 
+                    
+                    checkO.Checked = setting.ExcelSettingO?.Use ?? false;
                 }
             }
         }
@@ -636,16 +642,19 @@ namespace XMLtoExcel.Forms
         private void SaveSetting()
         {
             var setting = SettingController.GetOrCreateSetting();
+            setting.UsePricePerSet = checkPricePerSet.Checked;
 
             if (checkY.Checked)
             {
                 SetSettingParamentr(setting.ExcelSettingY, txtArticuleExcelY, txtCurrentPriceExcelY, txtAddCurrentPriceExcelY, txtAddNewPriceExcelY, txtPercentExcelY, txtListNameY, _excelPathY);
             }
+            setting.ExcelSettingY.Use = checkY.Checked;
 
             if (checkO.Checked)
             {
                 SetSettingParamentr(setting.ExcelSettingO, txtArticuleExcelO, txtCurrentPriceExcelO, txtAddCurrentPriceExcelO, txtAddNewPriceExcelO, txtPercentExcelO, txtListNameO, _excelPathO);
             }
+            setting.ExcelSettingO.Use = checkO.Checked;
 
             setting.Save();
         }
