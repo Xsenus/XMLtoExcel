@@ -157,6 +157,7 @@ namespace XMLtoExcel.Forms
             }
 
             ClearLableOut();
+            SaveSetting();
 
             if (checkStock.Checked)
             {
@@ -182,8 +183,6 @@ namespace XMLtoExcel.Forms
                                txtListNameO.Text,
                                checkPricePerSet.Checked);
             }
-
-            SaveSetting();
 
             MessageBox.Show("Все операции завершены.", "Информациооное сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

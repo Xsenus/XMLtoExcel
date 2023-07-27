@@ -19,7 +19,7 @@ namespace Core.Controllers
             catch (Exception ex)
             { 
                 LoggerController.WriteLog(ex.ToString());
-                return default;
+                return GetOrCreateSetting(true);
             }
         }
         public static string GetJson(Setting obj)
@@ -51,11 +51,17 @@ namespace Core.Controllers
             }
         }
 
-        public static Setting GetOrCreateSetting()
+        public static Setting GetOrCreateSetting(bool forceCreate = false)
         {
-            try
+            var setting = default(Setting);
+            
+            if (forceCreate is false)
             {
-                var setting = Get();
+                setting = Get();
+            }
+
+            try
+            {                
                 if (setting is null)
                 {
                     setting = new Setting()
