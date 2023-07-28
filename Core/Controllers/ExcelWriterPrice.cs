@@ -4,6 +4,7 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Core.Controllers
 {
@@ -66,33 +67,11 @@ namespace Core.Controllers
                             var rowCount = worksheet.Dimension.End.Row;
                             Log?.Invoke($"Строк для обработки файла Excel: {rowCount}");
 
+                            //Parallel.For(0, rowCount, i => BaseMethod(data, worksheet, columnDictionary, rowCount, i));
+
                             for (int i = 0; i <= rowCount; i++)
                             {
-                                try
-                                {
-                                    var indexExcelArticleColumn = GetColumnIndex(_excelSetting.ColumnArticle, columnDictionary);
-                                    string excelArticle = worksheet.Cells[i, indexExcelArticleColumn].Value?.ToString();
-                                    Log?.Invoke($"Получение артикля из ячейки [{i}; {indexExcelArticleColumn}] : {excelArticle ?? "NULL"}");
-
-                                    if (!string.IsNullOrWhiteSpace(excelArticle))
-                                    {
-                                        if (_pricePerSet)
-                                        {
-                                            PricePerSetMethod(data, worksheet, columnDictionary, i, excelArticle);
-                                        }
-                                        else
-                                        {
-                                            BaseMethod(data, worksheet, columnDictionary, i, excelArticle);
-                                        }
-                                        Total++;
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    Log?.Invoke(ex.ToString());
-                                }
-
-                                SentWriter(rowCount, i);
+                                BaseMethod(data, worksheet, columnDictionary, rowCount, i);
                             }
                         }
                         else
@@ -104,6 +83,35 @@ namespace Core.Controllers
 
                 package.Save();
             }
+        }
+
+        private void BaseMethod(Data data, ExcelWorksheet worksheet, Dictionary<int, string> columnDictionary, int rowCount, int i)
+        {
+            try
+            {
+                var indexExcelArticleColumn = GetColumnIndex(_excelSetting.ColumnArticle, columnDictionary);
+                string excelArticle = worksheet.Cells[i, indexExcelArticleColumn].Value?.ToString();
+                Log?.Invoke($"Получение артикля из ячейки [{i}; {indexExcelArticleColumn}] : {excelArticle ?? "NULL"}");
+
+                if (!string.IsNullOrWhiteSpace(excelArticle))
+                {
+                    if (_pricePerSet)
+                    {
+                        PricePerSetMethod(data, worksheet, columnDictionary, i, excelArticle);
+                    }
+                    else
+                    {
+                        BaseMethod(data, worksheet, columnDictionary, i, excelArticle);
+                    }
+                    Total++;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log?.Invoke(ex.ToString());
+            }
+
+            SentWriter(rowCount, i);
         }
 
         private void PricePerSetMethod(Data data, ExcelWorksheet worksheet, Dictionary<int, string> columnDictionary, int i, string excelArticle)
@@ -158,6 +166,8 @@ namespace Core.Controllers
 
                 if (isReturn)
                 {
+                    var index = GetColumnIndex(_excelSetting.ColumnSetNewPrice, columnDictionary);
+                    worksheet.Cells[i, index].Value = string.Empty;
                     return;
                 }
 
