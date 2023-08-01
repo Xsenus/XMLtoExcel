@@ -26,6 +26,7 @@ namespace Core.Controllers
 
         public int NoQty { get; private set; }
         public int NoPrice { get; private set; }
+        public bool IsNullableCurrentValue { get; private set; }
 
 
         public delegate void WriterEventHandler(int position, int count, int countSubstitutions);
@@ -43,6 +44,11 @@ namespace Core.Controllers
             _excelSetting = excelSetting;
             _pricePerSet = pricePerSet;
             _sheetName = sheetName;
+        }
+
+        public void SetNullableCurrentValue()
+        {
+            IsNullableCurrentValue = true;
         }
         
         public void StartWriterEPPlus(Data data)
@@ -117,11 +123,6 @@ namespace Core.Controllers
         private void PricePerSetMethod(Data data, ExcelWorksheet worksheet, Dictionary<int, string> columnDictionary, int i, string excelArticle)
         {
             var product = data.Product
-                //.Where(w => w.Package != null 
-                //    && w.Package.Qty != null)
-                //.Where(w => w.Prices != null
-                //    && w.Prices.Price != null
-                //    && w.Prices.Price.FirstOrDefault(f => f.Type == "retail") != null)
                 .FirstOrDefault(f => f.Article != null && f.Article.Equals(excelArticle));
             Log?.Invoke($"Поиск артикля в XML файле");
 
@@ -198,6 +199,11 @@ namespace Core.Controllers
                                     var value = (resultPrice + (resultPrice * result / 100));
                                     retailPrice = value.ToString("n2");
                                     CountPercentageApplied++;
+
+                                    if (IsNullableCurrentValue)
+                                    {
+                                        worksheet.Cells[i, indexExcelColumnSetCurrentPrice].Value = 0;
+                                    }
                                 }
                             }
                         }
@@ -268,6 +274,11 @@ namespace Core.Controllers
                                     var value = (resultPrice + (resultPrice * result / 100));
                                     retailPrice = value.ToString("n2");
                                     CountPercentageApplied++;
+
+                                    if (IsNullableCurrentValue)
+                                    {
+                                        worksheet.Cells[i, indexExcelColumnSetCurrentPrice].Value = 0;
+                                    }
                                 }
                             }
                         }
@@ -332,7 +343,6 @@ namespace Core.Controllers
                 CheckColumn(excelSetting.ColumnCurrentPrice, columnDictionary);
                 CheckColumn(excelSetting.ColumnSetCurrentPrice, columnDictionary);
                 CheckColumn(excelSetting.ColumnSetNewPrice, columnDictionary);
-                //CheckColumn(excelSetting.Percent, columnDictionary);
             }
             catch (Exception ex)
             {

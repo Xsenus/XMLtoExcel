@@ -181,7 +181,8 @@ namespace XMLtoExcel.Forms
                                SettingController.Get().ExcelSettingO,
                                memoOutExcelO,
                                txtListNameO.Text,
-                               checkPricePerSet.Checked);
+                               checkPricePerSet.Checked,
+                               isNullableCurrentValue: true);
             }
 
             MessageBox.Show("Все операции завершены.", "Информациооное сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -232,7 +233,8 @@ namespace XMLtoExcel.Forms
                                     ExcelSetting excelSetting,
                                     RichTextBox richTextBox,
                                     string sheetName,
-                                    bool pricePerSet = false)
+                                    bool pricePerSet = false,
+                                    bool isNullableCurrentValue = false)
         {
             var result = true;
             foreach (var excelPath in list)
@@ -250,6 +252,11 @@ namespace XMLtoExcel.Forms
                     else
                     {
                         excelWriter = new ExcelWriterPrice(excelPath, excelSetting, pricePerSet: pricePerSet, sheetName: sheetName);
+                    }
+
+                    if (isNullableCurrentValue)
+                    {
+                        excelWriter.SetNullableCurrentValue();
                     }
 
                     excelWriter.Writer += ExcelWriter_Writer;
