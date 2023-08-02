@@ -223,6 +223,10 @@ namespace Core.Controllers
                             }
                         }
                     }
+                    else if (_excelSetting.Percent == "0")
+                    {
+                        worksheet.Cells[i, indexExcelColumnSetCurrentPrice].Value = 0;
+                    }
                 }
 
 
