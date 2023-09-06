@@ -28,9 +28,59 @@ namespace ChangeXML.TestModels.Products
     [Serializable()]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
+    public partial class dataProductTextsTextdescript
+    {
+        /// <remarks/>
+        [XmlAttribute()]
+        public string type { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string mime { get; set; }
+
+        /// <remarks/>
+        [XmlText()]
+        public string Value { get; set; }
+    }
+
+    /// <remarks/>
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public partial class dataProductTextsText
+    {
+        /// <remarks/>
+        [XmlAttribute()]
+        public string type { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string mime { get; set; }
+
+        /// <remarks/>
+        [XmlText()]
+        public string Value { get; set; }
+    }
+
+    /// <remarks/>
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public partial class dataProductTexts
+    {
+        /// <remarks/>
+        public dataProductTextsTextdescript textdescript { get; set; }
+
+        /// <remarks/>
+        public dataProductTextsText text { get; set; }
+    }
+
+    /// <remarks/>
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
     public partial class dataProduct
     {
-
         /// <remarks/>
         public string article { get; set; }
 
@@ -57,8 +107,14 @@ namespace ChangeXML.TestModels.Products
         public string tnvedtext { get; set; }
 
         /// <remarks/>
-        [XmlArrayItem("text", IsNullable = false)]
-        public dataProductText[] texts { get; set; }
+        //[XmlArrayItem("text", IsNullable = false)]
+        //public dataProductText[] texts { get; set; }
+
+        /// <remarks/>
+        public string modified { get; set; }
+
+        /// <remarks/>        
+        public dataProductTexts texts { get; set; }
 
         /// <remarks/>
         public sbyte obsolete { get; set; }
@@ -88,11 +144,311 @@ namespace ChangeXML.TestModels.Products
         public dataProductArrival arrival { get; set; }
 
         /// <remarks/>
-        [XmlArrayItem("file", IsNullable = false)]
-        public dataProductFile[] files { get; set; }
+        //[XmlArrayItem("file", IsNullable = false)]
+        //public dataProductFile[] files { get; set; }
+        public dataProductFiles files { get; set; }
 
         [XmlElement("techdata")]
         public string techdata { get; set; }
+    }
+
+    /// <remarks/>
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public partial class dataProductFilesFile
+    {
+        /// <remarks/>
+        [XmlAttribute()]
+        public string type { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string mime { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public DateTime modified { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string md5 { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string name { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string id { get; set; }
+
+        /// <remarks/>
+        [XmlText()]
+        public string Value { get; set; }
+    }
+
+
+    /// <remarks/>
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public partial class dataProductFilesFileimage
+    {
+        /// <remarks/>
+        [XmlAttribute()]
+        public string type { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string mime { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public DateTime modified { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string md5 { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string name { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string id { get; set; }
+
+        /// <remarks/>
+        [XmlText()]
+        public string Value { get; set; }
+    }
+
+    /// <remarks/>
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public partial class dataProductFilesFilemain
+    {
+        /// <remarks/>
+        [XmlAttribute()]
+        public string type { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string mime { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public DateTime modified { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string md5 { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string name { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string id { get; set; }
+
+        /// <remarks/>
+        [XmlText()]
+        public string Value { get; set; }
+    }
+
+    /// <remarks/>
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public partial class dataProductFilesFileman
+    {
+        /// <remarks/>
+        [XmlAttribute()]
+        public string type { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string mime { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public DateTime modified { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string md5 { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string name { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string id { get; set; }
+
+        /// <remarks/>
+        [XmlText()]
+        public string Value { get; set; }
+    }
+
+    /// <remarks/>
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public partial class dataProductFilesFilepapp
+    {
+        /// <remarks/>
+        [XmlAttribute()]
+        public string type { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string mime { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public DateTime modified { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string md5 { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string name { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string id { get; set; }
+
+        /// <remarks/>
+        [XmlText()]
+        public string Value { get; set; }
+    }
+
+    /// <remarks/>
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public partial class dataProductFilesFilepdf
+    {
+        /// <remarks/>
+        [XmlAttribute()]
+        public string type { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string mime { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public DateTime modified { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string md5 { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string name { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string id { get; set; }
+
+        /// <remarks/>
+        [XmlText()]
+        public string Value { get; set; }
+    }
+
+    /// <remarks/>
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public partial class dataProductFilesFilephoto
+    {
+        /// <remarks/>
+        [XmlAttribute()]
+        public string type { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string mime { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public DateTime modified { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string md5 { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string name { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string id { get; set; }
+
+        /// <remarks/>
+        [XmlText()]
+        public string Value { get; set; }
+    }
+
+    /// <remarks/>
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public partial class dataProductFilesFileppack
+    {
+        /// <remarks/>
+        [XmlAttribute()]
+        public string type { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string mime { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public DateTime modified { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string md5 { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string name { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute()]
+        public string id { get; set; }
+
+        /// <remarks/>
+        [XmlText()]
+        public string Value { get; set; }
+    }
+
+    /// <remarks/>
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public partial class dataProductFiles
+    {
+        /// <remarks/>
+        [XmlElement("file", typeof(dataProductFilesFile))]
+        [XmlElement("fileimage", typeof(dataProductFilesFileimage))]
+        [XmlElement("filemain", typeof(dataProductFilesFilemain))]
+        [XmlElement("fileman", typeof(dataProductFilesFileman))]
+        [XmlElement("filepapp", typeof(dataProductFilesFilepapp))]
+        [XmlElement("filepdf", typeof(dataProductFilesFilepdf))]
+        [XmlElement("filephoto", typeof(dataProductFilesFilephoto))]
+        [XmlElement("fileppack", typeof(dataProductFilesFileppack))]
+        public object[] Items { get; set; }
     }
 
     /// <remarks/>
@@ -1049,40 +1405,36 @@ namespace ChangeXML.TestModels.Products
     [Serializable()]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
+    public partial class dataProductPricesPricer
+    {
+        /// <remarks/>
+        [XmlAttribute()]
+        public string type { get; set; }
+
+        /// <remarks/>
+        [XmlText()]
+        public decimal Value { get; set; }
+    }
+
+    /// <remarks/>
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
     public partial class dataProductPrices
     {
-
-        private dataProductPricesPrice[] priceField;
-
-        private string currencyField;
+        /// <remarks/>
+        public dataProductPricesPricer pricer { get; set; }
 
         /// <remarks/>
         [XmlElement("price")]
-        public dataProductPricesPrice[] price
-        {
-            get
-            {
-                return this.priceField;
-            }
-            set
-            {
-                this.priceField = value;
-            }
-        }
+        public dataProductPricesPrice[] price { get; set; }
+
+        /// <remarks/>
+        public dataProductPricesPrice1 price1 { get; set; }
 
         /// <remarks/>
         [XmlAttribute()]
-        public string currency
-        {
-            get
-            {
-                return this.currencyField;
-            }
-            set
-            {
-                this.currencyField = value;
-            }
-        }
+        public string currency { get; set; }
     }
 
     /// <remarks/>
@@ -1091,38 +1443,28 @@ namespace ChangeXML.TestModels.Products
     [XmlType(AnonymousType = true)]
     public partial class dataProductPricesPrice
     {
-
-        private string typeField;
-
-        private decimal valueField;
-
         /// <remarks/>
         [XmlAttribute()]
-        public string type
-        {
-            get
-            {
-                return this.typeField;
-            }
-            set
-            {
-                this.typeField = value;
-            }
-        }
+        public string type { get; set; }
 
         /// <remarks/>
         [XmlText()]
-        public decimal Value
-        {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                this.valueField = value;
-            }
-        }
+        public decimal Value { get; set; }
+    }
+    
+    /// <remarks/>
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public partial class dataProductPricesPrice1
+    {
+        /// <remarks/>
+        [XmlAttribute()]
+        public string type { get; set; }
+
+        /// <remarks/>
+        [XmlText()]
+        public decimal Value { get; set; }
     }
 
     /// <remarks/>

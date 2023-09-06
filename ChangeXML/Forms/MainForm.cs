@@ -15,9 +15,9 @@ namespace ChangeXML.Forms
 
             Text += $" v{Application.ProductVersion}";
 #if DEBUG
-            btnProduct.EditValue = @"C:\Users\ilel\Downloads\products_b.xml";
-            btnParameter.EditValue = @"C:\Users\ilel\Downloads\parameters_b.xml";
-            btnShablon.EditValue = @"C:\Users\ilel\Downloads\shab_b.xml";
+            btnProduct.EditValue = @"C:\Users\User16\Desktop\test\products_b.xml";
+            btnParameter.EditValue = @"C:\Users\User16\Desktop\test\parameters_b.xml";
+            btnShablon.EditValue = @"C:\Users\User16\Desktop\test\shab_b.xml";
 #endif
         }
 
