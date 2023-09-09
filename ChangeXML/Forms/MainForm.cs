@@ -84,8 +84,8 @@ namespace ChangeXML.Forms
 
                 var tempFileProduct = GetTempFileFromPathProduct(pathProduct);
 
-                var products = Controllers.OriginalController.GetObjFromXML<ChangeXML.TestModels.Products.data>(tempFileProduct);
-                var parameters = Controllers.OriginalController.GetObjFromXML<ChangeXML.TestModels.Parameters.data>(pathParameter);
+                var products = Controllers.OriginalController.GetObjFromXML<CnahgeXML.Core.TestModels.Products.data>(tempFileProduct);
+                var parameters = Controllers.OriginalController.GetObjFromXML<CnahgeXML.Core.TestModels.Parameters.data>(pathParameter);
                 var templates = Controllers.OriginalController.GetTechnicalInformation(pathShablon);
 
                 var countProduct = 0;
@@ -162,7 +162,7 @@ namespace ChangeXML.Forms
             }
         }
 
-        private static string SaveAndEditNewFile(TestModels.Products.data products)
+        private static string SaveAndEditNewFile(CnahgeXML.Core.TestModels.Products.data products)
         {
             var fileName = "new.xml";
             Controllers.OriginalController.Save(products, fileName);

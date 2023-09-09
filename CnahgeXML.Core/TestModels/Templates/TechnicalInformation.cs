@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChangeXML.TestModels.Templates
+namespace CnahgeXML.Core.TestModels.Templates
 {
     public partial class TechnicalInformation
     {

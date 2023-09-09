@@ -26,9 +26,9 @@ namespace ChangeXML.Controllers
             }
         }
 
-        public static TestModels.Templates.TechnicalInformation GetTechnicalInformation(string path)
+        public static CnahgeXML.Core.TestModels.Templates.TechnicalInformation GetTechnicalInformation(string path)
         {
-            var result = new TestModels.Templates.TechnicalInformation();
+            var result = new CnahgeXML.Core.TestModels.Templates.TechnicalInformation();
 
             var xmlDocument = new XmlDocument();
             xmlDocument.Load(path);
@@ -37,7 +37,7 @@ namespace ChangeXML.Controllers
             {
                 foreach (XmlElement xnode in root)
                 {
-                    var parameter = new TestModels.Templates.Parameter();
+                    var parameter = new CnahgeXML.Core.TestModels.Templates.Parameter();
 
                     var order = xnode.Attributes.GetNamedItem("order");
                     var id = xnode.Attributes.GetNamedItem("id");

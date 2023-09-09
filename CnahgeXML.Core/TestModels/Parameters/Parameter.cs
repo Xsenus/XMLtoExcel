@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace ChangeXML.TestModels.Parameters
+namespace CnahgeXML.Core.TestModels.Parameters
 {
     [Serializable()]
     [DesignerCategory("code")]

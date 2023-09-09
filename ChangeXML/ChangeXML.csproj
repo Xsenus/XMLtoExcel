@@ -95,9 +95,6 @@
     <Compile Include="Models\DataProductText.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestModels\Parameters\Parameter.cs" />
-    <Compile Include="TestModels\Products\Product.cs" />
-    <Compile Include="TestModels\Templates\TechnicalInformation.cs" />
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -125,6 +122,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CnahgeXML.Core\CnahgeXML.Core.csproj">
+      <Project>{007c568d-0092-4407-9600-1177f0ade57c}</Project>
+      <Name>CnahgeXML.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

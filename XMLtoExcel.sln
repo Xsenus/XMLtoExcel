@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32901.82
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLtoExcel", "XMLtoExcel\XMLtoExcel.csproj", "{C4E6854A-AB07-450C-8F5D-77A5B3A802C9}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangeXML", "ChangeXML\ChangeXML.csproj", "{A008CE5A-95AC-4C8B-8FB5-754F23A8A511}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangeXML.NET", "ChangeXML.NET\ChangeXML.NET.csproj", "{4EE26393-4575-44F4-9A34-953B1FA7BC7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CnahgeXML.Core", "CnahgeXML.Core\CnahgeXML.Core.csproj", "{007C568D-0092-4407-9600-1177F0ADE57C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{4EE26393-4575-44F4-9A34-953B1FA7BC7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EE26393-4575-44F4-9A34-953B1FA7BC7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EE26393-4575-44F4-9A34-953B1FA7BC7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{007C568D-0092-4407-9600-1177F0ADE57C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{007C568D-0092-4407-9600-1177F0ADE57C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{007C568D-0092-4407-9600-1177F0ADE57C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{007C568D-0092-4407-9600-1177F0ADE57C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{C5BA257C-DFE9-49C1-A5AB-F3C8ACAD6323} = {5934A1AC-8523-4374-8BCD-F9426F97573B}
 		{A008CE5A-95AC-4C8B-8FB5-754F23A8A511} = {BD95B0C8-93D0-45CF-BFC6-B9D7E363BE68}
 		{4EE26393-4575-44F4-9A34-953B1FA7BC7D} = {BD95B0C8-93D0-45CF-BFC6-B9D7E363BE68}
+		{007C568D-0092-4407-9600-1177F0ADE57C} = {BD95B0C8-93D0-45CF-BFC6-B9D7E363BE68}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {305E5BAA-D21F-4AFD-9961-254C3C82C74F}

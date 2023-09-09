@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace ChangeXML.TestModels.Products
+namespace CnahgeXML.Core.TestModels.Products
 {
     /// <remarks/>
     [Serializable()]
@@ -1451,7 +1451,7 @@ namespace ChangeXML.TestModels.Products
         [XmlText()]
         public decimal Value { get; set; }
     }
-    
+
     /// <remarks/>
     [Serializable()]
     [DesignerCategory("code")]

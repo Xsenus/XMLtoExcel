@@ -1,26 +1,25 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
-// связанных со сборкой.
-[assembly: AssemblyTitle("ChangeXML.NET")]
+// связанные со сборкой.
+[assembly: AssemblyTitle("CnahgeXML.Core")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ilel@list.ru")]
-[assembly: AssemblyProduct("ChangeXML.NET")]
+[assembly: AssemblyProduct("CnahgeXML.Core")]
 [assembly: AssemblyCopyright("ilel@list.ru © 2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Установка значения False для параметра ComVisible делает типы в этой сборке невидимыми
 // для компонентов COM. Если необходимо обратиться к типу в этой сборке через
-// COM, следует установить атрибут ComVisible в TRUE для этого типа.
+// COM, задайте атрибуту ComVisible значение TRUE для этого типа.
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("4ee26393-4575-44f4-9a34-953b1fa7bc7d")]
+[assembly: Guid("007c568d-0092-4407-9600-1177f0ade57c")]
 
 // Сведения о версии сборки состоят из указанных ниже четырех значений:
 //
