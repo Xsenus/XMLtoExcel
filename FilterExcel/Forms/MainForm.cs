@@ -80,7 +80,7 @@ namespace FilterExcel.Forms
 
         private void OpenFileDialog()
         {
-            using (var ofd = new OpenFileDialog() 
+            using (var ofd = new OpenFileDialog()
             {
                 Filter = "Excel Files (.xlsx)|*.xlsx|Excel Files(.xls)|*.xls|Excel Files(*.xlsm)|*.xlsm"
             })
@@ -234,7 +234,7 @@ namespace FilterExcel.Forms
                     var lastRow = worksheet.Cells.LastOrDefault(c => c.Start.Column == usingExcelColumn.Index);
                     if (lastRow != null)
                     {
-                        var lastRowAddress = string.Join("", lastRow?.Address?.Where(char.IsDigit));
+                        var lastRowAddress = string.Join(string.Empty, lastRow?.Address?.Where(char.IsDigit));
 
                         if (int.TryParse(lastRowAddress, out int resultLastRow))
                         {
@@ -268,7 +268,7 @@ namespace FilterExcel.Forms
             {
                 if (item is TextBox textBox && textBox.Name.Contains("txtCol"))
                 {
-                    var number = textBox.Name.Replace("txtCol", "");
+                    var number = textBox.Name.Replace("txtCol", string.Empty);
                     if (int.TryParse(number, out int numberResult))
                     {
                         var comboBoxCollection = Controls.Find($"cmbCol{numberResult}", false);
@@ -396,7 +396,7 @@ namespace FilterExcel.Forms
             }
 
 
-            var vendorCodeColumn = txtVendorCodeColumn.Text; 
+            var vendorCodeColumn = txtVendorCodeColumn.Text;
             if (string.IsNullOrWhiteSpace(vendorCodeColumn))
             {
                 MessageBox.Show(
@@ -450,14 +450,14 @@ namespace FilterExcel.Forms
                 //var filterValue = item.ComboBox.Text;
                 //if (string.IsNullOrWhiteSpace(filterValue))
                 //{
-                    //if (MessageBox.Show(
-                    //    $"Не задано значение фильтра для столбца № {item.FilterPosition}. Продолжить с пустым значением?",
-                    //    "Информационное сообщение",
-                    //    MessageBoxButtons.OKCancel,
-                    //    MessageBoxIcon.Question) != DialogResult.OK)
-                    //{
-                    //    return;
-                    //}
+                //if (MessageBox.Show(
+                //    $"Не задано значение фильтра для столбца № {item.FilterPosition}. Продолжить с пустым значением?",
+                //    "Информационное сообщение",
+                //    MessageBoxButtons.OKCancel,
+                //    MessageBoxIcon.Question) != DialogResult.OK)
+                //{
+                //    return;
+                //}
                 //}
             }
 
@@ -554,7 +554,7 @@ namespace FilterExcel.Forms
                             var vendorCode = worksheet.Cells[i, vendorCodeExcelColumn.Index].Text;
                             firstVendorCode = vendorCode;
                         }
-                        
+
                         var newValue = $"{value}{firstVendorCode}";
                         worksheet.Cells[i, newColumnExcelValue.Index].Value = newValue;
 
