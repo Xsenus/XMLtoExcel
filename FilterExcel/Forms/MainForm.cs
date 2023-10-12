@@ -6,9 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using static FilterExcel.Forms.MainForm;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskBand;
 
 namespace FilterExcel.Forms
 {
@@ -527,7 +524,7 @@ namespace FilterExcel.Forms
                     var firstVendorCode = default(string);
                     for (int i = resultRowPosition; i < countDataTableRow; i++)
                     {
-                        generalMeaning++; 
+                        generalMeaning++;
                         ProcessingFilterEnabled(value, collectionUsingComboBox, ref valuesChanged, worksheet, collectionUsingExcelColumn, ref firstVendorCode, vendorCodeExcelColumn, newColumnExcelValue, i);
                     }
                 }
@@ -574,13 +571,20 @@ namespace FilterExcel.Forms
 
                             foreach (var objDataExcel in item)
                             {
-                                worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
-                                valuesChanged++;
+                                if (item.Count() > 1)
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                    valuesChanged++;
+                                }
+                                else
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = string.Empty;
+                                }
                             }
                         }
 
                     }
-                    if (usingExcelColumns.Count == 6)
+                    else if (usingExcelColumns.Count == 6)
                     {
                         var groupListDataExcel = dataExcel.GroupBy(group => new
                         {
@@ -590,8 +594,8 @@ namespace FilterExcel.Forms
                             Column4 = group.GetValueByColumn(usingExcelColumns[3].Index),
                             Column5 = group.GetValueByColumn(usingExcelColumns[4].Index),
                             Column6 = group.GetValueByColumn(usingExcelColumns[5].Index),
-                        }); 
-                        
+                        });
+
                         foreach (var item in groupListDataExcel)
                         {
                             var firstVendorCode = item.First().GetValueByColumn(vendorCodeExcelColumn.Index);
@@ -599,12 +603,19 @@ namespace FilterExcel.Forms
 
                             foreach (var objDataExcel in item)
                             {
-                                worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
-                                valuesChanged++;
+                                if (item.Count() > 1)
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                    valuesChanged++;
+                                }
+                                else
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = string.Empty;
+                                }
                             }
                         }
                     }
-                    if (usingExcelColumns.Count == 5)
+                    else if (usingExcelColumns.Count == 5)
                     {
                         var groupListDataExcel = dataExcel.GroupBy(group => new
                         {
@@ -622,12 +633,19 @@ namespace FilterExcel.Forms
 
                             foreach (var objDataExcel in item)
                             {
-                                worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
-                                valuesChanged++;
+                                if (item.Count() > 1)
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                    valuesChanged++;
+                                }
+                                else
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = string.Empty;
+                                }
                             }
                         }
                     }
-                    if (usingExcelColumns.Count == 4)
+                    else if (usingExcelColumns.Count == 4)
                     {
                         var groupListDataExcel = dataExcel.GroupBy(group => new
                         {
@@ -644,12 +662,19 @@ namespace FilterExcel.Forms
 
                             foreach (var objDataExcel in item)
                             {
-                                worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
-                                valuesChanged++;
+                                if (item.Count() > 1)
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                    valuesChanged++;
+                                }
+                                else
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = string.Empty;
+                                }
                             }
                         }
                     }
-                    if (usingExcelColumns.Count == 3)
+                    else if (usingExcelColumns.Count == 3)
                     {
                         var groupListDataExcel = dataExcel.GroupBy(group => new
                         {
@@ -665,12 +690,19 @@ namespace FilterExcel.Forms
 
                             foreach (var objDataExcel in item)
                             {
-                                worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
-                                valuesChanged++;
+                                if (item.Count() > 1)
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                    valuesChanged++;
+                                }
+                                else
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = string.Empty;
+                                }
                             }
                         }
                     }
-                    if (usingExcelColumns.Count == 2)
+                    else if (usingExcelColumns.Count == 2)
                     {
                         var groupListDataExcel = dataExcel.GroupBy(group => new
                         {
@@ -685,13 +717,20 @@ namespace FilterExcel.Forms
 
                             foreach (var objDataExcel in item)
                             {
-                                worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
-                                valuesChanged++;
+                                if (item.Count() > 1)
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                    valuesChanged++;
+                                }
+                                else
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = string.Empty;
+                                }
                             }
                         }
 
                     }
-                    if (usingExcelColumns.Count == 1)
+                    else if (usingExcelColumns.Count == 1)
                     {
                         var groupListDataExcel = dataExcel.GroupBy(group => new
                         {
@@ -702,29 +741,21 @@ namespace FilterExcel.Forms
                         {
                             var firstVendorCode = item.First().GetValueByColumn(vendorCodeExcelColumn.Index);
                             var newValue = $"{value}{firstVendorCode}";
-
+                            
                             foreach (var objDataExcel in item)
                             {
-                                worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
-                                valuesChanged++;
+                                if (item.Count() > 1)
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                    valuesChanged++;
+                                }
+                                else
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = string.Empty;
+                                }
                             }
                         }
                     }
-
-                    //var groupListDataExcel = GroupByColumns(dataExcel, possibleValues, usingExcelColumns, 0);
-                    //groupListDataExcel = groupListDataExcel.Where(w => w.Count > 0).ToList();
-
-                    //foreach (var listDataExcel in groupListDataExcel)
-                    //{
-                    //    var firstVendorCode = listDataExcel.First().GetValueByColumn(vendorCodeExcelColumn.Index);
-                    //    var newValue = $"{value}{firstVendorCode}";
-
-                    //    foreach (var objDataExcel in listDataExcel)
-                    //    {
-                    //        worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
-                    //        valuesChanged++;
-                    //    }
-                    //}
                 }
 
                 try
@@ -746,11 +777,7 @@ namespace FilterExcel.Forms
 
             var messageResult = $"Отработка Excel успешно завершена.{Environment.NewLine}" +
                         $"Обработано записей: {generalMeaning}";
-            if (isUseFilter)
-            {
-                messageResult += $"{Environment.NewLine}Установлено новых значений: {valuesChanged}";
-            }
-
+            messageResult += $"{Environment.NewLine}Установлено новых значений: {valuesChanged}";
             messageResult += $"{Environment.NewLine}Время начало операции: {dateTimeStart}";
             messageResult += $"{Environment.NewLine}Время окончания операции: {dateTimeStop}";
 
