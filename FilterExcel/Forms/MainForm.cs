@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using static FilterExcel.Forms.MainForm;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace FilterExcel.Forms
 {
@@ -432,8 +434,8 @@ namespace FilterExcel.Forms
                 return;
             }
 
-            var collection = GetUsingComboBoxControls(false);
-            if (collection.Count == 0)
+            var collectionUsingComboBox = GetUsingComboBoxControls(false);
+            if (collectionUsingComboBox.Count == 0)
             {
                 if (MessageBox.Show(
                         $"Нет активных фильтров, хотите продолжить операцию без фильтрации?",
@@ -445,20 +447,25 @@ namespace FilterExcel.Forms
                 }
             }
 
-            foreach (var item in collection)
+            var isUseFilter = false;
+
+            foreach (var item in collectionUsingComboBox)
             {
-                //var filterValue = item.ComboBox.Text;
-                //if (string.IsNullOrWhiteSpace(filterValue))
-                //{
-                //if (MessageBox.Show(
-                //    $"Не задано значение фильтра для столбца № {item.FilterPosition}. Продолжить с пустым значением?",
-                //    "Информационное сообщение",
-                //    MessageBoxButtons.OKCancel,
-                //    MessageBoxIcon.Question) != DialogResult.OK)
-                //{
-                //    return;
-                //}
-                //}
+                var filterValue = item.ComboBox.Text;
+                if (!string.IsNullOrWhiteSpace(filterValue))
+                {
+                    isUseFilter = true;
+                    break;
+
+                    //if (MessageBox.Show(
+                    //    $"Не задано значение фильтра для столбца № {item.FilterPosition}. Продолжить с пустым значением?",
+                    //    "Информационное сообщение",
+                    //    MessageBoxButtons.OKCancel,
+                    //    MessageBoxIcon.Question) != DialogResult.OK)
+                    //{
+                    //    return;
+                    //}
+                }
             }
 
             SaveSetting();
@@ -518,47 +525,61 @@ namespace FilterExcel.Forms
                     var id = item.StartColumn;
                     var name = item.Range.Address.Split(':').First();
                     collectionUsingExcelColumn.Add(new UsingExcelColumn(name, id));
+
+                    if (collectionUsingExcelColumn.Count >= 500)
+                    {
+                        break;
+                    }
                 }
 
-                var firstVendorCode = default(string);
                 var vendorCodeExcelColumn = GetUsingExcelColumn(collectionUsingExcelColumn, vendorCodeColumn);
                 var newColumnExcelValue = GetUsingExcelColumn(collectionUsingExcelColumn, newColumnValue);
                 var countDataTableRow = worksheet.Dimension.End.Row;
 
-                for (int i = resultRowPosition; i < countDataTableRow; i++)
+                if (isUseFilter)
                 {
-                    generalMeaning++;
-
-                    var isUse = true;
-                    foreach (var item in collection)
+                    var firstVendorCode = default(string);
+                    for (int i = resultRowPosition; i < countDataTableRow; i++)
                     {
-                        var usingExcelColumn = GetUsingExcelColumn(collectionUsingExcelColumn, item.ExcelColumnName);
-                        var cellValue = worksheet.Cells[i, usingExcelColumn.Index].Text;
-
-                        if (string.IsNullOrWhiteSpace(item.ComboBoxValue))
-                        {
-                            continue;
-                        }
-
-                        if (cellValue != null && !cellValue.Equals(item.ComboBoxValue, StringComparison.OrdinalIgnoreCase))
-                        {
-                            isUse = false;
-                            break;
-                        }
+                        generalMeaning++; 
+                        ProcessingFilterEnabled(value, collectionUsingComboBox, ref valuesChanged, worksheet, collectionUsingExcelColumn, ref firstVendorCode, vendorCodeExcelColumn, newColumnExcelValue, i);
                     }
-
-                    if (isUse)
+                }
+                else
+                {
+                    var dataExcel = new List<DataExcel>();
+                    for (int i = resultRowPosition; i < countDataTableRow + 1; i++)
                     {
-                        if (string.IsNullOrWhiteSpace(firstVendorCode))
+                        generalMeaning++;
+                        var obj = new object[collectionUsingExcelColumn.Count];
+                        for (int j = 0; j <= collectionUsingExcelColumn.Count - 1; j++)
                         {
-                            var vendorCode = worksheet.Cells[i, vendorCodeExcelColumn.Index].Text;
-                            firstVendorCode = vendorCode;
+                            obj[j] = worksheet.Cells[i, j + 1].Value;
                         }
+                        dataExcel.Add(new DataExcel(i, obj?.Select(s => s?.ToString())?.ToList()));
+                    } 
 
+                    var usingExcelColumns = new List<UsingExcelColumn>();
+                    var possibleValues = new List<List<string>>();
+                    foreach (var item in collectionUsingComboBox)
+                    {
+                        var filterColumn = GetUsingExcelColumn(collectionUsingExcelColumn, item.ExcelColumnName);
+                        usingExcelColumns.Add(filterColumn);
+                        possibleValues.Add(GetPossibleValues(dataExcel, filterColumn.Index));
+                    }
+                    var groupListDataExcel = GroupByColumns(dataExcel, possibleValues, usingExcelColumns, 0);
+                    groupListDataExcel = groupListDataExcel.Where(w => w.Count > 0).ToList();
+
+                    foreach (var listDataExcel in groupListDataExcel)
+                    {
+                        var firstVendorCode = listDataExcel.First().GetValueByColumn(vendorCodeExcelColumn.Index);
                         var newValue = $"{value}{firstVendorCode}";
-                        worksheet.Cells[i, newColumnExcelValue.Index].Value = newValue;
 
-                        valuesChanged++;
+                        foreach (var objDataExcel in listDataExcel)
+                        {
+                            worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                            valuesChanged++;
+                        }
                     }
                 }
 
@@ -577,25 +598,195 @@ namespace FilterExcel.Forms
                 }
             }
 
+            var messageResult = $"Отработка Excel успешно завершена.{Environment.NewLine}" +
+                        $"Обработано записей: {generalMeaning}";
+            if (isUseFilter)
+            {
+                messageResult += $"{Environment.NewLine}Установлено новых значений: {valuesChanged}";
+            }
+
             MessageBox.Show(
-                    $"Отработка Excel успешно завершена.{Environment.NewLine}" +
-                        $"Обработано записей: {generalMeaning}{Environment.NewLine}" +
-                        $"Установлено новых значений: {valuesChanged}",
+                    messageResult,
                     "Информационное сообщение",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
         }
 
+        private static List<string> GetPossibleValues(List<DataExcel> data, int columnIndex)
+        {
+            var possibleValues = new List<string>();
+            foreach (var item in data)
+            {
+                string value = item.GetValueByColumn(columnIndex);
+                if (!possibleValues.Contains(value))
+                {
+                    possibleValues.Add(value);
+                }
+            }
+            return possibleValues;
+        }
+
+        private static List<List<DataExcel>> GroupByColumns(List<DataExcel> data, List<List<string>> possibleValues, List<UsingExcelColumn> usingExcelColumns, int columnIndex)
+        {
+            if (columnIndex == possibleValues.Count)
+            {
+                return new List<List<DataExcel>> { data };
+            }
+
+            var result = new List<List<DataExcel>>();
+            foreach (var value in possibleValues[columnIndex])
+            {
+                var subData = new List<DataExcel>();
+                foreach (var item in data)
+                {
+                    if (item.GetValueByColumn(usingExcelColumns[columnIndex].Index) == value)
+                    {
+                        subData.Add(item);
+                    }
+                }
+                var subGroups = GroupByColumns(subData, possibleValues, usingExcelColumns, columnIndex + 1);
+                result.AddRange(subGroups);
+            }
+            return result;
+        }
+
+        public class DataExcel
+        {
+            public DataExcel(int row, List<string> columnValues)
+            {
+                Row = row;
+                ColumnValues = columnValues ?? new List<string>();
+            }
+
+            public int Row { get; }
+            public List<string> ColumnValues { get; }
+            public int ColumnValuesCount => ColumnValues?.Count ?? -1;
+
+            public string GetValueByColumn(int columnIndex, bool isRealColumnIndex = false)
+            {
+                var index = columnIndex - 1;
+                if (isRealColumnIndex)
+                {
+                    index = columnIndex;
+                }
+
+                if (index > ColumnValuesCount || index == -1)
+                {
+                    return default;
+                }
+                return ColumnValues[index];
+            }
+
+            public override string ToString()
+            {
+                return $"{Row}";
+            }
+        }
+
+        private static void ProcessingFilterEnabled(string value, List<UsingComboBox> collection, ref int valuesChanged, ExcelWorksheet worksheet, List<UsingExcelColumn> collectionUsingExcelColumn, ref string firstVendorCode, UsingExcelColumn vendorCodeExcelColumn, UsingExcelColumn newColumnExcelValue, int i)
+        {
+            var isUse = true;
+            foreach (var item in collection)
+            {
+                var usingExcelColumn = GetUsingExcelColumn(collectionUsingExcelColumn, item.ExcelColumnName);
+                var cellValue = worksheet.Cells[i, usingExcelColumn.Index].Text;
+
+                if (string.IsNullOrWhiteSpace(item.ComboBoxValue))
+                {
+                    continue;
+                }
+
+                if (cellValue != null && !cellValue.Equals(item.ComboBoxValue, StringComparison.OrdinalIgnoreCase))
+                {
+                    isUse = false;
+                    break;
+                }
+            }
+
+            if (isUse)
+            {
+                if (string.IsNullOrWhiteSpace(firstVendorCode))
+                {
+                    var vendorCode = worksheet.Cells[i, vendorCodeExcelColumn.Index].Text;
+                    firstVendorCode = vendorCode;
+                }
+
+                var newValue = $"{value}{firstVendorCode}";
+                worksheet.Cells[i, newColumnExcelValue.Index].Value = newValue;
+
+                valuesChanged++;
+            }
+        }
+
+        private static void ProcessingFilterDisable(string value, List<UsingComboBox> collection, ref int valuesChanged, ExcelWorksheet worksheet, List<UsingExcelColumn> collectionUsingExcelColumn, ref string firstVendorCode, UsingExcelColumn vendorCodeExcelColumn, UsingExcelColumn newColumnExcelValue, int i)
+        {
+            var isUse = true;
+            foreach (var item in collection)
+            {
+
+
+
+
+
+
+
+                var usingExcelColumn = GetUsingExcelColumn(collectionUsingExcelColumn, item.ExcelColumnName);
+                var cellValue = worksheet.Cells[i, usingExcelColumn.Index].Text;
+
+                if (string.IsNullOrWhiteSpace(item.ComboBoxValue))
+                {
+                    continue;
+                }
+
+                if (cellValue != null && !cellValue.Equals(item.ComboBoxValue, StringComparison.OrdinalIgnoreCase))
+                {
+                    isUse = false;
+                    break;
+                }
+            }
+
+            if (isUse)
+            {
+                if (string.IsNullOrWhiteSpace(firstVendorCode))
+                {
+                    var vendorCode = worksheet.Cells[i, vendorCodeExcelColumn.Index].Text;
+                    firstVendorCode = vendorCode;
+                }
+
+                var newValue = $"{value}{firstVendorCode}";
+                worksheet.Cells[i, newColumnExcelValue.Index].Value = newValue;
+
+                valuesChanged++;
+            }
+        }
+
+
         private static UsingExcelColumn GetUsingExcelColumn(List<UsingExcelColumn> collectionUsingExcelColumn, object columnValue)
         {
             var usingExcelColumn = default(UsingExcelColumn);
-            if (int.TryParse(columnValue?.ToString(), out int resultExcelColumnIndex))
+            try
             {
-                usingExcelColumn = collectionUsingExcelColumn.First(f => f.Index == resultExcelColumnIndex);
+                if (int.TryParse(columnValue?.ToString(), out int resultExcelColumnIndex))
+                {
+                    usingExcelColumn = collectionUsingExcelColumn.First(f => f.Index == resultExcelColumnIndex);
+                }
+                else
+                {
+                    usingExcelColumn = collectionUsingExcelColumn.First(f => f.Name.Equals(columnValue?.ToString(), StringComparison.OrdinalIgnoreCase));
+                }
             }
-            else
+            catch (InvalidOperationException ex)
             {
-                usingExcelColumn = collectionUsingExcelColumn.First(f => f.Name.Equals(columnValue?.ToString(), StringComparison.OrdinalIgnoreCase));
+                var message = $"{ex.Message}.{Environment.NewLine}" +
+                    $"Элемент ({nameof(columnValue)}): {columnValue}" +
+                    $"{Environment.NewLine}" +
+                    $"{Environment.NewLine}" +
+                    $"Возможно указана не верная страница документа Excel.";
+                throw new Exception(message);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
 
             return usingExcelColumn;
