@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using static FilterExcel.Forms.MainForm;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskBand;
 
 namespace FilterExcel.Forms
 {
@@ -298,23 +299,6 @@ namespace FilterExcel.Forms
             return collection.OrderBy(o => o.FilterPosition).ToList();
         }
 
-        public class UsingExcelColumn
-        {
-            public UsingExcelColumn(string name, int index)
-            {
-                Name = name ?? throw new ArgumentNullException(nameof(name));
-                Index = index;
-            }
-
-            public string Name { get; }
-            public int Index { get; }
-
-            public override string ToString()
-            {
-                return $"[{Index}] {Name}";
-            }
-        }
-
         public class UsingComboBox
         {
             public UsingComboBox(int filterPosition, string excelColumnName, ComboBox comboBox)
@@ -470,6 +454,8 @@ namespace FilterExcel.Forms
 
             SaveSetting();
 
+            var dateTimeStart = DateTime.Now;
+
             var generalMeaning = 0;
             var valuesChanged = 0;
 
@@ -557,30 +543,188 @@ namespace FilterExcel.Forms
                             obj[j] = worksheet.Cells[i, j + 1].Value;
                         }
                         dataExcel.Add(new DataExcel(i, obj?.Select(s => s?.ToString())?.ToList()));
-                    } 
+                    }
 
                     var usingExcelColumns = new List<UsingExcelColumn>();
-                    var possibleValues = new List<List<string>>();
+                    var possibleValues = new List<HashSet<string>>();
                     foreach (var item in collectionUsingComboBox)
                     {
                         var filterColumn = GetUsingExcelColumn(collectionUsingExcelColumn, item.ExcelColumnName);
                         usingExcelColumns.Add(filterColumn);
                         possibleValues.Add(GetPossibleValues(dataExcel, filterColumn.Index));
                     }
-                    var groupListDataExcel = GroupByColumns(dataExcel, possibleValues, usingExcelColumns, 0);
-                    groupListDataExcel = groupListDataExcel.Where(w => w.Count > 0).ToList();
 
-                    foreach (var listDataExcel in groupListDataExcel)
+                    if (usingExcelColumns.Count == 7)
                     {
-                        var firstVendorCode = listDataExcel.First().GetValueByColumn(vendorCodeExcelColumn.Index);
-                        var newValue = $"{value}{firstVendorCode}";
-
-                        foreach (var objDataExcel in listDataExcel)
+                        var groupListDataExcel = dataExcel.GroupBy(group => new
                         {
-                            worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
-                            valuesChanged++;
+                            Column1 = group.GetValueByColumn(usingExcelColumns[0].Index),
+                            Column2 = group.GetValueByColumn(usingExcelColumns[1].Index),
+                            Column3 = group.GetValueByColumn(usingExcelColumns[2].Index),
+                            Column4 = group.GetValueByColumn(usingExcelColumns[3].Index),
+                            Column5 = group.GetValueByColumn(usingExcelColumns[4].Index),
+                            Column6 = group.GetValueByColumn(usingExcelColumns[5].Index),
+                            Column7 = group.GetValueByColumn(usingExcelColumns[6].Index),
+                        });
+
+                        foreach (var item in groupListDataExcel)
+                        {
+                            var firstVendorCode = item.First().GetValueByColumn(vendorCodeExcelColumn.Index);
+                            var newValue = $"{value}{firstVendorCode}";
+
+                            foreach (var objDataExcel in item)
+                            {
+                                worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                valuesChanged++;
+                            }
+                        }
+
+                    }
+                    if (usingExcelColumns.Count == 6)
+                    {
+                        var groupListDataExcel = dataExcel.GroupBy(group => new
+                        {
+                            Column1 = group.GetValueByColumn(usingExcelColumns[0].Index),
+                            Column2 = group.GetValueByColumn(usingExcelColumns[1].Index),
+                            Column3 = group.GetValueByColumn(usingExcelColumns[2].Index),
+                            Column4 = group.GetValueByColumn(usingExcelColumns[3].Index),
+                            Column5 = group.GetValueByColumn(usingExcelColumns[4].Index),
+                            Column6 = group.GetValueByColumn(usingExcelColumns[5].Index),
+                        }); 
+                        
+                        foreach (var item in groupListDataExcel)
+                        {
+                            var firstVendorCode = item.First().GetValueByColumn(vendorCodeExcelColumn.Index);
+                            var newValue = $"{value}{firstVendorCode}";
+
+                            foreach (var objDataExcel in item)
+                            {
+                                worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                valuesChanged++;
+                            }
                         }
                     }
+                    if (usingExcelColumns.Count == 5)
+                    {
+                        var groupListDataExcel = dataExcel.GroupBy(group => new
+                        {
+                            Column1 = group.GetValueByColumn(usingExcelColumns[0].Index),
+                            Column2 = group.GetValueByColumn(usingExcelColumns[1].Index),
+                            Column3 = group.GetValueByColumn(usingExcelColumns[2].Index),
+                            Column4 = group.GetValueByColumn(usingExcelColumns[3].Index),
+                            Column5 = group.GetValueByColumn(usingExcelColumns[4].Index),
+                        });
+
+                        foreach (var item in groupListDataExcel)
+                        {
+                            var firstVendorCode = item.First().GetValueByColumn(vendorCodeExcelColumn.Index);
+                            var newValue = $"{value}{firstVendorCode}";
+
+                            foreach (var objDataExcel in item)
+                            {
+                                worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                valuesChanged++;
+                            }
+                        }
+                    }
+                    if (usingExcelColumns.Count == 4)
+                    {
+                        var groupListDataExcel = dataExcel.GroupBy(group => new
+                        {
+                            Column1 = group.GetValueByColumn(usingExcelColumns[0].Index),
+                            Column2 = group.GetValueByColumn(usingExcelColumns[1].Index),
+                            Column3 = group.GetValueByColumn(usingExcelColumns[2].Index),
+                            Column4 = group.GetValueByColumn(usingExcelColumns[3].Index),
+                        });
+
+                        foreach (var item in groupListDataExcel)
+                        {
+                            var firstVendorCode = item.First().GetValueByColumn(vendorCodeExcelColumn.Index);
+                            var newValue = $"{value}{firstVendorCode}";
+
+                            foreach (var objDataExcel in item)
+                            {
+                                worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                valuesChanged++;
+                            }
+                        }
+                    }
+                    if (usingExcelColumns.Count == 3)
+                    {
+                        var groupListDataExcel = dataExcel.GroupBy(group => new
+                        {
+                            Column1 = group.GetValueByColumn(usingExcelColumns[0].Index),
+                            Column2 = group.GetValueByColumn(usingExcelColumns[1].Index),
+                            Column3 = group.GetValueByColumn(usingExcelColumns[2].Index),
+                        });
+
+                        foreach (var item in groupListDataExcel)
+                        {
+                            var firstVendorCode = item.First().GetValueByColumn(vendorCodeExcelColumn.Index);
+                            var newValue = $"{value}{firstVendorCode}";
+
+                            foreach (var objDataExcel in item)
+                            {
+                                worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                valuesChanged++;
+                            }
+                        }
+                    }
+                    if (usingExcelColumns.Count == 2)
+                    {
+                        var groupListDataExcel = dataExcel.GroupBy(group => new
+                        {
+                            Column1 = group.GetValueByColumn(usingExcelColumns[0].Index),
+                            Column2 = group.GetValueByColumn(usingExcelColumns[1].Index),
+                        });
+
+                        foreach (var item in groupListDataExcel)
+                        {
+                            var firstVendorCode = item.First().GetValueByColumn(vendorCodeExcelColumn.Index);
+                            var newValue = $"{value}{firstVendorCode}";
+
+                            foreach (var objDataExcel in item)
+                            {
+                                worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                valuesChanged++;
+                            }
+                        }
+
+                    }
+                    if (usingExcelColumns.Count == 1)
+                    {
+                        var groupListDataExcel = dataExcel.GroupBy(group => new
+                        {
+                            Column1 = group.GetValueByColumn(usingExcelColumns[0].Index),
+                        });
+
+                        foreach (var item in groupListDataExcel)
+                        {
+                            var firstVendorCode = item.First().GetValueByColumn(vendorCodeExcelColumn.Index);
+                            var newValue = $"{value}{firstVendorCode}";
+
+                            foreach (var objDataExcel in item)
+                            {
+                                worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                valuesChanged++;
+                            }
+                        }
+                    }
+
+                    //var groupListDataExcel = GroupByColumns(dataExcel, possibleValues, usingExcelColumns, 0);
+                    //groupListDataExcel = groupListDataExcel.Where(w => w.Count > 0).ToList();
+
+                    //foreach (var listDataExcel in groupListDataExcel)
+                    //{
+                    //    var firstVendorCode = listDataExcel.First().GetValueByColumn(vendorCodeExcelColumn.Index);
+                    //    var newValue = $"{value}{firstVendorCode}";
+
+                    //    foreach (var objDataExcel in listDataExcel)
+                    //    {
+                    //        worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                    //        valuesChanged++;
+                    //    }
+                    //}
                 }
 
                 try
@@ -598,12 +742,17 @@ namespace FilterExcel.Forms
                 }
             }
 
+            var dateTimeStop = DateTime.Now;
+
             var messageResult = $"Отработка Excel успешно завершена.{Environment.NewLine}" +
                         $"Обработано записей: {generalMeaning}";
             if (isUseFilter)
             {
                 messageResult += $"{Environment.NewLine}Установлено новых значений: {valuesChanged}";
             }
+
+            messageResult += $"{Environment.NewLine}Время начало операции: {dateTimeStart}";
+            messageResult += $"{Environment.NewLine}Время окончания операции: {dateTimeStop}";
 
             MessageBox.Show(
                     messageResult,
@@ -612,9 +761,9 @@ namespace FilterExcel.Forms
                     MessageBoxIcon.Information);
         }
 
-        private static List<string> GetPossibleValues(List<DataExcel> data, int columnIndex)
+        private static HashSet<string> GetPossibleValues(List<DataExcel> data, int columnIndex)
         {
-            var possibleValues = new List<string>();
+            var possibleValues = new HashSet<string>();
             foreach (var item in data)
             {
                 string value = item.GetValueByColumn(columnIndex);
@@ -626,7 +775,8 @@ namespace FilterExcel.Forms
             return possibleValues;
         }
 
-        private static List<List<DataExcel>> GroupByColumns(List<DataExcel> data, List<List<string>> possibleValues, List<UsingExcelColumn> usingExcelColumns, int columnIndex)
+        public static List<List<DataExcel>> dataExcels = new List<List<DataExcel>>();
+        private static List<List<DataExcel>> GroupByColumns(List<DataExcel> data, List<HashSet<string>> possibleValues, List<UsingExcelColumn> usingExcelColumns, int columnIndex)
         {
             if (columnIndex == possibleValues.Count)
             {
@@ -645,7 +795,8 @@ namespace FilterExcel.Forms
                     }
                 }
                 var subGroups = GroupByColumns(subData, possibleValues, usingExcelColumns, columnIndex + 1);
-                result.AddRange(subGroups);
+                result.AddRange(subGroups.Where(w => w.Count > 0));
+                dataExcels.AddRange(subGroups.Where(w => w.Count > 0));
             }
             return result;
         }
@@ -680,6 +831,23 @@ namespace FilterExcel.Forms
             public override string ToString()
             {
                 return $"{Row}";
+            }
+        }
+
+        public class UsingExcelColumn
+        {
+            public UsingExcelColumn(string name, int index)
+            {
+                Name = name ?? throw new ArgumentNullException(nameof(name));
+                Index = index;
+            }
+
+            public string Name { get; }
+            public int Index { get; }
+
+            public override string ToString()
+            {
+                return $"[{Index}] {Name}";
             }
         }
 
