@@ -539,7 +539,7 @@ namespace FilterExcel.Forms
                         {
                             obj[j] = worksheet.Cells[i, j + 1].Value;
                         }
-                        dataExcel.Add(new DataExcel(i, obj?.Select(s => s?.ToString())?.ToList()));
+                        dataExcel.Add(new DataExcel(i, obj?.Select(s => s?.ToString()?.Trim())?.ToList()));
                     }
 
                     var usingExcelColumns = new List<UsingExcelColumn>();
@@ -802,83 +802,16 @@ namespace FilterExcel.Forms
             return possibleValues;
         }
 
-        public static List<List<DataExcel>> dataExcels = new List<List<DataExcel>>();
-        private static List<List<DataExcel>> GroupByColumns(List<DataExcel> data, List<HashSet<string>> possibleValues, List<UsingExcelColumn> usingExcelColumns, int columnIndex)
-        {
-            if (columnIndex == possibleValues.Count)
-            {
-                return new List<List<DataExcel>> { data };
-            }
-
-            var result = new List<List<DataExcel>>();
-            foreach (var value in possibleValues[columnIndex])
-            {
-                var subData = new List<DataExcel>();
-                foreach (var item in data)
-                {
-                    if (item.GetValueByColumn(usingExcelColumns[columnIndex].Index) == value)
-                    {
-                        subData.Add(item);
-                    }
-                }
-                var subGroups = GroupByColumns(subData, possibleValues, usingExcelColumns, columnIndex + 1);
-                result.AddRange(subGroups.Where(w => w.Count > 0));
-                dataExcels.AddRange(subGroups.Where(w => w.Count > 0));
-            }
-            return result;
-        }
-
-        public class DataExcel
-        {
-            public DataExcel(int row, List<string> columnValues)
-            {
-                Row = row;
-                ColumnValues = columnValues ?? new List<string>();
-            }
-
-            public int Row { get; }
-            public List<string> ColumnValues { get; }
-            public int ColumnValuesCount => ColumnValues?.Count ?? -1;
-
-            public string GetValueByColumn(int columnIndex, bool isRealColumnIndex = false)
-            {
-                var index = columnIndex - 1;
-                if (isRealColumnIndex)
-                {
-                    index = columnIndex;
-                }
-
-                if (index > ColumnValuesCount || index == -1)
-                {
-                    return default;
-                }
-                return ColumnValues[index];
-            }
-
-            public override string ToString()
-            {
-                return $"{Row}";
-            }
-        }
-
-        public class UsingExcelColumn
-        {
-            public UsingExcelColumn(string name, int index)
-            {
-                Name = name ?? throw new ArgumentNullException(nameof(name));
-                Index = index;
-            }
-
-            public string Name { get; }
-            public int Index { get; }
-
-            public override string ToString()
-            {
-                return $"[{Index}] {Name}";
-            }
-        }
-
-        private static void ProcessingFilterEnabled(string value, List<UsingComboBox> collection, ref int valuesChanged, ExcelWorksheet worksheet, List<UsingExcelColumn> collectionUsingExcelColumn, ref string firstVendorCode, UsingExcelColumn vendorCodeExcelColumn, UsingExcelColumn newColumnExcelValue, int i)
+        private static void ProcessingFilterEnabled(
+            string value,
+            List<UsingComboBox> collection,
+            ref int valuesChanged,
+            ExcelWorksheet worksheet,
+            List<UsingExcelColumn> collectionUsingExcelColumn,
+            ref string firstVendorCode,
+            UsingExcelColumn vendorCodeExcelColumn,
+            UsingExcelColumn newColumnExcelValue,
+            int i)
         {
             var isUse = true;
             foreach (var item in collection)
@@ -912,49 +845,6 @@ namespace FilterExcel.Forms
                 valuesChanged++;
             }
         }
-
-        private static void ProcessingFilterDisable(string value, List<UsingComboBox> collection, ref int valuesChanged, ExcelWorksheet worksheet, List<UsingExcelColumn> collectionUsingExcelColumn, ref string firstVendorCode, UsingExcelColumn vendorCodeExcelColumn, UsingExcelColumn newColumnExcelValue, int i)
-        {
-            var isUse = true;
-            foreach (var item in collection)
-            {
-
-
-
-
-
-
-
-                var usingExcelColumn = GetUsingExcelColumn(collectionUsingExcelColumn, item.ExcelColumnName);
-                var cellValue = worksheet.Cells[i, usingExcelColumn.Index].Text;
-
-                if (string.IsNullOrWhiteSpace(item.ComboBoxValue))
-                {
-                    continue;
-                }
-
-                if (cellValue != null && !cellValue.Equals(item.ComboBoxValue, StringComparison.OrdinalIgnoreCase))
-                {
-                    isUse = false;
-                    break;
-                }
-            }
-
-            if (isUse)
-            {
-                if (string.IsNullOrWhiteSpace(firstVendorCode))
-                {
-                    var vendorCode = worksheet.Cells[i, vendorCodeExcelColumn.Index].Text;
-                    firstVendorCode = vendorCode;
-                }
-
-                var newValue = $"{value}{firstVendorCode}";
-                worksheet.Cells[i, newColumnExcelValue.Index].Value = newValue;
-
-                valuesChanged++;
-            }
-        }
-
 
         private static UsingExcelColumn GetUsingExcelColumn(List<UsingExcelColumn> collectionUsingExcelColumn, object columnValue)
         {
