@@ -117,13 +117,17 @@ namespace EditingXML.Forms
                 var xmlDocument = new XmlDocument();
                 xmlDocument.Load(pathProduct);
 
+                var countProduct = 0;
                 var productList = xmlDocument.SelectNodes("//product");
+                progressBar.Maximum = productList.Count;
                 foreach (XmlNode productXmlNode in productList)
                 {
                     var article = productXmlNode.SelectSingleNode("article");
                     var articleValue = article.InnerText?.Trim();
                     if (!string.IsNullOrWhiteSpace(articleValue))
                     {
+                        countProduct++;
+                        progressBar.Value = countProduct;
                         var relastions = relations?.Relations?.Relation;
                         foreach (var relation in relastions)
                         {
@@ -160,7 +164,8 @@ namespace EditingXML.Forms
 
                 var message = $"" +
                     $"XML файл [{pathProduct}] успешно обработан.{Environment.NewLine}{Environment.NewLine}" +
-                    $"Создан новый XML файл с учетом всех изменений: {Environment.NewLine}{pathOut}{Environment.NewLine}{Environment.NewLine}";
+                    $"Создан новый XML файл с учетом всех изменений: {Environment.NewLine}{pathOut}{Environment.NewLine}{Environment.NewLine}" +
+                    $"Всего обработано: {countProduct}{Environment.NewLine}{Environment.NewLine}";
 
                 foreach (var item in changeNumbers)
                 {
@@ -173,6 +178,8 @@ namespace EditingXML.Forms
             {
                 MessageBox.Show(ex.Message, "Информационное сообщение", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            progressBar.Value = 0;
         }
     }
 }

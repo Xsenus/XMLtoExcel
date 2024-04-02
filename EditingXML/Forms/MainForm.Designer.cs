@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btnStart = new System.Windows.Forms.Button();
             this.btnParameter = new System.Windows.Forms.Button();
@@ -36,13 +37,15 @@
             this.lblProduct = new System.Windows.Forms.Label();
             this.txtParameter = new System.Windows.Forms.TextBox();
             this.txtProduct = new System.Windows.Forms.TextBox();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // btnStart
             // 
             this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnStart.Location = new System.Drawing.Point(308, 68);
+            this.btnStart.Location = new System.Drawing.Point(287, 91);
             this.btnStart.Margin = new System.Windows.Forms.Padding(0);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(150, 24);
@@ -121,11 +124,21 @@
             this.txtProduct.TabIndex = 10;
             this.txtProduct.DoubleClick += new System.EventHandler(this.txtProduct_DoubleClick);
             // 
+            // progressBar
+            // 
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar.Location = new System.Drawing.Point(84, 62);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(353, 23);
+            this.progressBar.TabIndex = 20;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 101);
+            this.ClientSize = new System.Drawing.Size(484, 124);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.btnParameter);
             this.Controls.Add(this.lblParameter);
@@ -151,6 +164,8 @@
         private System.Windows.Forms.Label lblProduct;
         private System.Windows.Forms.TextBox txtParameter;
         private System.Windows.Forms.TextBox txtProduct;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Timer timer;
     }
 }
 
