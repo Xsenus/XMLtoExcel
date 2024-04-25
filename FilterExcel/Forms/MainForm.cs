@@ -24,6 +24,7 @@ namespace FilterExcel.Forms
             txtExcel.Text = _setting.Excel;
             txtExcelWorksheet.Text = _setting.ExcelWorksheet;
             txtRowPosition.Text = _setting.RowPosition;
+
             txtCol1.Text = _setting.Column1;
             txtCol2.Text = _setting.Column2;
             txtCol3.Text = _setting.Column3;
@@ -31,6 +32,10 @@ namespace FilterExcel.Forms
             txtCol5.Text = _setting.Column5;
             txtCol6.Text = _setting.Column6;
             txtCol7.Text = _setting.Column7;
+            txtCol8.Text = _setting.Column8;
+            txtCol9.Text = _setting.Column9;
+            txtCol10.Text = _setting.Column10;
+
             cmbCol1.Text = _setting.ComboBoxValue1;
             cmbCol2.Text = _setting.ComboBoxValue2;
             cmbCol3.Text = _setting.ComboBoxValue3;
@@ -38,6 +43,10 @@ namespace FilterExcel.Forms
             cmbCol5.Text = _setting.ComboBoxValue5;
             cmbCol6.Text = _setting.ComboBoxValue6;
             cmbCol7.Text = _setting.ComboBoxValue7;
+            cmbCol8.Text = _setting.ComboBoxValue8;
+            cmbCol9.Text = _setting.ComboBoxValue9;
+            cmbCol10.Text = _setting.ComboBoxValue10;
+
             txtVendorCodeColumn.Text = _setting.VendorCodeColumn;
             txtNewColumnValue.Text = _setting.NewColumnValue;
             txtValue.Text = _setting.Value;
@@ -48,6 +57,7 @@ namespace FilterExcel.Forms
             _setting.Excel = txtExcel.Text;
             _setting.ExcelWorksheet = txtExcelWorksheet.Text;
             _setting.RowPosition = txtRowPosition.Text;
+
             _setting.Column1 = txtCol1.Text;
             _setting.Column2 = txtCol2.Text;
             _setting.Column3 = txtCol3.Text;
@@ -55,6 +65,10 @@ namespace FilterExcel.Forms
             _setting.Column5 = txtCol5.Text;
             _setting.Column6 = txtCol6.Text;
             _setting.Column7 = txtCol7.Text;
+            _setting.Column8 = txtCol8.Text;
+            _setting.Column9 = txtCol9.Text;
+            _setting.Column10 = txtCol10.Text;
+
             _setting.ComboBoxValue1 = cmbCol1.Text;
             _setting.ComboBoxValue2 = cmbCol2.Text;
             _setting.ComboBoxValue3 = cmbCol3.Text;
@@ -62,6 +76,10 @@ namespace FilterExcel.Forms
             _setting.ComboBoxValue5 = cmbCol5.Text;
             _setting.ComboBoxValue6 = cmbCol6.Text;
             _setting.ComboBoxValue7 = cmbCol7.Text;
+            _setting.ComboBoxValue8 = cmbCol8.Text;
+            _setting.ComboBoxValue9 = cmbCol9.Text;
+            _setting.ComboBoxValue10 = cmbCol10.Text;
+
             _setting.VendorCodeColumn = txtVendorCodeColumn.Text;
             _setting.NewColumnValue = txtNewColumnValue.Text;
             _setting.Value = txtValue.Text;
@@ -377,7 +395,6 @@ namespace FilterExcel.Forms
                 txtRowPosition.Focus();
                 return;
             }
-
 
             var vendorCodeColumn = txtVendorCodeColumn.Text;
             if (string.IsNullOrWhiteSpace(vendorCodeColumn))
@@ -742,6 +759,108 @@ namespace FilterExcel.Forms
                             var firstVendorCode = item.First().GetValueByColumn(vendorCodeExcelColumn.Index);
                             var newValue = $"{value}{firstVendorCode}";
                             
+                            foreach (var objDataExcel in item)
+                            {
+                                if (item.Count() > 1)
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                    valuesChanged++;
+                                }
+                                else
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = string.Empty;
+                                }
+                            }
+                        }
+                    }
+                    else if (usingExcelColumns.Count == 8)
+                    {
+                        var groupListDataExcel = dataExcel.GroupBy(group => new
+                        {
+                            Column1 = group.GetValueByColumn(usingExcelColumns[0].Index),
+                            Column2 = group.GetValueByColumn(usingExcelColumns[1].Index),
+                            Column3 = group.GetValueByColumn(usingExcelColumns[2].Index),
+                            Column4 = group.GetValueByColumn(usingExcelColumns[3].Index),
+                            Column5 = group.GetValueByColumn(usingExcelColumns[4].Index),
+                            Column6 = group.GetValueByColumn(usingExcelColumns[5].Index),
+                            Column7 = group.GetValueByColumn(usingExcelColumns[6].Index),
+                            Column8 = group.GetValueByColumn(usingExcelColumns[7].Index),
+                        });
+
+                        foreach (var item in groupListDataExcel)
+                        {
+                            var firstVendorCode = item.First().GetValueByColumn(vendorCodeExcelColumn.Index);
+                            var newValue = $"{value}{firstVendorCode}";
+
+                            foreach (var objDataExcel in item)
+                            {
+                                if (item.Count() > 1)
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                    valuesChanged++;
+                                }
+                                else
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = string.Empty;
+                                }
+                            }
+                        }
+                    }
+                    else if (usingExcelColumns.Count == 9)
+                    {
+                        var groupListDataExcel = dataExcel.GroupBy(group => new
+                        {
+                            Column1 = group.GetValueByColumn(usingExcelColumns[0].Index),
+                            Column2 = group.GetValueByColumn(usingExcelColumns[1].Index),
+                            Column3 = group.GetValueByColumn(usingExcelColumns[2].Index),
+                            Column4 = group.GetValueByColumn(usingExcelColumns[3].Index),
+                            Column5 = group.GetValueByColumn(usingExcelColumns[4].Index),
+                            Column6 = group.GetValueByColumn(usingExcelColumns[5].Index),
+                            Column7 = group.GetValueByColumn(usingExcelColumns[6].Index),
+                            Column8 = group.GetValueByColumn(usingExcelColumns[7].Index),
+                            Column9 = group.GetValueByColumn(usingExcelColumns[8].Index),
+                        });
+
+                        foreach (var item in groupListDataExcel)
+                        {
+                            var firstVendorCode = item.First().GetValueByColumn(vendorCodeExcelColumn.Index);
+                            var newValue = $"{value}{firstVendorCode}";
+
+                            foreach (var objDataExcel in item)
+                            {
+                                if (item.Count() > 1)
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = newValue;
+                                    valuesChanged++;
+                                }
+                                else
+                                {
+                                    worksheet.Cells[objDataExcel.Row, newColumnExcelValue.Index].Value = string.Empty;
+                                }
+                            }
+                        }
+                    }
+                    else if (usingExcelColumns.Count == 10)
+                    {
+                        var groupListDataExcel = dataExcel.GroupBy(group => new
+                        {
+                            Column1 = group.GetValueByColumn(usingExcelColumns[0].Index),
+                            Column2 = group.GetValueByColumn(usingExcelColumns[1].Index),
+                            Column3 = group.GetValueByColumn(usingExcelColumns[2].Index),
+                            Column4 = group.GetValueByColumn(usingExcelColumns[3].Index),
+                            Column5 = group.GetValueByColumn(usingExcelColumns[4].Index),
+                            Column6 = group.GetValueByColumn(usingExcelColumns[5].Index),
+                            Column7 = group.GetValueByColumn(usingExcelColumns[6].Index),
+                            Column8 = group.GetValueByColumn(usingExcelColumns[7].Index),
+                            Column9 = group.GetValueByColumn(usingExcelColumns[8].Index),
+                            Column10 = group.GetValueByColumn(usingExcelColumns[9].Index),
+                        });
+
+                        foreach (var item in groupListDataExcel)
+                        {
+                            var firstVendorCode = item.First().GetValueByColumn(vendorCodeExcelColumn.Index);
+                            var newValue = $"{value}{firstVendorCode}";
+
                             foreach (var objDataExcel in item)
                             {
                                 if (item.Count() > 1)
