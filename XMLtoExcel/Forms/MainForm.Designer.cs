@@ -47,6 +47,8 @@
             this.txtStock = new System.Windows.Forms.TextBox();
             this.lblStock = new System.Windows.Forms.Label();
             this.panelControl = new System.Windows.Forms.Panel();
+            this.txtPricePerSet = new System.Windows.Forms.TextBox();
+            this.checkPricePerSet = new System.Windows.Forms.CheckBox();
             this.txtListNameStock = new System.Windows.Forms.TextBox();
             this.txtListNameO = new System.Windows.Forms.TextBox();
             this.txtListNameY = new System.Windows.Forms.TextBox();
@@ -69,7 +71,6 @@
             this.labelNameExcelY = new System.Windows.Forms.Label();
             this.memoOutExcelY = new System.Windows.Forms.RichTextBox();
             this.listViewExcelY = new System.Windows.Forms.ListView();
-            this.checkPricePerSet = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -78,21 +79,21 @@
             // 
             this.txtPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPath.Location = new System.Drawing.Point(125, 120);
-            this.txtPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtPath.MinimumSize = new System.Drawing.Size(399, 4);
+            this.txtPath.Location = new System.Drawing.Point(94, 98);
+            this.txtPath.Margin = new System.Windows.Forms.Padding(2);
+            this.txtPath.MinimumSize = new System.Drawing.Size(300, 4);
             this.txtPath.Multiline = true;
             this.txtPath.Name = "txtPath";
-            this.txtPath.Size = new System.Drawing.Size(644, 45);
+            this.txtPath.Size = new System.Drawing.Size(486, 37);
             this.txtPath.TabIndex = 0;
             // 
             // btnSelect
             // 
             this.btnSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSelect.Location = new System.Drawing.Point(775, 120);
-            this.btnSelect.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnSelect.Location = new System.Drawing.Point(583, 98);
+            this.btnSelect.Margin = new System.Windows.Forms.Padding(2);
             this.btnSelect.Name = "btnSelect";
-            this.btnSelect.Size = new System.Drawing.Size(45, 45);
+            this.btnSelect.Size = new System.Drawing.Size(34, 37);
             this.btnSelect.TabIndex = 2;
             this.btnSelect.Text = "+";
             this.btnSelect.UseVisualStyleBackColor = true;
@@ -101,9 +102,10 @@
             // labelNameExcelStock
             // 
             this.labelNameExcelStock.AutoSize = true;
-            this.labelNameExcelStock.Location = new System.Drawing.Point(12, 173);
+            this.labelNameExcelStock.Location = new System.Drawing.Point(9, 141);
+            this.labelNameExcelStock.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelNameExcelStock.Name = "labelNameExcelStock";
-            this.labelNameExcelStock.Size = new System.Drawing.Size(86, 16);
+            this.labelNameExcelStock.Size = new System.Drawing.Size(71, 13);
             this.labelNameExcelStock.TabIndex = 6;
             this.labelNameExcelStock.Text = "Excel (stock):";
             this.labelNameExcelStock.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -111,9 +113,10 @@
             // lblPath
             // 
             this.lblPath.AutoSize = true;
-            this.lblPath.Location = new System.Drawing.Point(60, 123);
+            this.lblPath.Location = new System.Drawing.Point(45, 100);
+            this.lblPath.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPath.Name = "lblPath";
-            this.lblPath.Size = new System.Drawing.Size(36, 16);
+            this.lblPath.Size = new System.Drawing.Size(32, 13);
             this.lblPath.TabIndex = 5;
             this.lblPath.Text = "XML:";
             this.lblPath.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -121,10 +124,10 @@
             // btnStart
             // 
             this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStart.Location = new System.Drawing.Point(614, 568);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnStart.Location = new System.Drawing.Point(462, 468);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(2);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(100, 40);
+            this.btnStart.Size = new System.Drawing.Size(75, 32);
             this.btnStart.TabIndex = 7;
             this.btnStart.Text = "Старт";
             this.btnStart.UseVisualStyleBackColor = true;
@@ -135,10 +138,9 @@
             this.listViewExcelStock.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewExcelStock.HideSelection = false;
-            this.listViewExcelStock.Location = new System.Drawing.Point(125, 171);
-            this.listViewExcelStock.Margin = new System.Windows.Forms.Padding(4);
+            this.listViewExcelStock.Location = new System.Drawing.Point(94, 139);
             this.listViewExcelStock.Name = "listViewExcelStock";
-            this.listViewExcelStock.Size = new System.Drawing.Size(399, 116);
+            this.listViewExcelStock.Size = new System.Drawing.Size(302, 95);
             this.listViewExcelStock.TabIndex = 9;
             this.listViewExcelStock.UseCompatibleStateImageBehavior = false;
             this.listViewExcelStock.View = System.Windows.Forms.View.List;
@@ -147,10 +149,10 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(720, 568);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCancel.Location = new System.Drawing.Point(542, 468);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 40);
+            this.btnCancel.Size = new System.Drawing.Size(75, 32);
             this.btnCancel.TabIndex = 8;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -160,22 +162,22 @@
             // 
             this.memoOutExcelStock.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.memoOutExcelStock.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.memoOutExcelStock.Location = new System.Drawing.Point(535, 171);
-            this.memoOutExcelStock.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.memoOutExcelStock.Location = new System.Drawing.Point(403, 139);
+            this.memoOutExcelStock.Margin = new System.Windows.Forms.Padding(5);
             this.memoOutExcelStock.Name = "memoOutExcelStock";
             this.memoOutExcelStock.ReadOnly = true;
-            this.memoOutExcelStock.Size = new System.Drawing.Size(285, 114);
+            this.memoOutExcelStock.Size = new System.Drawing.Size(214, 93);
             this.memoOutExcelStock.TabIndex = 10;
             this.memoOutExcelStock.Text = "";
             // 
             // progressBar
             // 
             this.progressBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBar.Location = new System.Drawing.Point(0, 616);
-            this.progressBar.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
-            this.progressBar.MaximumSize = new System.Drawing.Size(0, 37);
+            this.progressBar.Location = new System.Drawing.Point(0, 507);
+            this.progressBar.Margin = new System.Windows.Forms.Padding(5);
+            this.progressBar.MaximumSize = new System.Drawing.Size(0, 30);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(832, 37);
+            this.progressBar.Size = new System.Drawing.Size(626, 30);
             this.progressBar.TabIndex = 11;
             this.progressBar.Tag = "";
             // 
@@ -186,8 +188,8 @@
             this.btnMenuFile});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip.Size = new System.Drawing.Size(832, 28);
+            this.menuStrip.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip.Size = new System.Drawing.Size(626, 24);
             this.menuStrip.TabIndex = 12;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -196,13 +198,13 @@
             this.btnMenuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnMenuLogger});
             this.btnMenuFile.Name = "btnMenuFile";
-            this.btnMenuFile.Size = new System.Drawing.Size(59, 24);
+            this.btnMenuFile.Size = new System.Drawing.Size(48, 20);
             this.btnMenuFile.Text = "Файл";
             // 
             // btnMenuLogger
             // 
             this.btnMenuLogger.Name = "btnMenuLogger";
-            this.btnMenuLogger.Size = new System.Drawing.Size(153, 26);
+            this.btnMenuLogger.Size = new System.Drawing.Size(123, 22);
             this.btnMenuLogger.Text = "События";
             this.btnMenuLogger.Click += new System.EventHandler(this.btnMenuLogger_Click);
             // 
@@ -210,11 +212,11 @@
             // 
             this.checkIsInterop.AutoSize = true;
             this.checkIsInterop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkIsInterop.Location = new System.Drawing.Point(0, 56);
-            this.checkIsInterop.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.checkIsInterop.Location = new System.Drawing.Point(0, 47);
+            this.checkIsInterop.Margin = new System.Windows.Forms.Padding(5);
             this.checkIsInterop.Name = "checkIsInterop";
-            this.checkIsInterop.Padding = new System.Windows.Forms.Padding(7, 4, 7, 4);
-            this.checkIsInterop.Size = new System.Drawing.Size(832, 28);
+            this.checkIsInterop.Padding = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            this.checkIsInterop.Size = new System.Drawing.Size(626, 23);
             this.checkIsInterop.TabIndex = 13;
             this.checkIsInterop.Text = "Использовать Microsoft.Office.Interop.Excel";
             this.checkIsInterop.UseVisualStyleBackColor = true;
@@ -226,11 +228,11 @@
             this.checkIsEpplus.Checked = true;
             this.checkIsEpplus.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkIsEpplus.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkIsEpplus.Location = new System.Drawing.Point(0, 28);
-            this.checkIsEpplus.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.checkIsEpplus.Location = new System.Drawing.Point(0, 24);
+            this.checkIsEpplus.Margin = new System.Windows.Forms.Padding(5);
             this.checkIsEpplus.Name = "checkIsEpplus";
-            this.checkIsEpplus.Padding = new System.Windows.Forms.Padding(7, 4, 7, 4);
-            this.checkIsEpplus.Size = new System.Drawing.Size(832, 28);
+            this.checkIsEpplus.Padding = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            this.checkIsEpplus.Size = new System.Drawing.Size(626, 23);
             this.checkIsEpplus.TabIndex = 14;
             this.checkIsEpplus.Text = "Использовать EPPlus";
             this.checkIsEpplus.UseVisualStyleBackColor = true;
@@ -242,36 +244,35 @@
             this.checkIsDeleteColumnNumber.Checked = true;
             this.checkIsDeleteColumnNumber.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkIsDeleteColumnNumber.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkIsDeleteColumnNumber.Location = new System.Drawing.Point(0, 84);
-            this.checkIsDeleteColumnNumber.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.checkIsDeleteColumnNumber.Location = new System.Drawing.Point(0, 70);
+            this.checkIsDeleteColumnNumber.Margin = new System.Windows.Forms.Padding(5);
             this.checkIsDeleteColumnNumber.Name = "checkIsDeleteColumnNumber";
-            this.checkIsDeleteColumnNumber.Padding = new System.Windows.Forms.Padding(7, 4, 7, 4);
+            this.checkIsDeleteColumnNumber.Padding = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.checkIsDeleteColumnNumber.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.checkIsDeleteColumnNumber.Size = new System.Drawing.Size(832, 28);
+            this.checkIsDeleteColumnNumber.Size = new System.Drawing.Size(626, 23);
             this.checkIsDeleteColumnNumber.TabIndex = 15;
             this.checkIsDeleteColumnNumber.Text = "Удаление колонки с артикулом";
             this.checkIsDeleteColumnNumber.UseVisualStyleBackColor = true;
             // 
             // txtStock
             // 
-            this.txtStock.Location = new System.Drawing.Point(700, 33);
-            this.txtStock.Margin = new System.Windows.Forms.Padding(4);
+            this.txtStock.Location = new System.Drawing.Point(525, 27);
             this.txtStock.Name = "txtStock";
-            this.txtStock.Size = new System.Drawing.Size(120, 22);
+            this.txtStock.Size = new System.Drawing.Size(91, 20);
             this.txtStock.TabIndex = 16;
             // 
             // lblStock
             // 
             this.lblStock.AutoSize = true;
-            this.lblStock.Location = new System.Drawing.Point(400, 37);
-            this.lblStock.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblStock.Location = new System.Drawing.Point(300, 30);
             this.lblStock.Name = "lblStock";
-            this.lblStock.Size = new System.Drawing.Size(281, 16);
+            this.lblStock.Size = new System.Drawing.Size(222, 13);
             this.lblStock.TabIndex = 17;
             this.lblStock.Text = "Значение остатков (равное и меньше) в 0:";
             // 
             // panelControl
             // 
+            this.panelControl.Controls.Add(this.txtPricePerSet);
             this.panelControl.Controls.Add(this.checkPricePerSet);
             this.panelControl.Controls.Add(this.txtListNameStock);
             this.panelControl.Controls.Add(this.txtListNameO);
@@ -305,102 +306,135 @@
             this.panelControl.Controls.Add(this.listViewExcelStock);
             this.panelControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelControl.Location = new System.Drawing.Point(0, 0);
+            this.panelControl.Margin = new System.Windows.Forms.Padding(2);
             this.panelControl.Name = "panelControl";
-            this.panelControl.Size = new System.Drawing.Size(832, 653);
+            this.panelControl.Size = new System.Drawing.Size(626, 537);
             this.panelControl.TabIndex = 18;
+            // 
+            // txtPricePerSet
+            // 
+            this.txtPricePerSet.Location = new System.Drawing.Point(9, 197);
+            this.txtPricePerSet.Margin = new System.Windows.Forms.Padding(2);
+            this.txtPricePerSet.Name = "txtPricePerSet";
+            this.txtPricePerSet.Size = new System.Drawing.Size(80, 20);
+            this.txtPricePerSet.TabIndex = 39;
+            this.txtPricePerSet.Visible = false;
+            // 
+            // checkPricePerSet
+            // 
+            this.checkPricePerSet.AutoSize = true;
+            this.checkPricePerSet.Location = new System.Drawing.Point(94, 239);
+            this.checkPricePerSet.Margin = new System.Windows.Forms.Padding(2);
+            this.checkPricePerSet.Name = "checkPricePerSet";
+            this.checkPricePerSet.Size = new System.Drawing.Size(119, 17);
+            this.checkPricePerSet.TabIndex = 38;
+            this.checkPricePerSet.Text = "Цена за комплект";
+            this.checkPricePerSet.UseVisualStyleBackColor = true;
             // 
             // txtListNameStock
             // 
-            this.txtListNameStock.Location = new System.Drawing.Point(12, 192);
+            this.txtListNameStock.Location = new System.Drawing.Point(9, 156);
+            this.txtListNameStock.Margin = new System.Windows.Forms.Padding(2);
             this.txtListNameStock.Name = "txtListNameStock";
-            this.txtListNameStock.Size = new System.Drawing.Size(106, 22);
+            this.txtListNameStock.Size = new System.Drawing.Size(80, 20);
             this.txtListNameStock.TabIndex = 37;
             this.txtListNameStock.Enter += new System.EventHandler(this.txtListName_Enter);
             // 
             // txtListNameO
             // 
-            this.txtListNameO.Location = new System.Drawing.Point(12, 460);
+            this.txtListNameO.Location = new System.Drawing.Point(9, 374);
+            this.txtListNameO.Margin = new System.Windows.Forms.Padding(2);
             this.txtListNameO.Name = "txtListNameO";
-            this.txtListNameO.Size = new System.Drawing.Size(106, 22);
+            this.txtListNameO.Size = new System.Drawing.Size(80, 20);
             this.txtListNameO.TabIndex = 36;
             this.txtListNameO.Enter += new System.EventHandler(this.txtListName_Enter);
             // 
             // txtListNameY
             // 
-            this.txtListNameY.Location = new System.Drawing.Point(12, 339);
+            this.txtListNameY.Location = new System.Drawing.Point(9, 275);
+            this.txtListNameY.Margin = new System.Windows.Forms.Padding(2);
             this.txtListNameY.Name = "txtListNameY";
-            this.txtListNameY.Size = new System.Drawing.Size(106, 22);
+            this.txtListNameY.Size = new System.Drawing.Size(80, 20);
             this.txtListNameY.TabIndex = 35;
             this.txtListNameY.Enter += new System.EventHandler(this.txtListName_Enter);
             // 
             // checkO
             // 
             this.checkO.AutoSize = true;
-            this.checkO.Location = new System.Drawing.Point(100, 488);
+            this.checkO.Location = new System.Drawing.Point(75, 396);
+            this.checkO.Margin = new System.Windows.Forms.Padding(2);
             this.checkO.Name = "checkO";
-            this.checkO.Size = new System.Drawing.Size(18, 17);
+            this.checkO.Size = new System.Drawing.Size(15, 14);
             this.checkO.TabIndex = 34;
             this.checkO.UseVisualStyleBackColor = true;
             // 
             // checkY
             // 
             this.checkY.AutoSize = true;
-            this.checkY.Location = new System.Drawing.Point(100, 367);
+            this.checkY.Location = new System.Drawing.Point(75, 298);
+            this.checkY.Margin = new System.Windows.Forms.Padding(2);
             this.checkY.Name = "checkY";
-            this.checkY.Size = new System.Drawing.Size(18, 17);
+            this.checkY.Size = new System.Drawing.Size(15, 14);
             this.checkY.TabIndex = 33;
             this.checkY.UseVisualStyleBackColor = true;
             // 
             // checkStock
             // 
             this.checkStock.AutoSize = true;
-            this.checkStock.Location = new System.Drawing.Point(100, 220);
+            this.checkStock.Location = new System.Drawing.Point(75, 179);
+            this.checkStock.Margin = new System.Windows.Forms.Padding(2);
             this.checkStock.Name = "checkStock";
-            this.checkStock.Size = new System.Drawing.Size(18, 17);
+            this.checkStock.Size = new System.Drawing.Size(15, 14);
             this.checkStock.TabIndex = 32;
             this.checkStock.UseVisualStyleBackColor = true;
+            this.checkStock.CheckedChanged += new System.EventHandler(this.checkStock_CheckedChanged);
             // 
             // txtPercentExcelO
             // 
-            this.txtPercentExcelO.Location = new System.Drawing.Point(449, 531);
+            this.txtPercentExcelO.Location = new System.Drawing.Point(337, 431);
+            this.txtPercentExcelO.Margin = new System.Windows.Forms.Padding(2);
             this.txtPercentExcelO.Name = "txtPercentExcelO";
-            this.txtPercentExcelO.Size = new System.Drawing.Size(75, 22);
+            this.txtPercentExcelO.Size = new System.Drawing.Size(57, 20);
             this.txtPercentExcelO.TabIndex = 31;
             this.txtPercentExcelO.Text = "% (+/-)";
             this.txtPercentExcelO.Enter += new System.EventHandler(this.txtPercentExcel_Enter);
             // 
             // txtAddNewPriceExcelO
             // 
-            this.txtAddNewPriceExcelO.Location = new System.Drawing.Point(368, 531);
+            this.txtAddNewPriceExcelO.Location = new System.Drawing.Point(276, 431);
+            this.txtAddNewPriceExcelO.Margin = new System.Windows.Forms.Padding(2);
             this.txtAddNewPriceExcelO.Name = "txtAddNewPriceExcelO";
-            this.txtAddNewPriceExcelO.Size = new System.Drawing.Size(75, 22);
+            this.txtAddNewPriceExcelO.Size = new System.Drawing.Size(57, 20);
             this.txtAddNewPriceExcelO.TabIndex = 30;
             this.txtAddNewPriceExcelO.Text = "Ст.нов.цена";
             this.txtAddNewPriceExcelO.Enter += new System.EventHandler(this.txtAddNewPriceExcel_Enter);
             // 
             // txtAddCurrentPriceExcelO
             // 
-            this.txtAddCurrentPriceExcelO.Location = new System.Drawing.Point(287, 531);
+            this.txtAddCurrentPriceExcelO.Location = new System.Drawing.Point(215, 431);
+            this.txtAddCurrentPriceExcelO.Margin = new System.Windows.Forms.Padding(2);
             this.txtAddCurrentPriceExcelO.Name = "txtAddCurrentPriceExcelO";
-            this.txtAddCurrentPriceExcelO.Size = new System.Drawing.Size(75, 22);
+            this.txtAddCurrentPriceExcelO.Size = new System.Drawing.Size(57, 20);
             this.txtAddCurrentPriceExcelO.TabIndex = 29;
             this.txtAddCurrentPriceExcelO.Text = "Ст.тек.цена";
             this.txtAddCurrentPriceExcelO.Enter += new System.EventHandler(this.txtAddCurrentPriceExcel_Enter);
             // 
             // txtCurrentPriceExcelO
             // 
-            this.txtCurrentPriceExcelO.Location = new System.Drawing.Point(206, 531);
+            this.txtCurrentPriceExcelO.Location = new System.Drawing.Point(154, 431);
+            this.txtCurrentPriceExcelO.Margin = new System.Windows.Forms.Padding(2);
             this.txtCurrentPriceExcelO.Name = "txtCurrentPriceExcelO";
-            this.txtCurrentPriceExcelO.Size = new System.Drawing.Size(75, 22);
+            this.txtCurrentPriceExcelO.Size = new System.Drawing.Size(57, 20);
             this.txtCurrentPriceExcelO.TabIndex = 28;
             this.txtCurrentPriceExcelO.Text = "Тек.цена";
             this.txtCurrentPriceExcelO.Enter += new System.EventHandler(this.txtCurrentPriceExcel_Enter);
             // 
             // txtArticuleExcelO
             // 
-            this.txtArticuleExcelO.Location = new System.Drawing.Point(125, 531);
+            this.txtArticuleExcelO.Location = new System.Drawing.Point(94, 431);
+            this.txtArticuleExcelO.Margin = new System.Windows.Forms.Padding(2);
             this.txtArticuleExcelO.Name = "txtArticuleExcelO";
-            this.txtArticuleExcelO.Size = new System.Drawing.Size(75, 22);
+            this.txtArticuleExcelO.Size = new System.Drawing.Size(57, 20);
             this.txtArticuleExcelO.TabIndex = 27;
             this.txtArticuleExcelO.Text = "Артикул";
             this.txtArticuleExcelO.Enter += new System.EventHandler(this.txtArticuleExcel_Enter);
@@ -408,9 +442,10 @@
             // label1labelNameExcelO
             // 
             this.label1labelNameExcelO.AutoSize = true;
-            this.label1labelNameExcelO.Location = new System.Drawing.Point(12, 441);
+            this.label1labelNameExcelO.Location = new System.Drawing.Point(9, 358);
+            this.label1labelNameExcelO.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1labelNameExcelO.Name = "label1labelNameExcelO";
-            this.label1labelNameExcelO.Size = new System.Drawing.Size(98, 16);
+            this.label1labelNameExcelO.Size = new System.Drawing.Size(80, 13);
             this.label1labelNameExcelO.TabIndex = 24;
             this.label1labelNameExcelO.Text = "Excel (Price O):";
             this.label1labelNameExcelO.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -419,11 +454,11 @@
             // 
             this.memoOutExcelO.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.memoOutExcelO.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.memoOutExcelO.Location = new System.Drawing.Point(535, 439);
-            this.memoOutExcelO.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.memoOutExcelO.Location = new System.Drawing.Point(403, 357);
+            this.memoOutExcelO.Margin = new System.Windows.Forms.Padding(5);
             this.memoOutExcelO.Name = "memoOutExcelO";
             this.memoOutExcelO.ReadOnly = true;
-            this.memoOutExcelO.Size = new System.Drawing.Size(285, 114);
+            this.memoOutExcelO.Size = new System.Drawing.Size(214, 93);
             this.memoOutExcelO.TabIndex = 26;
             this.memoOutExcelO.Text = "";
             // 
@@ -432,10 +467,9 @@
             this.listViewExcelO.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewExcelO.HideSelection = false;
-            this.listViewExcelO.Location = new System.Drawing.Point(125, 439);
-            this.listViewExcelO.Margin = new System.Windows.Forms.Padding(4);
+            this.listViewExcelO.Location = new System.Drawing.Point(94, 357);
             this.listViewExcelO.Name = "listViewExcelO";
-            this.listViewExcelO.Size = new System.Drawing.Size(399, 85);
+            this.listViewExcelO.Size = new System.Drawing.Size(302, 70);
             this.listViewExcelO.TabIndex = 25;
             this.listViewExcelO.UseCompatibleStateImageBehavior = false;
             this.listViewExcelO.View = System.Windows.Forms.View.List;
@@ -443,45 +477,50 @@
             // 
             // txtPercentExcelY
             // 
-            this.txtPercentExcelY.Location = new System.Drawing.Point(449, 410);
+            this.txtPercentExcelY.Location = new System.Drawing.Point(337, 333);
+            this.txtPercentExcelY.Margin = new System.Windows.Forms.Padding(2);
             this.txtPercentExcelY.Name = "txtPercentExcelY";
-            this.txtPercentExcelY.Size = new System.Drawing.Size(75, 22);
+            this.txtPercentExcelY.Size = new System.Drawing.Size(57, 20);
             this.txtPercentExcelY.TabIndex = 23;
             this.txtPercentExcelY.Text = "% (+/-)";
             this.txtPercentExcelY.Enter += new System.EventHandler(this.txtPercentExcel_Enter);
             // 
             // txtAddNewPriceExcelY
             // 
-            this.txtAddNewPriceExcelY.Location = new System.Drawing.Point(368, 410);
+            this.txtAddNewPriceExcelY.Location = new System.Drawing.Point(276, 333);
+            this.txtAddNewPriceExcelY.Margin = new System.Windows.Forms.Padding(2);
             this.txtAddNewPriceExcelY.Name = "txtAddNewPriceExcelY";
-            this.txtAddNewPriceExcelY.Size = new System.Drawing.Size(75, 22);
+            this.txtAddNewPriceExcelY.Size = new System.Drawing.Size(57, 20);
             this.txtAddNewPriceExcelY.TabIndex = 22;
             this.txtAddNewPriceExcelY.Text = "Ст.нов.цена";
             this.txtAddNewPriceExcelY.Enter += new System.EventHandler(this.txtAddNewPriceExcel_Enter);
             // 
             // txtAddCurrentPriceExcelY
             // 
-            this.txtAddCurrentPriceExcelY.Location = new System.Drawing.Point(287, 410);
+            this.txtAddCurrentPriceExcelY.Location = new System.Drawing.Point(215, 333);
+            this.txtAddCurrentPriceExcelY.Margin = new System.Windows.Forms.Padding(2);
             this.txtAddCurrentPriceExcelY.Name = "txtAddCurrentPriceExcelY";
-            this.txtAddCurrentPriceExcelY.Size = new System.Drawing.Size(75, 22);
+            this.txtAddCurrentPriceExcelY.Size = new System.Drawing.Size(57, 20);
             this.txtAddCurrentPriceExcelY.TabIndex = 21;
             this.txtAddCurrentPriceExcelY.Text = "Ст.тек.цена";
             this.txtAddCurrentPriceExcelY.Enter += new System.EventHandler(this.txtAddCurrentPriceExcel_Enter);
             // 
             // txtCurrentPriceExcelY
             // 
-            this.txtCurrentPriceExcelY.Location = new System.Drawing.Point(206, 410);
+            this.txtCurrentPriceExcelY.Location = new System.Drawing.Point(154, 333);
+            this.txtCurrentPriceExcelY.Margin = new System.Windows.Forms.Padding(2);
             this.txtCurrentPriceExcelY.Name = "txtCurrentPriceExcelY";
-            this.txtCurrentPriceExcelY.Size = new System.Drawing.Size(75, 22);
+            this.txtCurrentPriceExcelY.Size = new System.Drawing.Size(57, 20);
             this.txtCurrentPriceExcelY.TabIndex = 20;
             this.txtCurrentPriceExcelY.Text = "Тек.цена";
             this.txtCurrentPriceExcelY.Enter += new System.EventHandler(this.txtCurrentPriceExcel_Enter);
             // 
             // txtArticuleExcelY
             // 
-            this.txtArticuleExcelY.Location = new System.Drawing.Point(125, 410);
+            this.txtArticuleExcelY.Location = new System.Drawing.Point(94, 333);
+            this.txtArticuleExcelY.Margin = new System.Windows.Forms.Padding(2);
             this.txtArticuleExcelY.Name = "txtArticuleExcelY";
-            this.txtArticuleExcelY.Size = new System.Drawing.Size(75, 22);
+            this.txtArticuleExcelY.Size = new System.Drawing.Size(57, 20);
             this.txtArticuleExcelY.TabIndex = 19;
             this.txtArticuleExcelY.Text = "Артикул";
             this.txtArticuleExcelY.Enter += new System.EventHandler(this.txtArticuleExcel_Enter);
@@ -489,9 +528,10 @@
             // labelNameExcelY
             // 
             this.labelNameExcelY.AutoSize = true;
-            this.labelNameExcelY.Location = new System.Drawing.Point(12, 320);
+            this.labelNameExcelY.Location = new System.Drawing.Point(9, 260);
+            this.labelNameExcelY.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelNameExcelY.Name = "labelNameExcelY";
-            this.labelNameExcelY.Size = new System.Drawing.Size(97, 16);
+            this.labelNameExcelY.Size = new System.Drawing.Size(79, 13);
             this.labelNameExcelY.TabIndex = 11;
             this.labelNameExcelY.Text = "Excel (Price Y):";
             this.labelNameExcelY.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -500,11 +540,11 @@
             // 
             this.memoOutExcelY.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.memoOutExcelY.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.memoOutExcelY.Location = new System.Drawing.Point(535, 318);
-            this.memoOutExcelY.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.memoOutExcelY.Location = new System.Drawing.Point(403, 258);
+            this.memoOutExcelY.Margin = new System.Windows.Forms.Padding(5);
             this.memoOutExcelY.Name = "memoOutExcelY";
             this.memoOutExcelY.ReadOnly = true;
-            this.memoOutExcelY.Size = new System.Drawing.Size(285, 114);
+            this.memoOutExcelY.Size = new System.Drawing.Size(214, 93);
             this.memoOutExcelY.TabIndex = 13;
             this.memoOutExcelY.Text = "";
             // 
@@ -513,30 +553,19 @@
             this.listViewExcelY.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewExcelY.HideSelection = false;
-            this.listViewExcelY.Location = new System.Drawing.Point(125, 318);
-            this.listViewExcelY.Margin = new System.Windows.Forms.Padding(4);
+            this.listViewExcelY.Location = new System.Drawing.Point(94, 258);
             this.listViewExcelY.Name = "listViewExcelY";
-            this.listViewExcelY.Size = new System.Drawing.Size(399, 85);
+            this.listViewExcelY.Size = new System.Drawing.Size(302, 70);
             this.listViewExcelY.TabIndex = 12;
             this.listViewExcelY.UseCompatibleStateImageBehavior = false;
             this.listViewExcelY.View = System.Windows.Forms.View.List;
             this.listViewExcelY.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listViewExcelY_MouseUp);
             // 
-            // checkPricePerSet
-            // 
-            this.checkPricePerSet.AutoSize = true;
-            this.checkPricePerSet.Location = new System.Drawing.Point(125, 294);
-            this.checkPricePerSet.Name = "checkPricePerSet";
-            this.checkPricePerSet.Size = new System.Drawing.Size(146, 20);
-            this.checkPricePerSet.TabIndex = 38;
-            this.checkPricePerSet.Text = "Цена за комплект";
-            this.checkPricePerSet.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(832, 653);
+            this.ClientSize = new System.Drawing.Size(626, 537);
             this.Controls.Add(this.lblStock);
             this.Controls.Add(this.txtStock);
             this.Controls.Add(this.checkIsDeleteColumnNumber);
@@ -547,8 +576,8 @@
             this.Controls.Add(this.panelControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MinimumSize = new System.Drawing.Size(850, 700);
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MinimumSize = new System.Drawing.Size(642, 576);
             this.Name = "MainForm";
             this.Text = "XML TO EXCEL";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -604,6 +633,7 @@
         private System.Windows.Forms.TextBox txtListNameO;
         private System.Windows.Forms.TextBox txtListNameY;
         private System.Windows.Forms.CheckBox checkPricePerSet;
+        private System.Windows.Forms.TextBox txtPricePerSet;
     }
 }
 

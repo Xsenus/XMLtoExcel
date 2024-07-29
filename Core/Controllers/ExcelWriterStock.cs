@@ -57,7 +57,7 @@ namespace Core.Controllers
 
         }
         
-        public void StartWriterEPPlus(Data data, decimal? stock = default)
+        public void StartWriterEPPlus(Data data, decimal? stock = default, decimal? pricePerSetValue = default)
         {
             _isEpPlus = true;
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -103,7 +103,46 @@ namespace Core.Controllers
 
                                     Log?.Invoke($"Найдено значение для артикля [{excelArticle}]: {value ?? "NULL"}");
 
-                                    worksheet.Cells[i, _columnEditNumber].Value = value;
+                                    if (pricePerSetValue is decimal valueDecimal)
+                                    {
+                                        var retailPrice = product.Prices?.Price?
+                                            .Where(w => w.Type != null && w.Type.Equals("retail"))
+                                            .FirstOrDefault();
+
+                                        var qtyUnitPrice = product.Package?.Qty?.Text;
+
+                                        if (retailPrice is null || qtyUnitPrice is null)
+                                        {
+                                            worksheet.Cells[i, _columnEditNumber].Value = "0";
+                                        }
+                                        else
+                                        {
+                                            if (decimal.TryParse(retailPrice?.Text?.Replace(".", ","), out decimal retailPriceResult) &&
+                                                decimal.TryParse(qtyUnitPrice?.Replace(".", ","), out decimal qtyUnitPriceResult))
+                                            {
+                                                var multiplication = retailPriceResult * qtyUnitPriceResult;
+                                                if (pricePerSetValue >= multiplication)
+                                                {
+                                                    CountZeroSubstitutions++;
+                                                    worksheet.Cells[i, _columnEditNumber].Value = "0";
+                                                }
+                                                else
+                                                {
+                                                    worksheet.Cells[i, _columnEditNumber].Value = value;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                CountZeroSubstitutions++;
+                                                worksheet.Cells[i, _columnEditNumber].Value = "0";
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        worksheet.Cells[i, _columnEditNumber].Value = value;
+                                    }
+
                                     Log?.Invoke($"Подстановка артикула [{value}] в ячейку [{i}, {_columnEditNumber}]");
 
                                     CountSubstitutions++;

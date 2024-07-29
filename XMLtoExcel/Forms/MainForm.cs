@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace XMLtoExcel.Forms
@@ -20,13 +21,15 @@ namespace XMLtoExcel.Forms
         {
             InitializeComponent();
 
-//#if DEBUG
-//            txtPath.Text = "C:\\Users\\ilel\\Desktop\\TEST\\30992026\\1010.xml";
+            Text += $" v{Assembly.GetExecutingAssembly().GetName().Version}";
 
-//            _excelPathStock.Add(@"C:\Users\ilel\Desktop\TEST\30992026\ТЕСТ-stock.xlsx");
-//            _excelPathY.Add(@"C:\Users\ilel\Desktop\TEST\30992026\Пример1.xlsx");
-//            _excelPathO.Add(@"C:\Users\ilel\Desktop\TEST\30992026\Пример1.xlsx");
-//#endif
+            //#if DEBUG
+            //txtPath.Text = "C:\\Users\\ilel\\Desktop\\TEST\\30992026\\1010.xml";
+
+            //_excelPathStock.Add(@"C:\Users\ilel\Desktop\TEST\30992026\ТЕСТ-stock.xlsx");
+            //_excelPathY.Add(@"C:\Users\ilel\Desktop\TEST\30992026\Пример1.xlsx");
+            //_excelPathO.Add(@"C:\Users\ilel\Desktop\TEST\30992026\Пример1.xlsx");
+            //#endif
         }
         
         private void btnSelect_Click(object sender, EventArgs e)
@@ -146,6 +149,26 @@ namespace XMLtoExcel.Forms
                 }
             }
 
+            var pricePerSetValue = default(decimal?);
+            if (txtPricePerSet.Visible)
+            {
+                var value = txtPricePerSet.Text;
+
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    if (decimal.TryParse(value.Replace(".", ","), out decimal result))
+                    {
+                        pricePerSetValue = result;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Не корректно указано значение в цене за комплект.");
+                        txtPricePerSet.Focus();
+                        return;
+                    }
+                }
+            }
+
             var stock = GetStock();
             var isDeleteColumnNumber = checkIsDeleteColumnNumber.Checked;
             var query = GetXMLData(path);
@@ -161,7 +184,7 @@ namespace XMLtoExcel.Forms
 
             if (checkStock.Checked)
             {
-                TreatmentStock(stock, isDeleteColumnNumber, query, txtListNameStock.Text);
+                TreatmentStock(stock, isDeleteColumnNumber, query, txtListNameStock.Text, pricePerSetValue: pricePerSetValue);
             }
 
             if (checkY.Checked && CheckExcelPath(_excelPathY))
@@ -304,7 +327,7 @@ namespace XMLtoExcel.Forms
         }
 
 
-        private bool TreatmentStock(decimal? stock, bool isDeleteColumnNumber, Data query, string sheetName)
+        private bool TreatmentStock(decimal? stock, bool isDeleteColumnNumber, Data query, string sheetName, decimal? pricePerSetValue = default)
         {
             var result = true;
             foreach (var excelPath in _excelPathStock)
@@ -318,7 +341,7 @@ namespace XMLtoExcel.Forms
                         excelWriter.Log += ExcelWriter_Log;
                         if (checkIsEpplus.Checked)
                         {
-                            excelWriter.StartWriterEPPlus(query, stock);
+                            excelWriter.StartWriterEPPlus(query, stock, pricePerSetValue);
                         }
                         else
                         {
@@ -720,6 +743,23 @@ namespace XMLtoExcel.Forms
             {
                 ShowToolTip(textBox, $"Поле для установки наименования листа обработки.{Environment.NewLine}" +
                     $"Если пусто, то используются параметры по умолчанию.");
+            }
+        }
+
+        private void checkStock_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is CheckBox checkBox)
+            {
+                if (checkBox.Checked)
+                {
+                    txtPricePerSet.Visible = true;
+                    txtPricePerSet.Text = "0";
+                }
+                else
+                {
+                    txtPricePerSet.Visible = false;
+                    txtPricePerSet.Text = default;
+                }
             }
         }
     }
